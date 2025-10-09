@@ -1,815 +1,226 @@
-Return-Path: <linux-samsung-soc+bounces-11444-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-11448-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5B64BBC8510
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 09 Oct 2025 11:31:53 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 22B5EBC8831
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 09 Oct 2025 12:33:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 166F619E1F3B
-	for <lists+linux-samsung-soc@lfdr.de>; Thu,  9 Oct 2025 09:32:16 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CCE863AE83D
+	for <lists+linux-samsung-soc@lfdr.de>; Thu,  9 Oct 2025 10:33:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 668CF2D7DE9;
-	Thu,  9 Oct 2025 09:31:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE8D62C11DB;
+	Thu,  9 Oct 2025 10:33:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BI7x8Ng9"
+	dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b="PAzJtPog"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-m15574.qiye.163.com (mail-m15574.qiye.163.com [101.71.155.74])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 537362C0F68
-	for <linux-samsung-soc@vger.kernel.org>; Thu,  9 Oct 2025 09:31:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D24B52C0292;
+	Thu,  9 Oct 2025 10:32:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=101.71.155.74
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760002295; cv=none; b=A4Ne6j0JaTddc/RKjehAbOqNTF3OYyhcOQCv6BBxGlW/uj3xWy2aHp+lPwnwdTQsLXiGTMjcnpGfb8swjxpWbt18b1NtCqmUI7V61GcSUmbVFO2TbwUnpBLhYfjFNna/3VS0q2Mv6uxRArM67A7l16DvsJAp5TaKzHWVNTPZsUU=
+	t=1760005981; cv=none; b=J3qXIpFNBwWzQ8gfqfS7OyprAxUPs/RujN/1Ngge+Z7xpDCVt3CcoPKIsAkNbN+4sHAY1o+iu5uQi2vjO8rMpVc38jlRUxLWEubI8TqC43vFu6B0c4Hf25KWTgHAHXAlhz54LKjHhrdKHDGZVFx/oGQnyMUbT6FHTTqpmnJHkws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760002295; c=relaxed/simple;
-	bh=GGsXKWQfsyBxozCVXClMuQpqHK6rniF+z6DgDmhOx04=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=MrgK7OlAZEm1hV0oVYtM2fKud+Bu0bVXWuwXfrp4R4quiiXwGeH+7P8XVTXIjB1Tcx9Tkc433dFUGndSkbBavEVy2n0bZMiqdnHnqb7Wbt9DDqBhrT5TcYxzjMxcazmF24lcJlqodddX8h/qh3BXeTqe859Cu4OHHpXb5/Lh29Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BI7x8Ng9; arc=none smtp.client-ip=209.85.208.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-639fe77bb29so683762a12.1
-        for <linux-samsung-soc@vger.kernel.org>; Thu, 09 Oct 2025 02:31:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1760002290; x=1760607090; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=MZJgKOvBaKxRXht8HXlFm085PMZstahMFekfq0ah17k=;
-        b=BI7x8Ng9kMNsKZ09JgGIYcU50gqatiAfbQGz41kk3tdE7wKTW9wAHQoRrktqDtlp6l
-         0GnmkL/02DN4zGhM6p3demUr0seofLcGsuhS6fjr2FfcNWkCxSJR0pE7qB7AJOsR2dbj
-         Me2Iu415xMeV8OVqzQCctJr0jw58KH/Vykp2KXOeqYqkFUNktqe4U/LgNNpsFGEIhUyz
-         03UKhfR4QVywdhjAgAUKLs3sD8N4qeV13kPNwM96r8xOqQSHEHnrtn+qeTr0hkWglFAa
-         vUGV2NAi7AfkXTwxv/W5I8fJcxhKdzXuH4oS2AqzvdAiEn0/Q3f46JtTry5mr00QB6Df
-         dBkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760002290; x=1760607090;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=MZJgKOvBaKxRXht8HXlFm085PMZstahMFekfq0ah17k=;
-        b=Rnj0vpb6Zf2zmZgzkZHEaJ2jWFG6auOIp361NIo29clp1N1aBAeNWSV2q+Mpr/M78x
-         P5gD7TKaJqfygcFVuB7KLvHvD7097SqGkrcrgb5krUJHzdkWfXO6U8iVBx4+m1iqjTp8
-         mgfUz6pfMEpkTfi1eiJpObwwgzxnshiGVv/xsZEpR4BLwyqF5Ap+gvSzEb5sc31gS/LV
-         jJY3ppWlQTY9BIrdHYTXNGE7uAkI+sqjxykgFmMYwpL34uCrI0SKblbhqNJg6rcHexhI
-         C9PYeFPOoJSCiNrTA6NzanWKyMpyDhNNO3+/Ubz0Qv1s8zvzPtcZkpHTkEfBjBW+tiuc
-         gDbg==
-X-Forwarded-Encrypted: i=1; AJvYcCWhYFa4csTR9piLT4erL3OczjaoXguIE8FIkVQHmy+oWU13h2BX1br7zfAJwnjF4rgO5gdIFkOGGpvZS4UjbNfkmA==@vger.kernel.org
-X-Gm-Message-State: AOJu0YyH+gOZ6CQyPyuO88fw/j536jDVPMZf55ydY3hSBSteDVqytPu+
-	IkEY0Cof0DTep5PGcMRrXluLkqjXVwcivqcjlD02BkpIRPKR4ptfBy2FvaotAWDok8k=
-X-Gm-Gg: ASbGncsWQTffnvsK5Ng6hucnEKaBokM98Lt4uV9osOs6MRfPcvsNmHYbWC9uxuu5+vQ
-	sEQcyEzi1F3nC5oyqWf2szKWIgh5g17VPS8hCU0hyitXG67e10fecdw5uwU3QYY9IyYb7hBHE0f
-	b3Y99p/S/2C+Fk2DnDrMPgrwhHCNptpNIzAlXtyw7NNqlk6zwIYQgNDLdWRQXDSBIYNkmwD2rMI
-	z/1W+qC9Sc/K41lsVNXYP7SpTtV6nau46f4sJHcI2Xxl5LDy4aVq3F5xwBill5PEOeCskPmxPlZ
-	OCYHdku3mkcdqRtRuYp3q7jna/JZfser7gj4Z8UaCOpLJEH56/7UWSjX3wV+OavEP/iM+Ds1OQ2
-	9mQNWd+aYRTbF+0GTE1cZdWY+fguc9NammUmctX8W854XBqIh58gRfqD0Hziys8LA9IQo9t+sKD
-	FqrMqa7Be5rsFIpCQOJutHYhYV+qaxnXTyYa2Aqyw3
-X-Google-Smtp-Source: AGHT+IEFBHjueK2L/ZW7bhe4lMi2BrLNc1+BBy/coGcE53/TY8ObSw8M15JdE25SHgGvgOlFyZngtw==
-X-Received: by 2002:a17:907:3e22:b0:b3e:b226:5bad with SMTP id a640c23a62f3a-b50a9a6d8a3mr783863066b.8.1760002290407;
-        Thu, 09 Oct 2025 02:31:30 -0700 (PDT)
-Received: from puffmais2.c.googlers.com (224.138.204.35.bc.googleusercontent.com. [35.204.138.224])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b486a173a41sm1855670766b.87.2025.10.09.02.31.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Oct 2025 02:31:30 -0700 (PDT)
-From: =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>
-Date: Thu, 09 Oct 2025 10:31:27 +0100
-Subject: [PATCH v2 3/3] soc: samsung: gs101-pmu: implement access tables
- for read and write
+	s=arc-20240116; t=1760005981; c=relaxed/simple;
+	bh=eMvlU5OhYC+iS8Y//953L753gSz4ZcU4zPP2IlcFm0U=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=d5gv8alXLCXfseDKVaRbNKqjg1eU9iyu9p4rI33iIVOBoMg/aNrFEDgPJ1eh4YWsg74MZd+dIWxsAAE1M18Pe10I8yOB4ssBSF8wiV2JEP6d3tAr7wiMQt78kzEg2NR61OMQldMQ9MTOeiOQED89mca0f2k4dJ3dJq9UPnKXwTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com; spf=pass smtp.mailfrom=rock-chips.com; dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b=PAzJtPog; arc=none smtp.client-ip=101.71.155.74
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rock-chips.com
+Received: from [172.16.12.26] (unknown [58.22.7.114])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 253c93889;
+	Thu, 9 Oct 2025 09:29:43 +0800 (GMT+08:00)
+Message-ID: <642ee0da-5179-4790-ace3-c3035032c6d7@rock-chips.com>
+Date: Thu, 9 Oct 2025 09:29:44 +0800
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20251009-gs101-pmu-regmap-tables-v2-3-2d64f5261952@linaro.org>
-References: <20251009-gs101-pmu-regmap-tables-v2-0-2d64f5261952@linaro.org>
-In-Reply-To: <20251009-gs101-pmu-regmap-tables-v2-0-2d64f5261952@linaro.org>
-To: Krzysztof Kozlowski <krzk@kernel.org>, 
- Alim Akhtar <alim.akhtar@samsung.com>, 
- Peter Griffin <peter.griffin@linaro.org>, 
- Tudor Ambarus <tudor.ambarus@linaro.org>
-Cc: Will McVicker <willmcvicker@google.com>, kernel-team@android.com, 
- linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org, 
- linux-kernel@vger.kernel.org, 
- =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>, 
- Sam Protsenko <semen.protsenko@linaro.org>
-X-Mailer: b4 0.14.2
+User-Agent: Mozilla Thunderbird
+From: Damon Ding <damon.ding@rock-chips.com>
+Subject: Re: [PATCH v6 00/18] Apply drm_bridge_connector and panel_bridge
+ helper for the Analogix DP driver
+To: Marek Szyprowski <m.szyprowski@samsung.com>, andrzej.hajda@intel.com,
+ neil.armstrong@linaro.org, rfoss@kernel.org
+Cc: Laurent.pinchart@ideasonboard.com, jonas@kwiboo.se,
+ jernej.skrabec@gmail.com, maarten.lankhorst@linux.intel.com,
+ mripard@kernel.org, tzimmermann@suse.de, airlied@gmail.com, simona@ffwll.ch,
+ shawnguo@kernel.org, s.hauer@pengutronix.de, kernel@pengutronix.de,
+ festevam@gmail.com, inki.dae@samsung.com, sw0312.kim@samsung.com,
+ kyungmin.park@samsung.com, krzk@kernel.org, alim.akhtar@samsung.com,
+ jingoohan1@gmail.com, p.zabel@pengutronix.de, hjc@rock-chips.com,
+ heiko@sntech.de, andy.yan@rock-chips.com, dmitry.baryshkov@oss.qualcomm.com,
+ dianders@chromium.org, luca.ceresoli@bootlin.com, jani.nikula@intel.com,
+ linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ imx@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
+ linux-samsung-soc@vger.kernel.org, linux-rockchip@lists.infradead.org
+References: <CGME20250930091415eucas1p1f82ef0c96cbe0c7c673d975d502629e2@eucas1p1.samsung.com>
+ <20250930090920.131094-1-damon.ding@rock-chips.com>
+ <41c2a141-a72e-4780-ab32-f22f3a2e0179@samsung.com>
+Content-Language: en-US
+In-Reply-To: <41c2a141-a72e-4780-ab32-f22f3a2e0179@samsung.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-HM-Tid: 0a99c6969bbf03a3kunmdb30cebaa2e219
+X-HM-MType: 1
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFDSUNOT01LS0k3V1ktWUFJV1kPCRoVCBIfWUFZGU5OHlZLT0wdTR9OH0keGEJWFRQJFh
+	oXVRMBExYaEhckFA4PWVdZGBILWUFZTkNVSUlVTFVKSk9ZV1kWGg8SFR0UWUFZT0tIVUpLSEpKQk
+	1VSktLVUpCWQY+
+DKIM-Signature: a=rsa-sha256;
+	b=PAzJtPogGAtKNZF9kobys+S/AKxHrq4GQv8D4Z+zLodxNHH4JYCTujogAXm9fgicqrAw7SJ1Ed/1y5ar44pfmhXbF3urj0ZGNVm3tQFTiqOHhYi0FRcJvpHZzCZZTol5n2XzaUvwtgW2y0xff7e202M52ezasiZAj3cQv8oueNU=; c=relaxed/relaxed; s=default; d=rock-chips.com; v=1;
+	bh=kHQXpJLhL6Zuw3ZLmpn+nIKZ+QG/Z5d2ERurV4FyGmc=;
+	h=date:mime-version:subject:message-id:from;
 
-Accessing non-existent PMU registers causes an SError, halting the
-system.
+Hi Marek,
 
-Implement read and write access tables for the gs101-PMU to specify
-which registers are read- and/or writable to avoid that SError.
+On 9/30/2025 6:17 PM, Marek Szyprowski wrote:
+> On 30.09.2025 11:09, Damon Ding wrote:
+>> PATCH 1 is a small format optimization for struct analogid_dp_device.
+>> PATCH 2 is to perform mode setting in &drm_bridge_funcs.atomic_enable.
+>> PATCH 3 is to add a new parameter to store the point of next bridge.
+>> PATCH 4 is to make legacy bridge driver more universal.
+>> PATCH 5-10 are preparations for apply drm_bridge_connector helper.
+>> PATCH 11 is to ensure last bridge determines OP_EDID/OP_MODES capabilities.
+>> PATCH 12 is to apply the drm_bridge_connector helper.
+>> PATCH 13-15 are to move the panel/bridge parsing to the Analogix side.
+>> PATCH 16 is to attach the next bridge on Analogix side uniformly.
+>> PATCH 17-18 are to apply the panel_bridge helper.
+> 
+> Works fine on my Exynos based test boards with (e)DP displays. Thanks!
+> 
+> Feel free to update tags if needed:
+> 
+> Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
+> 
 
-Reviewed-by: Sam Protsenko <semen.protsenko@linaro.org>
-Signed-off-by: André Draszik <andre.draszik@linaro.org>
----
-Note there are checkpatch warnings 'Macros with complex values should
-be enclosed in parentheses' and 'Macro argument reuse' for macros like
-CLUSTER_CPU_RANGE(). Since they are used in an initialiser, the only
-way to get rid of the warnings is to avoid the macros and duplicate all
-the related register ranges I believe, which I'd rather not due to the
-sheer amount of similar blocks.
----
- drivers/soc/samsung/gs101-pmu.c             | 306 ++++++++++++++++++++++++-
- include/linux/soc/samsung/exynos-regs-pmu.h | 343 +++++++++++++++++++++++++++-
- 2 files changed, 640 insertions(+), 9 deletions(-)
+Thanks a lot for the testing and the tag!
 
-diff --git a/drivers/soc/samsung/gs101-pmu.c b/drivers/soc/samsung/gs101-pmu.c
-index ec345d09f21fca8692c3ba2a61feae5615bbef51..17dadc1b9c6ecb49e463fbbf48b1bd866fea936e 100644
---- a/drivers/soc/samsung/gs101-pmu.c
-+++ b/drivers/soc/samsung/gs101-pmu.c
-@@ -9,6 +9,7 @@
- #include <linux/array_size.h>
- #include <linux/soc/samsung/exynos-pmu.h>
- #include <linux/soc/samsung/exynos-regs-pmu.h>
-+#include <linux/regmap.h>
- 
- #include "exynos-pmu.h"
- 
-@@ -20,9 +21,312 @@
- #define TENSOR_PMUREG_WRITE		1
- #define TENSOR_PMUREG_RMW		2
- 
-+static const struct regmap_range gs101_pmu_registers[] = {
-+	regmap_reg_range(GS101_OM_STAT, GS101_SYSTEM_INFO),
-+	regmap_reg_range(GS101_IDLE_IP(0), GS101_IDLE_IP_MASK(3)),
-+	regmap_reg_range(GS101_DATARAM_STATE_SLC_CH(0),
-+			 GS101_PPMPURAM_INFORM_SCL_CH(3)),
-+	regmap_reg_range(GS101_INFORM0, GS101_SYSIP_DAT(0)),
-+	/* skip SYSIP_DAT1 SYSIP_DAT2 */
-+	regmap_reg_range(GS101_SYSIP_DAT(3), GS101_PWR_HOLD_SW_TRIP),
-+	regmap_reg_range(GS101_GSA_INFORM(0), GS101_GSA_INFORM(1)),
-+	regmap_reg_range(GS101_INFORM4, GS101_IROM_INFORM),
-+	regmap_reg_range(GS101_IROM_CPU_INFORM(0), GS101_IROM_CPU_INFORM(7)),
-+	regmap_reg_range(GS101_PMU_SPARE(0), GS101_PMU_SPARE(3)),
-+	/* skip most IROM_xxx registers */
-+	regmap_reg_range(GS101_DREX_CALIBRATION(0), GS101_DREX_CALIBRATION(7)),
-+
-+#define CLUSTER_CPU_RANGE(cl, cpu)					\
-+	regmap_reg_range(GS101_CLUSTER_CPU_CONFIGURATION(cl, cpu),	\
-+			 GS101_CLUSTER_CPU_OPTION(cl, cpu)),		\
-+	regmap_reg_range(GS101_CLUSTER_CPU_OUT(cl, cpu),		\
-+			 GS101_CLUSTER_CPU_IN(cl, cpu)),		\
-+	regmap_reg_range(GS101_CLUSTER_CPU_INT_IN(cl, cpu),		\
-+			 GS101_CLUSTER_CPU_INT_DIR(cl, cpu))
-+
-+	/* cluster 0..2 and cpu 0..4 or 0..1 */
-+	CLUSTER_CPU_RANGE(GS101_CLUSTER0_OFFSET, 0),
-+	CLUSTER_CPU_RANGE(GS101_CLUSTER0_OFFSET, 1),
-+	CLUSTER_CPU_RANGE(GS101_CLUSTER0_OFFSET, 2),
-+	CLUSTER_CPU_RANGE(GS101_CLUSTER0_OFFSET, 3),
-+	CLUSTER_CPU_RANGE(GS101_CLUSTER1_OFFSET, 0),
-+	CLUSTER_CPU_RANGE(GS101_CLUSTER1_OFFSET, 1),
-+	CLUSTER_CPU_RANGE(GS101_CLUSTER2_OFFSET, 0),
-+	CLUSTER_CPU_RANGE(GS101_CLUSTER2_OFFSET, 1),
-+#undef CLUSTER_CPU_RANGE
-+
-+#define CLUSTER_NONCPU_RANGE(cl)					\
-+	regmap_reg_range(GS101_CLUSTER_NONCPU_CONFIGURATION(cl),	\
-+			 GS101_CLUSTER_NONCPU_OPTION(cl)),		\
-+	regmap_reg_range(GS101_CLUSTER_NONCPU_OUT(cl),			\
-+			 GS101_CLUSTER_NONCPU_IN(cl)),			\
-+	regmap_reg_range(GS101_CLUSTER_NONCPU_INT_IN(cl),		\
-+			 GS101_CLUSTER_NONCPU_INT_DIR(cl)),		\
-+	regmap_reg_range(GS101_CLUSTER_NONCPU_DUALRAIL_CTRL_OUT(cl),	\
-+			 GS101_CLUSTER_NONCPU_DUALRAIL_POS_OUT(cl)),	\
-+	regmap_reg_range(GS101_CLUSTER_NONCPU_DUALRAIL_CTRL_IN(cl),	\
-+			 GS101_CLUSTER_NONCPU_DUALRAIL_CTRL_IN(cl))
-+
-+	CLUSTER_NONCPU_RANGE(0),
-+	regmap_reg_range(GS101_CLUSTER0_NONCPU_DSU_PCH,
-+			 GS101_CLUSTER0_NONCPU_DSU_PCH),
-+	CLUSTER_NONCPU_RANGE(1),
-+	CLUSTER_NONCPU_RANGE(2),
-+#undef CLUSTER_NONCPU_RANGE
-+
-+#define SUBBLK_RANGE(blk)						\
-+	regmap_reg_range(GS101_SUBBLK_CONFIGURATION(blk),		\
-+			 GS101_SUBBLK_CTRL(blk)),			\
-+	regmap_reg_range(GS101_SUBBLK_OUT(blk), GS101_SUBBLK_IN(blk)),	\
-+	regmap_reg_range(GS101_SUBBLK_INT_IN(blk),			\
-+			 GS101_SUBBLK_INT_DIR(blk)),			\
-+	regmap_reg_range(GS101_SUBBLK_MEMORY_OUT(blk),			\
-+			 GS101_SUBBLK_MEMORY_IN(blk))
-+
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_ALIVE),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_AOC),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_APM),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_CMU),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_BUS0),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_BUS1),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_BUS2),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_CORE),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_EH),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_CPUCL0),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_CPUCL1),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_CPUCL2),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_G3D),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_EMBEDDED_CPUCL0),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_EMBEDDED_G3D),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_HSI0),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_HSI1),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_HSI2),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_DPU),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_DISP),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_G2D),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_MFC),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_CSIS),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_PDP),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_DNS),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_G3AA),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_IPP),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_ITP),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_MCSC),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_GDC),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_TNR),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_BO),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_TPU),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_MIF0),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_MIF1),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_MIF2),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_MIF3),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_MISC),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_PERIC0),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_PERIC1),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_S2D),
-+#undef SUBBLK_RANGE
-+
-+#define SUBBLK_CPU_RANGE(blk)						\
-+	regmap_reg_range(GS101_SUBBLK_CPU_CONFIGURATION(blk),		\
-+			 GS101_SUBBLK_CPU_OPTION(blk)),			\
-+	regmap_reg_range(GS101_SUBBLK_CPU_OUT(blk),			\
-+			 GS101_SUBBLK_CPU_IN(blk)),			\
-+	regmap_reg_range(GS101_SUBBLK_CPU_INT_IN(blk),			\
-+			 GS101_SUBBLK_CPU_INT_DIR(blk))
-+
-+	SUBBLK_CPU_RANGE(GS101_SUBBBLK_CPU_OFFSET_APM),
-+	SUBBLK_CPU_RANGE(GS101_SUBBBLK_CPU_OFFSET_DBGCORE),
-+	SUBBLK_CPU_RANGE(GS101_SUBBBLK_CPU_OFFSET_SSS),
-+#undef SUBBLK_CPU_RANGE
-+
-+	regmap_reg_range(GS101_MIF_CONFIGURATION, GS101_MIF_CTRL),
-+	regmap_reg_range(GS101_MIF_OUT, GS101_MIF_IN),
-+	regmap_reg_range(GS101_MIF_INT_IN, GS101_MIF_INT_DIR),
-+	regmap_reg_range(GS101_TOP_CONFIGURATION, GS101_TOP_OPTION),
-+	regmap_reg_range(GS101_TOP_OUT, GS101_TOP_IN),
-+	regmap_reg_range(GS101_TOP_INT_IN, GS101_WAKEUP2_STAT),
-+	regmap_reg_range(GS101_WAKEUP2_INT_IN, GS101_WAKEUP2_INT_DIR),
-+	regmap_reg_range(GS101_SYSTEM_CONFIGURATION, GS101_USER_DEFINED_OUT),
-+	regmap_reg_range(GS101_SYSTEM_OUT, GS101_SYSTEM_IN),
-+	regmap_reg_range(GS101_SYSTEM_INT_IN, GS101_EINT_WAKEUP_MASK3),
-+	regmap_reg_range(GS101_USER_DEFINED_INT_IN, GS101_SCAN2DRAM_INT_DIR),
-+	/* skip HCU_START */
-+	regmap_reg_range(GS101_CUSTOM_OUT, GS101_CUSTOM_IN),
-+	regmap_reg_range(GS101_CUSTOM_INT_IN, GS101_CUSTOM_INT_DIR),
-+	regmap_reg_range(GS101_ACK_LAST_CPU, GS101_HCU_R(3)),
-+	regmap_reg_range(GS101_HCU_SP, GS101_HCU_PC),
-+	/* skip PMU_RAM_CTRL */
-+	regmap_reg_range(GS101_APM_HCU_CTRL, GS101_APM_HCU_CTRL),
-+	regmap_reg_range(GS101_APM_NMI_ENABLE, GS101_RST_STAT_PMU),
-+	regmap_reg_range(GS101_HPM_INT_IN, GS101_BOOT_STAT),
-+	regmap_reg_range(GS101_PMLINK_OUT, GS101_PMLINK_AOC_CTRL),
-+	regmap_reg_range(GS101_TCXO_BUF_CTRL, GS101_ADD_CTRL),
-+	regmap_reg_range(GS101_HCU_TIMEOUT_RESET, GS101_HCU_TIMEOUT_SCAN2DRAM),
-+	regmap_reg_range(GS101_TIMER(0), GS101_TIMER(3)),
-+	regmap_reg_range(GS101_PPC_MIF(0), GS101_PPC_EH),
-+	/* PPC_OFFSET, skip PPC_CPUCL1_0 PPC_CPUCL1_1 */
-+	regmap_reg_range(GS101_EXT_REGULATOR_MIF_DURATION, GS101_TCXO_DURATION),
-+	regmap_reg_range(GS101_BURNIN_CTRL, GS101_TMU_SUB_TRIP),
-+	regmap_reg_range(GS101_MEMORY_CEN, GS101_MEMORY_SMX_FEEDBACK),
-+	regmap_reg_range(GS101_SLC_PCH_CHANNEL, GS101_SLC_PCH_CB),
-+	regmap_reg_range(GS101_FORCE_NOMC, GS101_FORCE_NOMC),
-+	regmap_reg_range(GS101_FORCE_BOOST, GS101_PMLINK_SLC_BUSY),
-+	regmap_reg_range(GS101_BOOTSYNC_OUT, GS101_CTRL_SECJTAG_ALIVE),
-+	regmap_reg_range(GS101_CTRL_DIV_PLL_ALV_DIVLOW, GS101_CTRL_CLKDIV__CLKRTC),
-+	regmap_reg_range(GS101_CTRL_SOC32K, GS101_CTRL_SBU_SW_EN),
-+	regmap_reg_range(GS101_PAD_CTRL_CLKOUT0, GS101_PAD_CTRL_WRESETO_n),
-+	regmap_reg_range(GS101_PHY_CTRL_USB20, GS101_PHY_CTRL_UFS),
-+};
-+
-+static const struct regmap_range gs101_pmu_ro_registers[] = {
-+	regmap_reg_range(GS101_OM_STAT, GS101_VERSION),
-+	regmap_reg_range(GS101_OTP_STATUS, GS101_OTP_STATUS),
-+
-+	regmap_reg_range(GS101_DATARAM_STATE_SLC_CH(0),
-+			 GS101_PPMPURAM_STATE_SLC_CH(0)),
-+	regmap_reg_range(GS101_DATARAM_STATE_SLC_CH(1),
-+			 GS101_PPMPURAM_STATE_SLC_CH(1)),
-+	regmap_reg_range(GS101_DATARAM_STATE_SLC_CH(2),
-+			 GS101_PPMPURAM_STATE_SLC_CH(2)),
-+	regmap_reg_range(GS101_DATARAM_STATE_SLC_CH(3),
-+			 GS101_PPMPURAM_STATE_SLC_CH(3)),
-+
-+#define CLUSTER_CPU_RANGE(cl, cpu)					\
-+	regmap_reg_range(GS101_CLUSTER_CPU_IN(cl, cpu),			\
-+			 GS101_CLUSTER_CPU_IN(cl, cpu)),		\
-+	regmap_reg_range(GS101_CLUSTER_CPU_INT_IN(cl, cpu),		\
-+			 GS101_CLUSTER_CPU_INT_IN(cl, cpu))
-+
-+	CLUSTER_CPU_RANGE(GS101_CLUSTER0_OFFSET, 0),
-+	CLUSTER_CPU_RANGE(GS101_CLUSTER0_OFFSET, 1),
-+	CLUSTER_CPU_RANGE(GS101_CLUSTER0_OFFSET, 2),
-+	CLUSTER_CPU_RANGE(GS101_CLUSTER0_OFFSET, 3),
-+	CLUSTER_CPU_RANGE(GS101_CLUSTER1_OFFSET, 0),
-+	CLUSTER_CPU_RANGE(GS101_CLUSTER1_OFFSET, 1),
-+	CLUSTER_CPU_RANGE(GS101_CLUSTER2_OFFSET, 0),
-+	CLUSTER_CPU_RANGE(GS101_CLUSTER2_OFFSET, 1),
-+#undef CLUSTER_CPU_RANGE
-+
-+#define CLUSTER_NONCPU_RANGE(cl)					\
-+	regmap_reg_range(GS101_CLUSTER_NONCPU_IN(cl),			\
-+			 GS101_CLUSTER_NONCPU_IN(cl)),			\
-+	regmap_reg_range(GS101_CLUSTER_NONCPU_INT_IN(cl),		\
-+			 GS101_CLUSTER_NONCPU_INT_IN(cl)),		\
-+	regmap_reg_range(GS101_CLUSTER_NONCPU_DUALRAIL_CTRL_IN(cl),	\
-+			 GS101_CLUSTER_NONCPU_DUALRAIL_CTRL_IN(cl))
-+
-+	CLUSTER_NONCPU_RANGE(0),
-+	CLUSTER_NONCPU_RANGE(1),
-+	CLUSTER_NONCPU_RANGE(2),
-+	regmap_reg_range(GS101_CLUSTER_NONCPU_INT_EN(2),
-+			 GS101_CLUSTER_NONCPU_INT_DIR(2)),
-+#undef CLUSTER_NONCPU_RANGE
-+
-+#define SUBBLK_RANGE(blk)						\
-+	regmap_reg_range(GS101_SUBBLK_IN(blk), GS101_SUBBLK_IN(blk)),	\
-+	regmap_reg_range(GS101_SUBBLK_INT_IN(blk),			\
-+			 GS101_SUBBLK_INT_IN(blk)),			\
-+	regmap_reg_range(GS101_SUBBLK_MEMORY_IN(blk),			\
-+			 GS101_SUBBLK_MEMORY_IN(blk))
-+
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_ALIVE),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_AOC),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_APM),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_CMU),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_BUS0),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_BUS1),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_BUS2),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_CORE),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_EH),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_CPUCL0),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_CPUCL1),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_CPUCL2),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_G3D),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_EMBEDDED_CPUCL0),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_EMBEDDED_G3D),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_HSI0),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_HSI1),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_HSI2),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_DPU),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_DISP),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_G2D),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_MFC),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_CSIS),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_PDP),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_DNS),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_G3AA),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_IPP),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_ITP),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_MCSC),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_GDC),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_TNR),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_BO),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_TPU),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_MIF0),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_MIF1),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_MIF2),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_MIF3),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_MISC),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_PERIC0),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_PERIC1),
-+	SUBBLK_RANGE(GS101_SUBBBLK_OFFSET_S2D),
-+#undef SUBBLK_RANGE
-+
-+#define SUBBLK_CPU_RANGE(blk)						\
-+	regmap_reg_range(GS101_SUBBLK_CPU_IN(blk),			\
-+			 GS101_SUBBLK_CPU_IN(blk)),			\
-+	regmap_reg_range(GS101_SUBBLK_CPU_INT_IN(blk),			\
-+			 GS101_SUBBLK_CPU_INT_IN(blk))
-+
-+	SUBBLK_CPU_RANGE(GS101_SUBBBLK_CPU_OFFSET_APM),
-+	SUBBLK_CPU_RANGE(GS101_SUBBBLK_CPU_OFFSET_DBGCORE),
-+	SUBBLK_CPU_RANGE(GS101_SUBBBLK_CPU_OFFSET_SSS),
-+#undef SUBBLK_CPU_RANGE
-+
-+	regmap_reg_range(GS101_MIF_CONFIGURATION, GS101_MIF_CONFIGURATION),
-+	regmap_reg_range(GS101_MIF_IN, GS101_MIF_IN),
-+	regmap_reg_range(GS101_MIF_INT_IN, GS101_MIF_INT_IN),
-+	regmap_reg_range(GS101_TOP_IN, GS101_TOP_IN),
-+	regmap_reg_range(GS101_TOP_INT_IN, GS101_TOP_INT_IN),
-+	regmap_reg_range(GS101_WAKEUP2_INT_IN, GS101_WAKEUP2_INT_IN),
-+	regmap_reg_range(GS101_SYSTEM_IN, GS101_SYSTEM_IN),
-+	regmap_reg_range(GS101_SYSTEM_INT_IN, GS101_SYSTEM_INT_IN),
-+	regmap_reg_range(GS101_EINT_INT_IN, GS101_EINT_INT_IN),
-+	regmap_reg_range(GS101_EINT2_INT_IN, GS101_EINT2_INT_IN),
-+	regmap_reg_range(GS101_EINT3_INT_IN, GS101_EINT3_INT_IN),
-+	regmap_reg_range(GS101_USER_DEFINED_INT_IN, GS101_USER_DEFINED_INT_IN),
-+	regmap_reg_range(GS101_SCAN2DRAM_INT_IN, GS101_SCAN2DRAM_INT_IN),
-+	regmap_reg_range(GS101_CUSTOM_IN, GS101_CUSTOM_IN),
-+	regmap_reg_range(GS101_CUSTOM_INT_IN, GS101_CUSTOM_INT_IN),
-+	regmap_reg_range(GS101_HCU_R(0), GS101_HCU_R(3)),
-+	regmap_reg_range(GS101_HCU_SP, GS101_HCU_PC),
-+	regmap_reg_range(GS101_NMI_SRC_IN, GS101_NMI_SRC_IN),
-+	regmap_reg_range(GS101_HPM_INT_IN, GS101_HPM_INT_IN),
-+	regmap_reg_range(GS101_MEMORY_PGEN_FEEDBACK, GS101_MEMORY_PGEN_FEEDBACK),
-+	regmap_reg_range(GS101_MEMORY_SMX_FEEDBACK, GS101_MEMORY_SMX_FEEDBACK),
-+	regmap_reg_range(GS101_PMLINK_SLC_ACK, GS101_PMLINK_SLC_BUSY),
-+	regmap_reg_range(GS101_BOOTSYNC_IN, GS101_BOOTSYNC_IN),
-+	regmap_reg_range(GS101_SCAN_READY_IN, GS101_SCAN_READY_IN),
-+	regmap_reg_range(GS101_CTRL_PLL_ALV_LOCK, GS101_CTRL_PLL_ALV_LOCK),
-+};
-+
-+static const struct regmap_access_table gs101_pmu_rd_table = {
-+	.yes_ranges = gs101_pmu_registers,
-+	.n_yes_ranges = ARRAY_SIZE(gs101_pmu_registers),
-+};
-+
-+static const struct regmap_access_table gs101_pmu_wr_table = {
-+	.yes_ranges = gs101_pmu_registers,
-+	.n_yes_ranges = ARRAY_SIZE(gs101_pmu_registers),
-+	.no_ranges = gs101_pmu_ro_registers,
-+	.n_no_ranges = ARRAY_SIZE(gs101_pmu_ro_registers),
-+};
-+
- const struct exynos_pmu_data gs101_pmu_data = {
- 	.pmu_secure = true,
- 	.pmu_cpuhp = true,
-+	.rd_table = &gs101_pmu_rd_table,
-+	.wr_table = &gs101_pmu_wr_table,
- };
- 
- /*
-@@ -124,7 +428,7 @@ static bool tensor_is_atomic(unsigned int reg)
- 		return false;
- 
- 	switch (reg) {
--	case GS101_SYSIP_DAT0:
-+	case GS101_SYSIP_DAT(0):
- 	case GS101_SYSTEM_CONFIGURATION:
- 		return false;
- 	default:
-diff --git a/include/linux/soc/samsung/exynos-regs-pmu.h b/include/linux/soc/samsung/exynos-regs-pmu.h
-index 71e0c09a49ebb8544d26081e97492665e5e9ec6a..532c6c2d11950c606576805aeeb38b4612cd2d44 100644
---- a/include/linux/soc/samsung/exynos-regs-pmu.h
-+++ b/include/linux/soc/samsung/exynos-regs-pmu.h
-@@ -672,14 +672,341 @@
- 
- /* For Tensor GS101 */
- /* PMU ALIVE */
--#define GS101_SYSIP_DAT0					(0x810)
--#define GS101_CPU0_INFORM					(0x860)
--#define GS101_CPU_INFORM(cpu)	\
--			(GS101_CPU0_INFORM + (cpu*4))
--#define GS101_SYSTEM_CONFIGURATION				(0x3A00)
--#define GS101_EINT_WAKEUP_MASK					(0x3A80)
--#define GS101_PHY_CTRL_USB20					(0x3EB0)
--#define GS101_PHY_CTRL_USBDP					(0x3EB4)
-+#define GS101_OM_STAT                           0x0000
-+#define GS101_VERSION                           0x0004
-+#define GS101_PORESET_CHECK                     0x0008
-+#define GS101_OTP_STATUS                        0x000c
-+#define GS101_SYSTEM_INFO                       0x0010
-+#define GS101_IDLE_IP(n)                        (0x03e0 + ((n) & 3) * 4)
-+#define GS101_IDLE_IP_MASK(n)                   (0x03f0 + ((n) & 3) * 4)
-+#define GS101_SLC_CH_OFFSET(ch)                 (0x0400 + ((ch) & 3) * 0x10)
-+#define GS101_DATARAM_STATE_SLC_CH(ch)          (GS101_SLC_CH_OFFSET(ch) + 0x00)
-+#define GS101_TAGRAM_STATE_SLC_CH(ch)           (GS101_SLC_CH_OFFSET(ch) + 0x04)
-+#define GS101_LRURAM_STATE_SLC_CH(ch)           (GS101_SLC_CH_OFFSET(ch) + 0x08)
-+#define GS101_PPMPURAM_STATE_SLC_CH(ch)         (GS101_SLC_CH_OFFSET(ch) + 0x0c)
-+#define GS101_DATARAM_INFORM_SCL_CH(ch)         (GS101_SLC_CH_OFFSET(ch) + 0x40)
-+#define GS101_TAGRAM_INFORM_SCL_CH(ch)          (GS101_SLC_CH_OFFSET(ch) + 0x44)
-+#define GS101_LRURAM_INFORM_SCL_CH(ch)          (GS101_SLC_CH_OFFSET(ch) + 0x48)
-+#define GS101_PPMPURAM_INFORM_SCL_CH(ch)        (GS101_SLC_CH_OFFSET(ch) + 0x4c)
-+#define GS101_INFORM0                           0x0800
-+#define GS101_INFORM1                           0x0804
-+#define GS101_INFORM2                           0x0808
-+#define GS101_INFORM3                           0x080c
-+#define GS101_SYSIP_DAT(n)                      (0x0810 + ((n) & 3) * 4)
-+#define GS101_PWR_HOLD_HW_TRIP                  0x0820
-+#define GS101_PWR_HOLD_SW_TRIP                  0x0824
-+#define GS101_GSA_INFORM(n)                     (0x0830 + ((n) & 1) * 4)
-+#define GS101_INFORM4                           0x0840
-+#define GS101_INFORM5                           0x0844
-+#define GS101_INFORM6                           0x0848
-+#define GS101_INFORM7                           0x084c
-+#define GS101_INFORM8                           0x0850
-+#define GS101_INFORM9                           0x0854
-+#define GS101_INFORM10                          0x0858
-+#define GS101_INFORM11                          0x085c
-+#define GS101_CPU_INFORM(cpu)                   (0x0860 + ((cpu) & 7) * 4)
-+#define GS101_IROM_INFORM                       0x0880
-+#define GS101_IROM_CPU_INFORM(cpu)              (0x0890 + ((cpu) & 7) * 4)
-+#define GS101_PMU_SPARE(n)                      (0x0900 + ((n) & 3) * 4)
-+#define GS101_IROM_DATA_REG(n)                  (0x0980 + ((n) & 3) * 4)
-+#define GS101_IROM_PWRMODE                      0x0990
-+#define GS101_DREX_CALIBRATION(n)               (0x09a0 + ((n) & 7) * 4)
-+
-+#define GS101_CLUSTER0_OFFSET                   0x1000
-+#define GS101_CLUSTER1_OFFSET                   0x1300
-+#define GS101_CLUSTER2_OFFSET                   0x1500
-+#define GS101_CLUSTER_CPU_OFFSET(cl, cpu)       ((cl) + ((cpu) * 0x80))
-+#define GS101_CLUSTER_CPU_CONFIGURATION(cl, cpu) \
-+			(GS101_CLUSTER_CPU_OFFSET(cl, cpu) + 0x00)
-+#define GS101_CLUSTER_CPU_STATUS(cl, cpu) \
-+			(GS101_CLUSTER_CPU_OFFSET(cl, cpu) + 0x04)
-+#define GS101_CLUSTER_CPU_STATES(cl, cpu) \
-+			(GS101_CLUSTER_CPU_OFFSET(cl, cpu) + 0x08)
-+#define GS101_CLUSTER_CPU_OPTION(cl, cpu) \
-+			(GS101_CLUSTER_CPU_OFFSET(cl, cpu) + 0x0c)
-+#define GS101_CLUSTER_CPU_OUT(cl, cpu) \
-+			(GS101_CLUSTER_CPU_OFFSET(cl, cpu) + 0x20)
-+#define GS101_CLUSTER_CPU_IN(cl, cpu) \
-+			(GS101_CLUSTER_CPU_OFFSET(cl, cpu) + 0x24)
-+#define GS101_CLUSTER_CPU_INT_IN(cl, cpu) \
-+			(GS101_CLUSTER_CPU_OFFSET(cl, cpu) + 0x40)
-+#define GS101_CLUSTER_CPU_INT_EN(cl, cpu) \
-+			(GS101_CLUSTER_CPU_OFFSET(cl, cpu) + 0x44)
-+#define GS101_CLUSTER_CPU_INT_TYPE(cl, cpu) \
-+			(GS101_CLUSTER_CPU_OFFSET(cl, cpu) + 0x48)
-+#define GS101_CLUSTER_CPU_INT_DIR(cl, cpu) \
-+			(GS101_CLUSTER_CPU_OFFSET(cl, cpu) + 0x4c)
-+
-+#define GS101_CLUSTER_NONCPU_OFFSET(cl)         (0x1200 + ((cl) * 0x200))
-+#define GS101_CLUSTER_NONCPU_CONFIGURATION(cl) \
-+			(GS101_CLUSTER_NONCPU_OFFSET(cl) + 0x00)
-+#define GS101_CLUSTER_NONCPU_STATUS(cl) \
-+			(GS101_CLUSTER_NONCPU_OFFSET(cl) + 0x04)
-+#define GS101_CLUSTER_NONCPU_STATES(cl) \
-+			(GS101_CLUSTER_NONCPU_OFFSET(cl) + 0x08)
-+#define GS101_CLUSTER_NONCPU_OPTION(cl) \
-+			(GS101_CLUSTER_NONCPU_OFFSET(cl) + 0x0c)
-+#define GS101_CLUSTER_NONCPU_OUT(cl) \
-+			(GS101_CLUSTER_NONCPU_OFFSET(cl) + 0x20)
-+#define GS101_CLUSTER_NONCPU_IN(cl) \
-+			(GS101_CLUSTER_NONCPU_OFFSET(cl) + 0x24)
-+#define GS101_CLUSTER_NONCPU_INT_IN(cl) \
-+			(GS101_CLUSTER_NONCPU_OFFSET(cl) + 0x40)
-+#define GS101_CLUSTER_NONCPU_INT_EN(cl) \
-+			(GS101_CLUSTER_NONCPU_OFFSET(cl) + 0x44)
-+#define GS101_CLUSTER_NONCPU_INT_TYPE(cl) \
-+			(GS101_CLUSTER_NONCPU_OFFSET(cl) + 0x48)
-+#define GS101_CLUSTER_NONCPU_INT_DIR(cl) \
-+			(GS101_CLUSTER_NONCPU_OFFSET(cl) + 0x4c)
-+#define GS101_CLUSTER_NONCPU_DUALRAIL_CTRL_OUT(cl) \
-+			(GS101_CLUSTER_NONCPU_OFFSET(cl) + 0x60)
-+#define GS101_CLUSTER_NONCPU_DUALRAIL_POS_OUT(cl) \
-+			(GS101_CLUSTER_NONCPU_OFFSET(cl) + 0x64)
-+#define GS101_CLUSTER_NONCPU_DUALRAIL_CTRL_IN(cl) \
-+			(GS101_CLUSTER_NONCPU_OFFSET(cl) + 0x6c)
-+#define GS101_CLUSTER0_NONCPU_DSU_PCH \
-+			(GS101_CLUSTER_NONCPU_OFFSET(0) + 0x80)
-+
-+#define GS101_SUBBBLK_OFFSET_ALIVE              0x1800
-+#define GS101_SUBBBLK_OFFSET_AOC                0x1880
-+#define GS101_SUBBBLK_OFFSET_APM                0x1900
-+#define GS101_SUBBBLK_OFFSET_CMU                0x1980
-+#define GS101_SUBBBLK_OFFSET_BUS0               0x1a00
-+#define GS101_SUBBBLK_OFFSET_BUS1               0x1a80
-+#define GS101_SUBBBLK_OFFSET_BUS2               0x1b00
-+#define GS101_SUBBBLK_OFFSET_CORE               0x1b80
-+#define GS101_SUBBBLK_OFFSET_EH                 0x1c00
-+#define GS101_SUBBBLK_OFFSET_CPUCL0             0x1c80
-+#define GS101_SUBBBLK_OFFSET_CPUCL1             0x1d00
-+#define GS101_SUBBBLK_OFFSET_CPUCL2             0x1d80
-+#define GS101_SUBBBLK_OFFSET_G3D                0x1e00
-+#define GS101_SUBBBLK_OFFSET_EMBEDDED_CPUCL0    0x1e80
-+#define GS101_SUBBBLK_OFFSET_EMBEDDED_G3D       0x2000
-+#define GS101_SUBBBLK_OFFSET_HSI0               0x2080
-+#define GS101_SUBBBLK_OFFSET_HSI1               0x2100
-+#define GS101_SUBBBLK_OFFSET_HSI2               0x2180
-+#define GS101_SUBBBLK_OFFSET_DPU                0x2200
-+#define GS101_SUBBBLK_OFFSET_DISP               0x2280
-+#define GS101_SUBBBLK_OFFSET_G2D                0x2300
-+#define GS101_SUBBBLK_OFFSET_MFC                0x2380
-+#define GS101_SUBBBLK_OFFSET_CSIS               0x2400
-+#define GS101_SUBBBLK_OFFSET_PDP                0x2480
-+#define GS101_SUBBBLK_OFFSET_DNS                0x2500
-+#define GS101_SUBBBLK_OFFSET_G3AA               0x2580
-+#define GS101_SUBBBLK_OFFSET_IPP                0x2600
-+#define GS101_SUBBBLK_OFFSET_ITP                0x2680
-+#define GS101_SUBBBLK_OFFSET_MCSC               0x2700
-+#define GS101_SUBBBLK_OFFSET_GDC                0x2780
-+#define GS101_SUBBBLK_OFFSET_TNR                0x2800
-+#define GS101_SUBBBLK_OFFSET_BO                 0x2880
-+#define GS101_SUBBBLK_OFFSET_TPU                0x2900
-+#define GS101_SUBBBLK_OFFSET_MIF0               0x2980
-+#define GS101_SUBBBLK_OFFSET_MIF1               0x2a00
-+#define GS101_SUBBBLK_OFFSET_MIF2               0x2a80
-+#define GS101_SUBBBLK_OFFSET_MIF3               0x2b00
-+#define GS101_SUBBBLK_OFFSET_MISC               0x2b80
-+#define GS101_SUBBBLK_OFFSET_PERIC0             0x2c00
-+#define GS101_SUBBBLK_OFFSET_PERIC1             0x2c80
-+#define GS101_SUBBBLK_OFFSET_S2D                0x2d00
-+#define GS101_SUBBLK_CONFIGURATION(blk)         ((blk) + 0x00)
-+#define GS101_SUBBLK_STATUS(blk)                ((blk) + 0x04)
-+#define GS101_SUBBLK_STATES(blk)                ((blk) + 0x08)
-+#define GS101_SUBBLK_OPTION(blk)                ((blk) + 0x0c)
-+#define GS101_SUBBLK_CTRL(blk)                  ((blk) + 0x10)
-+#define GS101_SUBBLK_OUT(blk)                   ((blk) + 0x20)
-+#define GS101_SUBBLK_IN(blk)                    ((blk) + 0x24)
-+#define GS101_SUBBLK_INT_IN(blk)                ((blk) + 0x40)
-+#define GS101_SUBBLK_INT_EN(blk)                ((blk) + 0x44)
-+#define GS101_SUBBLK_INT_TYPE(blk)              ((blk) + 0x48)
-+#define GS101_SUBBLK_INT_DIR(blk)               ((blk) + 0x4c)
-+#define GS101_SUBBLK_MEMORY_OUT(blk)            ((blk) + 0x60)
-+#define GS101_SUBBLK_MEMORY_IN(blk)             ((blk) + 0x64)
-+
-+#define GS101_SUBBBLK_CPU_OFFSET_APM            0x3000
-+#define GS101_SUBBBLK_CPU_OFFSET_DBGCORE        0x3080
-+#define GS101_SUBBBLK_CPU_OFFSET_SSS            0x3100
-+#define GS101_SUBBLK_CPU_CONFIGURATION(blk)     ((blk) + 0x00)
-+#define GS101_SUBBLK_CPU_STATUS(blk)            ((blk) + 0x04)
-+#define GS101_SUBBLK_CPU_STATES(blk)            ((blk) + 0x08)
-+#define GS101_SUBBLK_CPU_OPTION(blk)            ((blk) + 0x0c)
-+#define GS101_SUBBLK_CPU_OUT(blk)               ((blk) + 0x20)
-+#define GS101_SUBBLK_CPU_IN(blk)                ((blk) + 0x24)
-+#define GS101_SUBBLK_CPU_INT_IN(blk)            ((blk) + 0x40)
-+#define GS101_SUBBLK_CPU_INT_EN(blk)            ((blk) + 0x44)
-+#define GS101_SUBBLK_CPU_INT_TYPE(blk)          ((blk) + 0x48)
-+#define GS101_SUBBLK_CPU_INT_DIR(blk)           ((blk) + 0x4c)
-+
-+#define GS101_MIF_CONFIGURATION                 0x3800
-+#define GS101_MIF_STATUS                        0x3804
-+#define GS101_MIF_STATES                        0x3808
-+#define GS101_MIF_OPTION                        0x380c
-+#define GS101_MIF_CTRL                          0x3810
-+#define GS101_MIF_OUT                           0x3820
-+#define GS101_MIF_IN                            0x3824
-+#define GS101_MIF_INT_IN                        0x3840
-+#define GS101_MIF_INT_EN                        0x3844
-+#define GS101_MIF_INT_TYPE                      0x3848
-+#define GS101_MIF_INT_DIR                       0x384c
-+#define GS101_TOP_CONFIGURATION                 0x3900
-+#define GS101_TOP_STATUS                        0x3904
-+#define GS101_TOP_STATES                        0x3908
-+#define GS101_TOP_OPTION                        0x390c
-+#define GS101_TOP_OUT                           0x3920
-+#define GS101_TOP_IN                            0x3924
-+#define GS101_TOP_INT_IN                        0x3940
-+#define GS101_TOP_INT_EN                        0x3944
-+#define GS101_TOP_INT_TYPE                      0x3948
-+#define GS101_TOP_INT_DIR                       0x394c
-+#define GS101_WAKEUP_STAT                       0x3950
-+#define GS101_WAKEUP2_STAT                      0x3954
-+#define GS101_WAKEUP2_INT_IN                    0x3960
-+#define GS101_WAKEUP2_INT_EN                    0x3964
-+#define GS101_WAKEUP2_INT_TYPE                  0x3968
-+#define GS101_WAKEUP2_INT_DIR                   0x396c
-+#define GS101_SYSTEM_CONFIGURATION              0x3a00
-+#define GS101_SYSTEM_STATUS                     0x3a04
-+#define GS101_SYSTEM_STATES                     0x3a08
-+#define GS101_SYSTEM_OPTION                     0x3a0c
-+#define GS101_SYSTEM_CTRL                       0x3a10
-+#define GS101_SPARE_CTRL                        0x3a14
-+#define GS101_USER_DEFINED_OUT                  0x3a18
-+#define GS101_SYSTEM_OUT                        0x3a20
-+#define GS101_SYSTEM_IN                         0x3a24
-+#define GS101_SYSTEM_INT_IN                     0x3a40
-+#define GS101_SYSTEM_INT_EN                     0x3a44
-+#define GS101_SYSTEM_INT_TYPE                   0x3a48
-+#define GS101_SYSTEM_INT_DIR                    0x3a4c
-+#define GS101_EINT_INT_IN                       0x3a50
-+#define GS101_EINT_INT_EN                       0x3a54
-+#define GS101_EINT_INT_TYPE                     0x3a58
-+#define GS101_EINT_INT_DIR                      0x3a5c
-+#define GS101_EINT2_INT_IN                      0x3a60
-+#define GS101_EINT2_INT_EN                      0x3a64
-+#define GS101_EINT2_INT_TYPE                    0x3a68
-+#define GS101_EINT2_INT_DIR                     0x3a6c
-+#define GS101_EINT3_INT_IN                      0x3a70
-+#define GS101_EINT3_INT_EN                      0x3a74
-+#define GS101_EINT3_INT_TYPE                    0x3a78
-+#define GS101_EINT3_INT_DIR                     0x3a7c
-+#define GS101_EINT_WAKEUP_MASK                  0x3a80
-+#define GS101_EINT_WAKEUP_MASK2                 0x3a84
-+#define GS101_EINT_WAKEUP_MASK3                 0x3a88
-+#define GS101_USER_DEFINED_INT_IN               0x3a90
-+#define GS101_USER_DEFINED_INT_EN               0x3a94
-+#define GS101_USER_DEFINED_INT_TYPE             0x3a98
-+#define GS101_USER_DEFINED_INT_DIR              0x3a9c
-+#define GS101_SCAN2DRAM_INT_IN                  0x3aa0
-+#define GS101_SCAN2DRAM_INT_EN                  0x3aa4
-+#define GS101_SCAN2DRAM_INT_TYPE                0x3aa8
-+#define GS101_SCAN2DRAM_INT_DIR                 0x3aac
-+#define GS101_HCU_START                         0x3ab0
-+#define GS101_CUSTOM_OUT                        0x3ac0
-+#define GS101_CUSTOM_IN                         0x3ac4
-+#define GS101_CUSTOM_INT_IN                     0x3ad0
-+#define GS101_CUSTOM_INT_EN                     0x3ad4
-+#define GS101_CUSTOM_INT_TYPE                   0x3ad8
-+#define GS101_CUSTOM_INT_DIR                    0x3adc
-+#define GS101_ACK_LAST_CPU                      0x3afc
-+#define GS101_HCU_R(n)                          (0x3b00 + ((n) & 3) * 4)
-+#define GS101_HCU_SP                            0x3b14
-+#define GS101_HCU_PC                            0x3b18
-+#define GS101_PMU_RAM_CTRL                      0x3b20
-+#define GS101_APM_HCU_CTRL                      0x3b24
-+#define GS101_APM_NMI_ENABLE                    0x3b30
-+#define GS101_DBGCORE_NMI_ENABLE                0x3b34
-+#define GS101_HCU_NMI_ENABLE                    0x3b38
-+#define GS101_PWR_HOLD_WDT_ENABLE               0x3b3c
-+#define GS101_NMI_SRC_IN                        0x3b40
-+#define GS101_RST_STAT                          0x3b44
-+#define GS101_RST_STAT_PMU                      0x3b48
-+#define GS101_HPM_INT_IN                        0x3b60
-+#define GS101_HPM_INT_EN                        0x3b64
-+#define GS101_HPM_INT_TYPE                      0x3b68
-+#define GS101_HPM_INT_DIR                       0x3b6c
-+#define GS101_S2D_AUTH                          0x3b70
-+#define GS101_BOOT_STAT                         0x3b74
-+#define GS101_PMLINK_OUT                        0x3c00
-+#define GS101_PMLINK_AOC_OUT                    0x3c04
-+#define GS101_PMLINK_AOC_CTRL                   0x3c08
-+#define GS101_TCXO_BUF_CTRL                     0x3c10
-+#define GS101_ADD_CTRL                          0x3c14
-+#define GS101_HCU_TIMEOUT_RESET                 0x3c20
-+#define GS101_HCU_TIMEOUT_SCAN2DRAM             0x3c24
-+#define GS101_TIMER(n)                          (0x3c80 + ((n) & 3) * 4)
-+#define GS101_PPC_MIF(n)                        (0x3c90 + ((n) & 3) * 4)
-+#define GS101_PPC_CORE                          0x3ca0
-+#define GS101_PPC_EH                            0x3ca4
-+#define GS101_PPC_CPUCL1_0                      0x3ca8
-+#define GS101_PPC_CPUCL1_1                      0x3cac
-+#define GS101_EXT_REGULATOR_MIF_DURATION        0x3cb0
-+#define GS101_EXT_REGULATOR_TOP_DURATION        0x3cb4
-+#define GS101_EXT_REGULATOR_CPUCL2_DURATION     0x3cb8
-+#define GS101_EXT_REGULATOR_CPUCL1_DURATION     0x3cbc
-+#define GS101_EXT_REGULATOR_G3D_DURATION        0x3cc0
-+#define GS101_EXT_REGULATOR_TPU_DURATION        0x3cc4
-+#define GS101_TCXO_DURATION                     0x3cc8
-+#define GS101_BURNIN_CTRL                       0x3cd0
-+#define GS101_JTAG_DBG_DET                      0x3cd4
-+#define GS101_MMC_CONWKUP_CTRL                  0x3cd8
-+#define GS101_USBDPPHY0_USBDP_WAKEUP            0x3cdc
-+#define GS101_TMU_TOP_TRIP                      0x3ce0
-+#define GS101_TMU_SUB_TRIP                      0x3ce4
-+#define GS101_MEMORY_CEN                        0x3d00
-+#define GS101_MEMORY_PGEN                       0x3d04
-+#define GS101_MEMORY_RET                        0x3d08
-+#define GS101_MEMORY_PGEN_FEEDBACK              0x3d0c
-+#define GS101_MEMORY_SMX                        0x3d10
-+#define GS101_MEMORY_SMX_FEEDBACK               0x3d14
-+#define GS101_SLC_PCH_CHANNEL                   0x3d20
-+#define GS101_SLC_PCH_CB                        0x3d24
-+#define GS101_FORCE_NOMC                        0x3d3c
-+#define GS101_FORCE_BOOST                       0x3d4c
-+#define GS101_PMLINK_SLC_REQ                    0x3d50
-+#define GS101_PMLINK_SLC_ACK                    0x3d54
-+#define GS101_PMLINK_SLC_BUSY                   0x3d58
-+#define GS101_BOOTSYNC_OUT                      0x3d80
-+#define GS101_BOOTSYNC_IN                       0x3d84
-+#define GS101_SCAN_READY_OUT                    0x3d88
-+#define GS101_SCAN_READY_IN                     0x3d8c
-+#define GS101_GSA_RESTORE                       0x3d90
-+#define GS101_ALIVE_OTP_LATCH                   0x3d94
-+#define GS101_DEBUG_OVERRIDE                    0x3d98
-+#define GS101_WDT_OPTION                        0x3d9c
-+#define GS101_AOC_WDT_CFG                       0x3da0
-+#define GS101_CTRL_SECJTAG_ALIVE                0x3da4
-+#define GS101_CTRL_DIV_PLL_ALV_DIVLOW           0x3e00
-+#define GS101_CTRL_MUX_CLK_APM_REFSRC_AUTORESTORE 0x3e04
-+#define GS101_CTRL_MUX_CLK_APM_REFSRC           0x3e08
-+#define GS101_CTRL_MUX_CLK_APM_REF              0x3e0c
-+#define GS101_CTRL_MUX_PLL_ALV_DIV4             0x3e10
-+#define GS101_CTRL_PLL_ALV_DIV4                 0x3e14
-+#define GS101_CTRL_OSCCLK_APMGSA                0x3e18
-+#define GS101_CTRL_BLK_AOC_CLKS                 0x3e1c
-+#define GS101_CTRL_PLL_ALV_LOCK                 0x3e20
-+#define GS101_CTRL_CLKDIV__CLKRTC               0x3e24
-+#define GS101_CTRL_SOC32K                       0x3e30
-+#define GS101_CTRL_STM_PMU                      0x3e34
-+#define GS101_CTRL_PMU_DEBUG                    0x3e38
-+#define GS101_CTRL_DEBUG_UART                   0x3e3c
-+#define GS101_CTRL_TCK                          0x3e40
-+#define GS101_CTRL_SBU_SW_EN                    0x3e44
-+#define GS101_PAD_CTRL_CLKOUT0                  0x3e80
-+#define GS101_PAD_CTRL_CLKOUT1                  0x3e84
-+#define GS101_PAD_CTRL_APM_24MOUT_0             0x3e88
-+#define GS101_PAD_CTRL_APM_24MOUT_1             0x3e8c
-+#define GS101_PAD_CTRL_IO_FORCE_RETENTION       0x3e90
-+#define GS101_PAD_CTRL_APACTIVE_n               0x3e94
-+#define GS101_PAD_CTRL_TCXO_ON                  0x3e98
-+#define GS101_PAD_CTRL_PWR_HOLD                 0x3e9c
-+#define GS101_PAD_CTRL_RESETO_n                 0x3ea0
-+#define GS101_PAD_CTRL_WRESETO_n                0x3ea4
-+#define GS101_PHY_CTRL_USB20                    0x3eb0
-+#define GS101_PHY_CTRL_USBDP                    0x3eb4
-+#define GS101_PHY_CTRL_MIPI_DCPHY_M4M4          0x3eb8
-+#define GS101_PHY_CTRL_MIPI_DCPHY_S4S4S4S4      0x3ebc
-+#define GS101_PHY_CTRL_PCIE_GEN4_0              0x3ec0
-+#define GS101_PHY_CTRL_PCIE_GEN4_1              0x3ec4
-+#define GS101_PHY_CTRL_UFS                      0x3ec8
- 
- /* PMU INTR GEN */
- #define GS101_GRP1_INTR_BID_UPEND				(0x0108)
+Apologies for the delayed reply as I was on vacation. ;-)
 
--- 
-2.51.0.710.ga91ca5db03-goog
+> 
+>> Damon Ding (18):
+>>     drm/bridge: analogix_dp: Formalize the struct analogix_dp_device
+>>     drm/bridge: analogix_dp: Move &drm_bridge_funcs.mode_set to
+>>       &drm_bridge_funcs.atomic_enable
+>>     drm/bridge: analogix_dp: Add &analogix_dp_plat_data.next_bridge
+>>     drm/bridge: Move legacy bridge driver out of imx directory for
+>>       multi-platform use
+>>     drm/exynos: exynos_dp: Remove &exynos_dp_device.ptn_bridge
+>>     drm/exynos: exynos_dp: Remove unused &exynos_dp_device.connector
+>>     drm/exynos: exynos_dp: Apply legacy bridge to parse the
+>>       display-timings node
+>>     drm/bridge: analogix_dp: Remove redundant
+>>       &analogix_dp_plat_data.skip_connector
+>>     drm/bridge: analogix_dp: Move the color format check to
+>>       .atomic_check() for Rockchip platforms
+>>     drm/bridge: analogix_dp: Remove unused
+>>       &analogix_dp_plat_data.get_modes()
+>>     drm/display: bridge_connector: Ensure last bridge determines
+>>       EDID/modes detection capabilities
+>>     drm/bridge: analogix_dp: Apply drm_bridge_connector helper
+>>     drm/bridge: analogix_dp: Add new API analogix_dp_finish_probe()
+>>     drm/rockchip: analogix_dp: Apply analogix_dp_finish_probe()
+>>     drm/exynos: exynos_dp: Apply analogix_dp_finish_probe()
+>>     drm/bridge: analogix_dp: Attach the next bridge in
+>>       analogix_dp_bridge_attach()
+>>     drm/bridge: analogix_dp: Remove bridge disabing and panel unpreparing
+>>       in analogix_dp_unbind()
+>>     drm/bridge: analogix_dp: Apply panel_bridge helper
+>>
+>>    drivers/gpu/drm/bridge/Kconfig                |  10 +
+>>    drivers/gpu/drm/bridge/Makefile               |   1 +
+>>    drivers/gpu/drm/bridge/analogix/Kconfig       |   1 +
+>>    .../drm/bridge/analogix/analogix_dp_core.c    | 395 +++++++++---------
+>>    .../drm/bridge/analogix/analogix_dp_core.h    |   5 +-
+>>    drivers/gpu/drm/bridge/imx/Kconfig            |  10 -
+>>    drivers/gpu/drm/bridge/imx/Makefile           |   1 -
+>>    .../gpu/drm/bridge/imx/imx-legacy-bridge.c    |  91 ----
+>>    drivers/gpu/drm/bridge/legacy-bridge.c        |  99 +++++
+>>    .../gpu/drm/display/drm_bridge_connector.c    |  42 ++
+>>    drivers/gpu/drm/exynos/Kconfig                |   2 +
+>>    drivers/gpu/drm/exynos/exynos_dp.c            | 117 ++----
+>>    drivers/gpu/drm/imx/ipuv3/Kconfig             |   4 +-
+>>    drivers/gpu/drm/imx/ipuv3/imx-ldb.c           |   6 +-
+>>    drivers/gpu/drm/imx/ipuv3/parallel-display.c  |   4 +-
+>>    drivers/gpu/drm/rockchip/Kconfig              |   1 +
+>>    .../gpu/drm/rockchip/analogix_dp-rockchip.c   |  67 +--
+>>    include/drm/bridge/analogix_dp.h              |   8 +-
+>>    include/drm/bridge/imx.h                      |  17 -
+>>    include/drm/bridge/legacy-bridge.h            |  18 +
+>>    20 files changed, 433 insertions(+), 466 deletions(-)
+>>    delete mode 100644 drivers/gpu/drm/bridge/imx/imx-legacy-bridge.c
+>>    create mode 100644 drivers/gpu/drm/bridge/legacy-bridge.c
+>>    delete mode 100644 include/drm/bridge/imx.h
+>>    create mode 100644 include/drm/bridge/legacy-bridge.h
+>>
+>> ---
+>>
+>> Changes in v2:
+>> - Update Exynos DP driver synchronously.
+>> - Move the panel/bridge parsing to the Analogix side.
+>>
+>> Changes in v3:
+>> - Rebase for the existing devm_drm_bridge_alloc() applying commit.
+>> - Fix the typographical error of panel/bridge check in exynos_dp_bind().
+>> - Squash all commits related to skip_connector deletion in both Exynos and
+>>     Analogix code into one.
+>> - Apply panel_bridge helper to make the codes more concise.
+>> - Fix the handing of bridge in analogix_dp_bridge_get_modes().
+>> - Remove unnecessary parameter struct drm_connector* for callback
+>>     &analogix_dp_plat_data.attach().
+>> - In order to decouple the connector driver and the bridge driver, move
+>>     the bridge connector initilization to the Rockchip and Exynos sides.
+>>
+>> Changes in v4:
+>> - Rebase for the applied &drm_bridge_funcs.detect() modification commit.
+>> - Rename analogix_dp_find_panel_or_bridge() to analogix_dp_finish_probe().
+>> - Drop the drmm_encoder_init() modification commit.
+>> - Rename the &analogix_dp_plat_data.bridge to
+>>     &analogix_dp_plat_data.next_bridge.
+>>
+>> Changes in v5:
+>> - Add legacy bridge to parse the display-timings node under the dp node
+>>     for Exynos side.
+>> - Move color format check to &drm_connector_helper_funcs.atomic_check()
+>>     in order to get rid of &analogix_dp_plat_data.get_modes().
+>> - Remove unused callback &analogix_dp_plat_data.get_modes().
+>> - Distinguish the &drm_bridge->ops of Analogix bridge based on whether
+>>     the downstream device is a panel, a bridge or neither.
+>> - Select DRM_DISPLAY_DP_AUX_BUS for DRM_ANALOGIX_DP, and remove it for
+>>     ROCKCHIP_ANALOGIX_DP.
+>> - Apply rockchip_dp_attach() to support the next bridge attachment for
+>>     the Rockchip side.
+>> - Move next_bridge attachment from Analogix side to Rockchip/Exynos sides.
+>>
+>> Changes in v6:
+>> - Move legacy bridge driver out of imx directory for multi-platform use.
+>> - Apply DRM legacy bridge to parse display timings intead of implementing
+>>     the same codes only for Exynos DP.
+>> - Ensure last bridge determines EDID/modes detection capabilities in DRM
+>>     bridge_connector driver.
+>> - Remove unnecessary drm_bridge_get_modes() in
+>>     analogix_dp_bridge_get_modes().
+>> - Simplify analogix_dp_bridge_edid_read().
+>> - If the next is a bridge, set DRM_BRIDGE_OP_DETECT and return
+>>     connector_status_connected in analogix_dp_bridge_detect().
+>> - Set flag DRM_BRIDGE_ATTACH_NO_CONNECTOR for bridge attachment while
+>>     binding. Meanwhile, make DRM_BRIDGE_ATTACH_NO_CONNECTOR unsuppported
+>>     in analogix_dp_bridge_attach().
+>> - Move the next bridge attachment to the Analogix side rather than
+>>     scattered on Rockchip and Exynos sides.
+>> - Remove the unnecessary analogix_dp_bridge_get_modes().
+>> - Squash [PATCH v5 15/17] into [PATCH v5 17/17].
+>> - Fix the &drm_bridge->ops to DRM_BRIDGE_OP_EDID | DRM_BRIDGE_OP_DETECT.
+>>
+
+Best regards,
+Damon
 
 
