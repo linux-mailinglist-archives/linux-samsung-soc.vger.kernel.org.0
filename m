@@ -1,48 +1,48 @@
-Return-Path: <linux-samsung-soc+bounces-11437-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-11439-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7CDBFBC7B24
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 09 Oct 2025 09:26:27 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 13F6BBC80F7
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 09 Oct 2025 10:35:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 78EB31897537
-	for <lists+linux-samsung-soc@lfdr.de>; Thu,  9 Oct 2025 07:26:50 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EC8001A60B08
+	for <lists+linux-samsung-soc@lfdr.de>; Thu,  9 Oct 2025 08:36:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 57D282D0C6C;
-	Thu,  9 Oct 2025 07:26:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A25AB2857F2;
+	Thu,  9 Oct 2025 08:35:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="En7eMwMe"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XK3IL3G2"
 X-Original-To: linux-samsung-soc@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06A7C7082D;
-	Thu,  9 Oct 2025 07:26:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 569944A01;
+	Thu,  9 Oct 2025 08:35:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759994782; cv=none; b=WtHeaWBFQcPmekW1hX5qz+wsfAHYOBHInviUg25y3+UJW2Hukg84vZlFfINCTXMafx28p7SiUJJLL0YLzEg1XTargp6i98nplan21lkfHqJfNNcl9yxTKty0rC5/iefRbMibXQuvzQH2AFbicB8LCAaqREIPelMsql7gjotHCy0=
+	t=1759998934; cv=none; b=V550O8PKzlyUdm3ev1dyBDCO9Ab0VVI/tnx72gIzEsmkqCmbveZN9TtMi8l/RZCrLw5nQJ5Nlj3zxJBmtwUrpI1YUzzkU25IT80rUxyvvQQiIpWWkd+Rr6LSKV1saDroPLtNUt9w6ymVTCXjb6+6PeeWx+IQpa/jCmVWfqJsAUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759994782; c=relaxed/simple;
-	bh=aUZwCKZriS2mx9oDnUC1YNntsIyiN+ubGEGIPBl8MwA=;
+	s=arc-20240116; t=1759998934; c=relaxed/simple;
+	bh=iJ2gAtfZfSkAmmta5myZcy2q+0UiwW4oR9qXus1t1Qo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=luKnM0udHhQnNYZ72lJHSkzw939dvM1ixNSCPPi/Axwyg4VYkfqaERV9o4RErS+B3wS1jy4CYYXzVFCqHPBQ87pNgQg8Vhtt6TGq/aFCi42ZtBIoM8//R9byTww6/nwaA2BdQhVPjyN5+6ne9mFqggGn3SH8fyydJpNaRotTeII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=En7eMwMe; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F072C4CEE7;
-	Thu,  9 Oct 2025 07:26:11 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=K1kdL5D6ZHr4wnZ0w6c/kcJJiQLMFRWTgSPTsyyVmWRa9xhXaF3+vqo2026Zt7rAbWHR4HFZy9c2hmn124fDR5GBGMDsPkN40asJNnH7UP15ioS3YmvXSF2RM4iA/ccmVE71HxjenV0fPWpLcyqJl+nHKnpXB9/qOVoRLhFQl5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XK3IL3G2; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5825C4CEE7;
+	Thu,  9 Oct 2025 08:35:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1759994781;
-	bh=aUZwCKZriS2mx9oDnUC1YNntsIyiN+ubGEGIPBl8MwA=;
+	s=k20201202; t=1759998933;
+	bh=iJ2gAtfZfSkAmmta5myZcy2q+0UiwW4oR9qXus1t1Qo=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=En7eMwMeJGkepvaJ8q2srUeiz31pgUGFFzkOIzFoManANQwcx6mbKGZs+E2G7b58P
-	 uZJjFFiIWFCKTpHTzKGIGNNsYl8lBBzUWfpLKaoZOTvSywrOLh9EMAF+2P1msiWk1j
-	 f4qZavZzm/ghXKSO4E4w3GSDLjAhtXbjlpAQYV0xyZTFZwlDa1Zac09X2UkPkd9A3s
-	 w/3kITa3qYybgFGNJ3JBpHGYHjTwF8Sx7RUD+L2f0+MepcjlTfSkRtI46gBSUR3//A
-	 ht2Up9KKwspeIpZCwqN7VC0V9TpD4gEHaULy3BBKSSwOsJxFW3gyj4G+H+VUkpD/W9
-	 9u2X+9Q3z94Og==
-Message-ID: <9ee299c1-edf4-4738-8b5e-6a684f683fbd@kernel.org>
-Date: Thu, 9 Oct 2025 16:26:08 +0900
+	b=XK3IL3G2i/C5MvcOk/aViHDqOWlGhoELkqpohpehP7KriLonf025Kj9t0cCD4uFLp
+	 sU+F8tGqejn/0au5vEihmh/BPHCH3h/Ej0RPLTeW7vPFkbOPKANTczGtwLBCy5vTap
+	 fHlN82F5MEpgoQ40l+kSuSuRpKOQOMVO15HKHFlarv4tJRPROIFNoNILNaQt0D9xf0
+	 8VjCydbivuUjZlrfFacJ/CP6bo4PDichsELzZhKomRqwHpK9tfSMp0cgkzx9/swV4B
+	 7jx/Tqy1OhEuZjWLctvTqOXX7+trBRWyGJp1MYhLvwCyvWKAeKGxt5B9qKBbfrhwfa
+	 MXj4WOc5+2tOg==
+Message-ID: <66b75fc5-1d3c-4d43-b1c7-9be689e131e6@kernel.org>
+Date: Thu, 9 Oct 2025 17:35:28 +0900
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
@@ -50,26 +50,19 @@ List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/4] dt-bindings: usb: dwc3: Add Google Tensor G5 DWC3
-To: Roy Luo <royluo@google.com>
-Cc: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I
- <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
- Philipp Zabel <p.zabel@pengutronix.de>,
- Peter Griffin <peter.griffin@linaro.org>,
- =?UTF-8?Q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>,
- Tudor Ambarus <tudor.ambarus@linaro.org>,
- Joy Chakraborty <joychakr@google.com>, Naveen Kumar <mnkumar@google.com>,
- Badhri Jagan Sridharan <badhri@google.com>, linux-phy@lists.infradead.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-usb@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-samsung-soc@vger.kernel.org
-References: <20251008060000.3136021-1-royluo@google.com>
- <20251008060000.3136021-2-royluo@google.com>
- <8966b6a9-ff70-4833-a5c7-c6d6c13c6c8b@kernel.org>
- <CA+zupgwLu-y26X9eiENyC28i9ZxCkuhb0X8X9H6HBpqkqJ7O3w@mail.gmail.com>
+Subject: Re: [tip: sched/urgent] sched/deadline: Fix dl_server getting stuck
+To: Marek Szyprowski <m.szyprowski@samsung.com>,
+ Peter Zijlstra <peterz@infradead.org>
+Cc: linux-kernel@vger.kernel.org, linux-tip-commits@vger.kernel.org,
+ John Stultz <jstultz@google.com>, x86@kernel.org,
+ 'Linux Samsung SOC' <linux-samsung-soc@vger.kernel.org>,
+ Mark Rutland <mark.rutland@arm.com>
+References: <20250916110155.GH3245006@noisy.programming.kicks-ass.net>
+ <175817861820.709179.10538516755307778527.tip-bot2@tip-bot2>
+ <CGME20250922215704eucas1p1f53a65a5cd1eafd3e0db006653231efd@eucas1p1.samsung.com>
+ <e56310b5-f7a9-4fad-b79a-dcbcdd3d3883@samsung.com>
+ <20250923220215.GH3419281@noisy.programming.kicks-ass.net>
+ <eae77bd0-d874-4ddf-88d7-c1ab75358f91@samsung.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -115,141 +108,145 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <CA+zupgwLu-y26X9eiENyC28i9ZxCkuhb0X8X9H6HBpqkqJ7O3w@mail.gmail.com>
+In-Reply-To: <eae77bd0-d874-4ddf-88d7-c1ab75358f91@samsung.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On 09/10/2025 14:12, Roy Luo wrote:
-> On Wed, Oct 8, 2025 at 4:56 PM Krzysztof Kozlowski <krzk@kernel.org> wrote:
+On 30/09/2025 00:19, Marek Szyprowski wrote:
+> On 24.09.2025 00:02, Peter Zijlstra wrote:
+>> On Mon, Sep 22, 2025 at 11:57:02PM +0200, Marek Szyprowski wrote:
+>>> On 18.09.2025 08:56, tip-bot2 for Peter Zijlstra wrote:
+>>>> The following commit has been merged into the sched/urgent branch of tip:
+>>>>
+>>>> Commit-ID:     077e1e2e0015e5ba6538d1c5299fb299a3a92d60
+>>>> Gitweb:https://git.kernel.org/tip/077e1e2e0015e5ba6538d1c5299fb299a3a92d60
+>>>> Author:        Peter Zijlstra<peterz@infradead.org>
+>>>> AuthorDate:    Tue, 16 Sep 2025 23:02:41 +02:00
+>>>> Committer:     Peter Zijlstra<peterz@infradead.org>
+>>>> CommitterDate: Thu, 18 Sep 2025 08:50:05 +02:00
+>>>>
+>>>> sched/deadline: Fix dl_server getting stuck
+>>>>
+>>>> John found it was easy to hit lockup warnings when running locktorture
+>>>> on a 2 CPU VM, which he bisected down to: commit cccb45d7c429
+>>>> ("sched/deadline: Less agressive dl_server handling").
+>>>>
+>>>> While debugging it seems there is a chance where we end up with the
+>>>> dl_server dequeued, with dl_se->dl_server_active. This causes
+>>>> dl_server_start() to return without enqueueing the dl_server, thus it
+>>>> fails to run when RT tasks starve the cpu.
+>>>>
+>>>> When this happens, dl_server_timer() catches the
+>>>> '!dl_se->server_has_tasks(dl_se)' case, which then calls
+>>>> replenish_dl_entity() and dl_server_stopped() and finally return
+>>>> HRTIMER_NO_RESTART.
+>>>>
+>>>> This ends in no new timer and also no enqueue, leaving the dl_server
+>>>> 'dead', allowing starvation.
+>>>>
+>>>> What should have happened is for the bandwidth timer to start the
+>>>> zero-laxity timer, which in turn would enqueue the dl_server and cause
+>>>> dl_se->server_pick_task() to be called -- which will stop the
+>>>> dl_server if no fair tasks are observed for a whole period.
+>>>>
+>>>> IOW, it is totally irrelevant if there are fair tasks at the moment of
+>>>> bandwidth refresh.
+>>>>
+>>>> This removes all dl_se->server_has_tasks() users, so remove the whole
+>>>> thing.
+>>>>
+>>>> Fixes: cccb45d7c4295 ("sched/deadline: Less agressive dl_server handling")
+>>>> Reported-by: John Stultz<jstultz@google.com>
+>>>> Signed-off-by: Peter Zijlstra (Intel)<peterz@infradead.org>
+>>>> Tested-by: John Stultz<jstultz@google.com>
+>>>> ---
+>>> This patch landed in today's linux-next as commit 077e1e2e0015
+>>> ("sched/deadline: Fix dl_server getting stuck"). In my tests I found
+>>> that it breaks CPU hotplug on some of my systems. On 64bit
+>>> Exynos5433-based TM2e board I've captured the following lock dep warning
+>>> (which unfortunately doesn't look like really related to CPU hotplug):
+>> Right -- I've looked at this patch a few times over the day, and the
+>> only thing I can think of is that we keep the dl_server timer running.
+>> But I already gave you a patch that *should've* stopped it.
 >>
->> On 08/10/2025 14:59, Roy Luo wrote:
->>> Document the device tree bindings for the DWC3 USB controller found in
->>> Google Tensor SoCs, starting with the G5 generation.
->>>
->>> The Tensor G5 silicon represents a complete architectural departure from
+>> There were a few issues with it -- notably if you've booted with
+>> something like isolcpus / nohz_full it might not have worked because the
+>> site I put the dl_server_stop() would only get ran if there was a root
+>> domain attached to the CPU.
 >>
+>> Put it in a different spot, just to make sure.
 >>
->> G5 does not have a model number like G1-G4?
+>> There is also the fact that dl_server_stop() uses
+>> hrtimer_try_to_cancel(), which can 'fail' when the timer is actively
+>> running. But if that is the case, it must be spin-waiting on rq->lock
+>> -- since the caller of dl_server_stop() will be holding that. Once
+>> dl_server_stop() completes and the rq->lock is released, the timer will
+>> see !dl_se->dl_throttled and immediately stop without restarting.
+>>
+>> So that *should* not be a problem.
+>>
+>> Anyway, clutching at staws here etc.
+>>
+>>> # for i in /sys/devices/system/cpu/cpu[1-9]; do echo 0 >$i/online; done
+>>> Detected VIPT I-cache on CPU7
+>>> CPU7: Booted secondary processor 0x0000000101 [0x410fd031]
+>>> ------------[ cut here ]------------
+>>> WARNING: CPU: 7 PID: 0 at kernel/rcu/tree.c:4329
+>>> rcutree_report_cpu_starting+0x1e8/0x348
+>> This is really weird; this does indeed look like CPU7 decides to boot
+>> again. AFAICT it is not hotplug failing and bringing the CPU back again,
+>> but it is really starting again.
+>>
+>> I'm not well versed enough in ARM64 foo to know what would cause a CPU
+>> to boot -- but on x86_64 this isn't something that would easily happen
+>> by accident.
+>>
+>> Not stopping a timer would certainly not be sufficient -- notably
+>> hrtimers_cpu_dying() would have migrated the thing.
+>>
+>>> (system is frozen at this point).
+>> The whole lockdep and freezing thing is typically printk choking on
+>> itself.
+>>
+>> My personal way around this are these here patches:
+>>
+>>    git://git.kernel.org/pub/scm/linux/kernel/git/peterz/queue.git debug/experimental
+>>
+>> They don't apply cleanly anymore, but the conflict isn't hard, so I've
+>> not taken the bother to rebase them yet. It relies on the platform
+>> having earlyprintk configured, then add force_early_printk to your
+>> kernel cmdline to have earlyprintk completely take over.
+>>
+>> Typical early serial drivers are lock-free and don't suffer from
+>> lockups.
+>>
+>> If you get it to work, you might get more data out of it.
 > 
-> There's no model number for G5, I'm sticking to the existing "gs" prefix
-> as they're still in the same SoC family.  Please let me know if you have any
-> concerns.
+> Thanks for some hints, but unfortunately ARM64 doesn't support 
+> earlyprintk, so I was not able to use this method.
 > 
->>
->>> previous generations (like gs101), including entirely new clock/reset
->>> schemes, top-level wrapper and register interface. Consequently,
->>> existing Samsung/Exynos DWC3 USB bindings and drivers are incompatible,
->>
->> Do not reference drivers. Explain the hardware.
+> However I've played a bit with this code and found that this strange 
+> wake-up of the CPU7 seems to be caused by the timer. If I restore
 > 
-> Ack, all mentions of "driver" will be removed in the next patch.
+>    if (!dl_se->server_has_tasks(dl_se))
+>            return HRTIMER_NORESTART;
 > 
->>
->>> necessitating this new device tree binding.
->>>
->>> The USB controller on Tensor G5 is based on Synopsys DWC3 IP and features
->>> Dual-Role Device single port with hibernation support.
->>>
->>> Signed-off-by: Roy Luo <royluo@google.com>
->>> ---
->>>  .../bindings/usb/google,gs-dwc3.yaml          | 145 ++++++++++++++++++
->>>  1 file changed, 145 insertions(+)
->>>  create mode 100644 Documentation/devicetree/bindings/usb/google,gs-dwc3.yaml
->>>
->>> diff --git a/Documentation/devicetree/bindings/usb/google,gs-dwc3.yaml b/Documentation/devicetree/bindings/usb/google,gs-dwc3.yaml
->>> new file mode 100644
->>> index 000000000000..9eb0bf726e8d
->>> --- /dev/null
->>> +++ b/Documentation/devicetree/bindings/usb/google,gs-dwc3.yaml
->>> @@ -0,0 +1,145 @@
->>> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
->>> +# Copyright (c) 2025, Google LLC
->>> +%YAML 1.2
->>> +---
->>> +$id: http://devicetree.org/schemas/usb/google,gs-dwc3.yaml#
->>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->>> +
->>> +title: Google Tensor Series (G5+) DWC3 USB SoC Controller
->>> +
->>> +maintainers:
->>> +  - Roy Luo <royluo@google.com>
->>> +
->>> +description: |
->>
->>
->> Do not need '|' unless you need to preserve formatting.
+> part in the dl_server_timer, the everything works again as before this 
+> patch.
 > 
-> Ack, will fix this in the next patch.
-> 
->>
->>> +  Describes the DWC3 USB controller block implemented on Google Tensor SoCs,
->>> +  starting with the G5 generation. Based on Synopsys DWC3 IP, the controller
->>> +  features Dual-Role Device single port with hibernation add-on.
->>> +
->>> +properties:
->>> +  compatible:
->>> +    items:
->>> +      - enum:
->>> +          - google,gs5-dwc3
->>> +
->>> +  reg:
->>> +    minItems: 3
->>
->> Drop
->>
->>> +    maxItems: 3
->>> +
->>> +  reg-names:
->>> +    description: |
->>> +      The following memory regions must present:
->>> +        - dwc3_core: Core DWC3 IP registers.
->>> +        - host_cfg_csr: Hibernation control registers.
->>> +        - usbint_csr: Hibernation interrupt registers.
->>
->> Drop description or move it to items in reg. See other bindings.
-> 
-> Ack, will use an item list in reg instead.
-> 
->>
->>> +    items:
->>> +      - const: dwc3_core
->>> +      - const: host_cfg_csr
->>> +      - const: usbint_csr
->>> +
->>> +  interrupts:
->>> +    minItems: 3
->>
->> Drop
-> 
-> Ack, will use an item list instead.
-> 
->>
->>> +    maxItems: 3
->>> +
->>> +  interrupt-names:
->>> +    description: |
->>> +      The following interrupts must present:
->>> +        - dwc_usb3: Core DWC3 interrupt.
->>> +        - hs_pme_irq: High speed remote wakeup interrupt for hibernation.
->>> +        - ss_pme_irq: Super speed remote wakeup interrupt for hibernation.
->>
->> From where did you get this style? Don't write bindings with chat gpt or
->> whatever other tool. it is a waste of our time.
-> 
-> I referenced the style from a recent dt binding change [1] that adds
-> "Documentation/devicetree/bindings/usb/qcom,snps-dwc3.yaml".
-> I thought it would be a good reference because it's relatively new
-> and is also a binding for SNPS dwc3 glue logic. Perhaps that style
-> doesn't apply here because qcom,snps-dwc3.yaml supports
-> multiple compatible and here we have only one?
-> 
-> Just to clarify, I'm a Gemini user and this patch is 100% organic,
-> hand-crafted by a living human brain :)
-> 
-> [1] https://lore.kernel.org/all/20250414-dwc3-refactor-v7-2-f015b358722d@oss.qualcomm.com/
+> This issue is however not Exynos5433 ARM 64bit specific. Similar lockup 
+> happens on Exynos5422 ARM 32bit boards, although there is no message in 
+> that case. Does it mean that handling of the hrtimers on Exynos boards 
+> is a bit broken in the context of CPU hotplug? I've never analyzed that 
+> part of Exynos SoC support. Krzysztof, any chance You remember how it works?
 
-Your code is not at all like above, you do not have any variants here,
-so you cannot use that syntax - is not correct here.
+
+I don't recall anything around this, but I also don't remember that much
+of details anymore.
+
+I believe long time ago - around 2014-2015 - were testing Exynos MCT
+against hotplug as well, so I think it was working. Many things could
+happen in between...
 
 Best regards,
 Krzysztof
