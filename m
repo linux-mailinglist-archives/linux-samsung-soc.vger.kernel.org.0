@@ -1,41 +1,48 @@
-Return-Path: <linux-samsung-soc+bounces-11449-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-11447-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id D2A25BC8AD1
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 09 Oct 2025 13:02:46 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 84182BC86CE
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 09 Oct 2025 12:13:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id AB9014F3C6D
-	for <lists+linux-samsung-soc@lfdr.de>; Thu,  9 Oct 2025 11:02:45 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 324D73B494F
+	for <lists+linux-samsung-soc@lfdr.de>; Thu,  9 Oct 2025 10:13:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E30C32DF3C6;
-	Thu,  9 Oct 2025 11:00:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 133BC2D8DA4;
+	Thu,  9 Oct 2025 10:13:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b="CRpZqVpX"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Tnnv3eU4"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-m3298.qiye.163.com (mail-m3298.qiye.163.com [220.197.32.98])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E7E82DF71E;
-	Thu,  9 Oct 2025 11:00:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.32.98
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4FA5211A09;
+	Thu,  9 Oct 2025 10:13:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760007622; cv=none; b=ZEpDznQIf3n0B4jc3LAA5/y2ISjmz1sBen/up9Sfq+IVbcextnl53TP2d7hYHa8SL3OrZSgJXOC7i83TYH7e5HnrzUa7u1PoBRYnm/sFn/u0XBenj1qJyVVAqX4G1x2rEfe6dUlBupBG4QwiJwqywCbMHafrZpW98wts0t5jvps=
+	t=1760004804; cv=none; b=LjDZ55VmV6QIcJzzhhKKwG+uOlDeISbtxOiOyXT1Elr14P15dfJWK6eS9tJWgrgvQddTmNSNqjyFGMUTmB4EjyMTrK4e8b7aZltkCFGIXRcqSozTuVlhxfeQhKVopyOudyLfYORxEYZOGvFmp8nYBPVpCyDyWmCnyGEFQ0kapZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760007622; c=relaxed/simple;
-	bh=y7OlmIAK8vLkfU3+JxQ1Pkm7zAIwUPOpZpXABe/3DLs=;
+	s=arc-20240116; t=1760004804; c=relaxed/simple;
+	bh=A21j6BI0oshVWixafoxwDpeBkRBj2xvnQviHZfLid2Y=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lGxWitYCG2vmLxOmhocm8Rir8+wUpAbhUcKPcODJsyl0cPkDYtVx9SyKaSYqSqoEZwoh+HG7kiDeXio1qQ1n+HBp19KRi36Q4aB9EdNt99vfNLjggtv5AaTGL+49J4DWXPYUm4nCrejlnsvMueCT9gslE4BIKzxdY22SFtNkIBk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com; spf=pass smtp.mailfrom=rock-chips.com; dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b=CRpZqVpX; arc=none smtp.client-ip=220.197.32.98
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rock-chips.com
-Received: from [172.16.12.26] (unknown [58.22.7.114])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 2543142d9;
-	Thu, 9 Oct 2025 12:10:40 +0800 (GMT+08:00)
-Message-ID: <a42ebdca-1cbc-498c-b859-336557823f26@rock-chips.com>
-Date: Thu, 9 Oct 2025 12:10:42 +0800
+	 In-Reply-To:Content-Type; b=qNVmmUY6TaDkntL9zncSgwFm9nNzf1LSz258SLQj1FTSu7oyqPXX7mAKlvKBHyZDCBEcy9CdnTfGOYjkYVJqgVybRN9hDMEn71+r5Z/2CNQQj+SRDl11X4H8/I3LQT0voXa2tsw9JB0gjeW4EVgxZXH0OVpLvPX8DIlmkgvlT98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Tnnv3eU4; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62B4AC4CEE7;
+	Thu,  9 Oct 2025 10:13:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1760004804;
+	bh=A21j6BI0oshVWixafoxwDpeBkRBj2xvnQviHZfLid2Y=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=Tnnv3eU4N9kLuB1OI0d/dMZQLKXKdkuuETJEKZK2ix6CYAhWKKofU7oA0/iEy9jc9
+	 icwoiTjkylQWDMuqTRY7A4r7WTWfBsUtazTugWyXoKKTlPIRHat16u7O9Vjb6qcXB5
+	 MT0pVHtl5wua/qv15nAEMBxNt3YSjU/CQncYq6o/Bk8M0bfe5/tiyrhLPSp2Nr2jcj
+	 jolEu/88inxoWUqLAzFcrSnxykdV79BaOIXpXPga7z7sYvxNqMVTCty/Ymmyue1ag7
+	 USgYBQsPhJwb5oLu4cwdJzT1JQpCZy+GkfMsJRDpNWGRLUO/cD/xiAyfV/klHsuTtY
+	 /TDXFBsWrZ9vQ==
+Message-ID: <4a03bec1-34e2-444e-acb8-cae72dcbe6c2@kernel.org>
+Date: Thu, 9 Oct 2025 19:13:14 +0900
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
@@ -43,205 +50,80 @@ List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 11/18] drm/display: bridge_connector: Ensure last
- bridge determines EDID/modes detection capabilities
-To: Luca Ceresoli <luca.ceresoli@bootlin.com>,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: andrzej.hajda@intel.com, neil.armstrong@linaro.org, rfoss@kernel.org,
- Laurent.pinchart@ideasonboard.com, jonas@kwiboo.se,
- jernej.skrabec@gmail.com, maarten.lankhorst@linux.intel.com,
- mripard@kernel.org, tzimmermann@suse.de, airlied@gmail.com, simona@ffwll.ch,
- shawnguo@kernel.org, s.hauer@pengutronix.de, kernel@pengutronix.de,
- festevam@gmail.com, inki.dae@samsung.com, sw0312.kim@samsung.com,
- kyungmin.park@samsung.com, krzk@kernel.org, alim.akhtar@samsung.com,
- jingoohan1@gmail.com, p.zabel@pengutronix.de, hjc@rock-chips.com,
- heiko@sntech.de, andy.yan@rock-chips.com, dianders@chromium.org,
- m.szyprowski@samsung.com, jani.nikula@intel.com,
- linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
- imx@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
- linux-samsung-soc@vger.kernel.org, linux-rockchip@lists.infradead.org
-References: <20250930090920.131094-1-damon.ding@rock-chips.com>
- <20250930090920.131094-12-damon.ding@rock-chips.com>
- <20251001180922.6bbe42ac@booty>
+Subject: Re: [RESEND PATCH 1/2] dt-bindings: i2c: exynos5: add
+ exynosautov920-hsi2c compatible
+To: Faraz Ata <faraz.ata@samsung.com>, andi.shyti@kernel.org,
+ robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+ alim.akhtar@samsung.com
+Cc: linux-i2c@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org,
+ linux-kernel@vger.kernel.org, rosa.pila@samsung.com, dev.tailor@samsung.com
+References: <CGME20251009101023epcas5p2de61d08e2d4a180bbcf2f2708d267336@epcas5p2.samsung.com>
+ <20251009101911.2802433-1-faraz.ata@samsung.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-From: Damon Ding <damon.ding@rock-chips.com>
-In-Reply-To: <20251001180922.6bbe42ac@booty>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <20251009101911.2802433-1-faraz.ata@samsung.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-HM-Tid: 0a99c729f83903a3kunm16370414a6fa98
-X-HM-MType: 1
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFDSUNOT01LS0k3V1ktWUFJV1kPCRoVCBIfWUFZGRhISlZKSRgYQkhITx4fSEtWFRQJFh
-	oXVRMBExYaEhckFA4PWVdZGBILWUFZTkNVSUlVTFVKSk9ZV1kWGg8SFR0UWUFZT0tIVUpLSEpKQk
-	1VSktLVUpCWQY+
-DKIM-Signature: a=rsa-sha256;
-	b=CRpZqVpXED0SBtQWsNn3unDFg6hHUsSbzj0hQuFlxkwW+RHOgdqWJ+gRlo060O6EvTD8QiK/bJkRJC7jl8p3TKWpa+RYxJFZxheUO49caZ0+LEO/SzLEqHTLZz4OpdNo5ABc75WLQf70YZcuBwLuXIDCpICPiK4KZ7G+gX4C7Gg=; c=relaxed/relaxed; s=default; d=rock-chips.com; v=1;
-	bh=qQ2zeMeYDfoWTQYJ4xG+nhpK+0ZJUttKUUEWrzWjUSw=;
-	h=date:mime-version:subject:message-id:from;
 
-Hi Luca,
+On 09/10/2025 19:19, Faraz Ata wrote:
+> Add "samsung,exynosautov920-hsi2c" dedicated compatible for
+> HSI2C found in ExynosAutov920 SoC.
+> 
+> Signed-off-by: Faraz Ata <faraz.ata@samsung.com>
+> ---
+> Note: This patch was previously sent separately. Resending now as part of a
+> two-patch series to avoid dt-binding check error. No functional changes from the earlier submission[1]
 
-On 10/2/2025 12:09 AM, Luca Ceresoli wrote:
-> Hello Damon,
-> 
-> On Tue, 30 Sep 2025 17:09:13 +0800
-> Damon Ding <damon.ding@rock-chips.com> wrote:
-> 
->> When multiple bridges are present, EDID detection capability
->> (DRM_BRIDGE_OP_EDID) takes precedence over modes detection
->> (DRM_BRIDGE_OP_MODES). To ensure the above two capabilities are
->> determined by the last bridge in the chain, we handle three cases:
->>
->> Case 1: The later bridge declares only DRM_BRIDGE_OP_MODES
->>   - If the previous bridge declares DRM_BRIDGE_OP_EDID, set
->>     &drm_bridge_connector.bridge_edid to NULL and set
->>     &drm_bridge_connector.bridge_modes to the later bridge.
->>   - Ensure modes detection capability of the later bridge will not
->>     be ignored.
->>
->> Case 2: The later bridge declares only DRM_BRIDGE_OP_EDID
->>   - If the previous bridge declares DRM_BRIDGE_OP_MODES, set
->>     &drm_bridge_connector.bridge_modes to NULL and set
->>     &drm_bridge_connector.bridge_edid to the later bridge.
->>   - Although EDID detection capability has higher priority, this
->>     operation is for balance and makes sense.
->>
->> Case 3: the later bridge declares both of them
->>   - Assign later bridge as &drm_bridge_connector.bridge_edid and
->>     and &drm_bridge_connector.bridge_modes to this bridge.
->>   - Just leave transfer of these two capabilities as before.
-> 
-> I think the whole explanation can be more concisely rewritten as:
-> 
-> If the later bridge declares OP_EDID, OP_MODES or both, then both
-> .bridge_modes and .bridge_edid should be set to NULL (if any was set
-> from a previous bridge), and then .bridge_modes and/or .bridge_edid be
-> set to the later bridge as is done already.
-> 
-> Does this look correct (i.e. does it convey the same meaning)?
-> 
->> --- a/drivers/gpu/drm/display/drm_bridge_connector.c
->> +++ b/drivers/gpu/drm/display/drm_bridge_connector.c
->> @@ -640,6 +640,7 @@ struct drm_connector *drm_bridge_connector_init(struct drm_device *drm,
->>   	struct drm_connector *connector;
->>   	struct i2c_adapter *ddc = NULL;
->>   	struct drm_bridge *bridge, *panel_bridge = NULL;
->> +	struct drm_bridge *pre_bridge_edid, *pre_bridge_modes;
->>   	unsigned int supported_formats = BIT(HDMI_COLORSPACE_RGB);
->>   	unsigned int max_bpc = 8;
->>   	bool support_hdcp = false;
->> @@ -668,6 +669,9 @@ struct drm_connector *drm_bridge_connector_init(struct drm_device *drm,
->>   	 */
->>   	connector_type = DRM_MODE_CONNECTOR_Unknown;
->>   	drm_for_each_bridge_in_chain(encoder, bridge) {
->> +		pre_bridge_edid = bridge_connector->bridge_edid;
->> +		pre_bridge_modes = bridge_connector->bridge_modes;
->> +
->>   		if (!bridge->interlace_allowed)
->>   			connector->interlace_allowed = false;
->>   		if (!bridge->ycbcr_420_allowed)
->> @@ -681,6 +685,44 @@ struct drm_connector *drm_bridge_connector_init(struct drm_device *drm,
->>   			bridge_connector->bridge_detect = bridge;
->>   		if (bridge->ops & DRM_BRIDGE_OP_MODES)
->>   			bridge_connector->bridge_modes = bridge;
->> +
->> +		/*
->> +		 * When multiple bridges are present, EDID detection capability
->> +		 * (DRM_BRIDGE_OP_EDID) takes precedence over modes detection
->> +		 * (DRM_BRIDGE_OP_MODES). To ensure the above two capabilities
->> +		 * are determined by the last bridge in the chain, we handle
->> +		 * three cases:
->> +		 *
->> +		 * Case 1: The later bridge declares only DRM_BRIDGE_OP_MODES
->> +		 *  - If the previous bridge declares DRM_BRIDGE_OP_EDID, set
->> +		 *    &drm_bridge_connector.bridge_edid to NULL and set
->> +		 *    &drm_bridge_connector.bridge_modes to the later bridge.
->> +		 *  - Ensure modes detection capability of the later bridge
->> +		 *    will not be ignored.
->> +		 *
->> +		 * Case 2: The later bridge declares only DRM_BRIDGE_OP_EDID
->> +		 *  - If the previous bridge declares DRM_BRIDGE_OP_MODES, set
->> +		 *    &drm_bridge_connector.bridge_modes to NULL and set
->> +		 *    &drm_bridge_connector.bridge_edid to the later bridge.
->> +		 *  - Although EDID detection capability has higher priority,
->> +		 *    this operation is for balance and makes sense.
->> +		 *
->> +		 * Case 3: the later bridge declares both of them
->> +		 *  - Assign later bridge as &drm_bridge_connector.bridge_edid
->> +		 *    and &drm_bridge_connector.bridge_modes to this bridge.
->> +		 *  - Just leave transfer of these two capabilities as before.
->> +		 */
->> +		if (bridge->ops & DRM_BRIDGE_OP_EDID &&
->> +		    !(bridge->ops & DRM_BRIDGE_OP_MODES)) {
->> +			if (pre_bridge_modes)
->> +				bridge_connector->bridge_modes = NULL;
->> +		}
->> +		if (bridge->ops & DRM_BRIDGE_OP_MODES &&
->> +		    !(bridge->ops & DRM_BRIDGE_OP_EDID)) {
->> +			if (pre_bridge_edid)
->> +				bridge_connector->bridge_edid = NULL;
->> +		}
->> +
-> 
-> If the above rewrite is correct, then I think this patch can be
-> rewritten in a simple way (build tested only):
-> 
-> diff --git a/drivers/gpu/drm/display/drm_bridge_connector.c b/drivers/gpu/drm/display/drm_bridge_connector.c
-> index a5bdd6c10643..bd5dbafe88bc 100644
-> --- a/drivers/gpu/drm/display/drm_bridge_connector.c
-> +++ b/drivers/gpu/drm/display/drm_bridge_connector.c
-> @@ -672,14 +672,18 @@ struct drm_connector *drm_bridge_connector_init(struct drm_device *drm,
->                  if (!bridge->ycbcr_420_allowed)
->                          connector->ycbcr_420_allowed = false;
->   
-> -               if (bridge->ops & DRM_BRIDGE_OP_EDID)
-> -                       bridge_connector->bridge_edid = bridge;
-> +               if (bridge->ops & DRM_BRIDGE_OP_EDID || bridge->ops & DRM_BRIDGE_OP_MODES) {
-> +                       bridge_connector->bridge_edid = NULL;
-> +                       bridge_connector->bridge_modes = NULL;
-> +                       if (bridge->ops & DRM_BRIDGE_OP_EDID)
-> +                               bridge_connector->bridge_edid = bridge;
-> +                       if (bridge->ops & DRM_BRIDGE_OP_MODES)
-> +                               bridge_connector->bridge_modes = bridge;
-> +               }
->                  if (bridge->ops & DRM_BRIDGE_OP_HPD)
->                          bridge_connector->bridge_hpd = bridge;
->                  if (bridge->ops & DRM_BRIDGE_OP_DETECT)
->                          bridge_connector->bridge_detect = bridge;
-> -               if (bridge->ops & DRM_BRIDGE_OP_MODES)
-> -                       bridge_connector->bridge_modes = bridge;
->                  if (bridge->ops & DRM_BRIDGE_OP_HDMI) {
->                          if (bridge_connector->bridge_hdmi)
->                                  return ERR_PTR(-EBUSY);
-> 
+It's not necessary. You only need to provide lore link to bindings in
+patch changelog. Read carefully report you received.
 
-Yes, this is correct and maintains functional equivalence with the 
-previous implementation.
+Also, do not resend non-fix patches during merge window. It's just noise.
 
-I previously attempted to implement this feature by modifying the logic 
-in this section. However, that approach would obscure the explicit 
-propagation semantics of the bridge chain flags 
-(OP_EDID/OP_HPD/OP_DETECT/OP_MODES). Therefore, I finally decided to 
-implemented it as a specific check after this code block.
-
-Dmitry, what's your take on this?
-
-> Another thing to note is that this patch conflicts with [0], which I
-> plan to apply in the next few days. The two patches are orthogonal but
-> they insist on the same lines (those assigning
-> bridge_connector->bridge_* = bridge). Not a big deal, whichever patch
-> comes later will be easily adapted. Just wanted to ensure you are aware.
-> 
-> [0] https://lore.kernel.org/all/20250926-drm-bridge-alloc-getput-bridge-connector-v2-1-138b4bb70576@bootlin.com/
-> 
-
-This is indeed a clever approach to the managing bridge resource cleanup 
-in drm_bridge_connector. Thanks a lot for the heads-up! I'll resolve 
-this conflict and rebase the patch series.
-
-Apologies for the delayed reply as I was on vacation. ;-)
 
 Best regards,
-Damon
-
+Krzysztof
 
