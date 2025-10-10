@@ -1,155 +1,315 @@
-Return-Path: <linux-samsung-soc+bounces-11514-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-11516-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id CC86DBCD4E1
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 10 Oct 2025 15:39:35 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1417EBCD695
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 10 Oct 2025 16:11:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BEB09189E618
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 10 Oct 2025 13:39:58 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 127B84FD0A3
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 10 Oct 2025 14:11:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E23C2F2601;
-	Fri, 10 Oct 2025 13:39:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3582C2F3600;
+	Fri, 10 Oct 2025 14:10:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=axis.com header.i=@axis.com header.b="SepOnIEe"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="YtCKZR/M"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from OSPPR02CU001.outbound.protection.outlook.com (mail-norwayeastazon11013054.outbound.protection.outlook.com [40.107.159.54])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 680B8264F96;
-	Fri, 10 Oct 2025 13:39:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.159.54
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760103569; cv=fail; b=kPvtKfLM1cQEpip8ySubWJ5TeqkKlTFQtCDQljvWi2X/kXZ+DDBjICRbXFtAV8ZpnRbaq1oTsN1Lt7wNBsPOdkmdRKDwngeyxxOwCkn7Eh/QUPv5AEnzAWluityw7yldtuAEkjh37stlw+qS5csG+KprllCZ6dyT9QiXaghOpYU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760103569; c=relaxed/simple;
-	bh=OM/Z/Db4w2vZA4wn/pSiwNdowgqblpIpBYy9aTQN5jU=;
-	h=From:To:CC:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=s3uHhxv0vBGOsgLFfPwmfQLcHCRGx6TVCZ/mjKtBgVhbAotvfD5vu5nURjplrCmAopLAhVbCk5VLNhhG1qW7xnwZYjMZ264VPafd6M8mBUWd7yQKAni5EUAXHKqzqbtr057YV037QKCpUJcgs0DAu/vbMSwKq7xMPXbsbr0ZPHk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=axis.com; spf=pass smtp.mailfrom=axis.com; dkim=pass (1024-bit key) header.d=axis.com header.i=@axis.com header.b=SepOnIEe; arc=fail smtp.client-ip=40.107.159.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=axis.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=axis.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=MopOl4Zm5EAmSH2Y95YlF13RjLFncPFtRj380UBUPIBqeCBL0PPV168Sakciy4JZzL4emONOoyC6aStUgvTL5I5SzimxpRvuhG1ABt50ZXeDaR8l25sD2VwJPDVhhPOoLUyUrjVDeJ4N9rsKc1pLkm1pOD0pAHjRzyP229y3yk/1LgUgC4mxOSibpES/E4DwKSny5zBJlIiooCfVaSWvM6zPWtqb0Mhko2BcJUzgYefMTpu+vvHCuK71zC5DjATftdJ2R5Dfo4AKsZIiXHW63u2C6O5G3AX5krUIF2PMETuO94IowyCiS01cp7vEt61Y3raPvSLoivCHISXoBj2SFw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=OM/Z/Db4w2vZA4wn/pSiwNdowgqblpIpBYy9aTQN5jU=;
- b=A85AUyo3B1faar7EFBTpjZ9fzO7acXEqVggSNfJm/GX9DgXX15Ac9qDIU700u2tbjMXBiQcUV6D9aC2HLXfW4b7oANQMdcbu6mRfsMnhjJbPDgN2czvUMPJ/65oZJAH/pnEjt+mjaWXe+Y5EoK9lA9guKXJqPR3Da2EevQJKl7AvvJLppNILaRF9b9oH3fPFPTnSR5WLj2ZDGE5rpSc4QcZRe759dekhofk5Bsc31wnz+u9jt+ISwMmASEcz9maH2OWe06AokxE1upbFINyHyQm6tgS6mw6TAK0ityJrRtr9Mkumts4CPuJ84Z8iIzPxyATDHNO8bsbw1r5Qobbx/g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 195.60.68.100) smtp.rcpttodomain=vger.kernel.org smtp.mailfrom=axis.com;
- dmarc=pass (p=none sp=none pct=100) action=none header.from=axis.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=axis.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=OM/Z/Db4w2vZA4wn/pSiwNdowgqblpIpBYy9aTQN5jU=;
- b=SepOnIEeM+0M1HH6p3v6xyrDN60mEnyGtLOXfjSwsQV99/sES/M1G7xlMiYLeZ3gXreavAkPzeb4Pr2QRNZvv6AI+r47sxwzopsnQ4y+ByqrCSi0OZo4ToI1DKANk3Z7IBG2jmyMrhzocfQs26rpPMesx/hSxMN8ebIluv8U0z0=
-Received: from DB7PR05CA0023.eurprd05.prod.outlook.com (2603:10a6:10:36::36)
- by GVXPR02MB11133.eurprd02.prod.outlook.com (2603:10a6:150:1f7::21) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9203.10; Fri, 10 Oct
- 2025 13:39:22 +0000
-Received: from DU6PEPF0000B61C.eurprd02.prod.outlook.com
- (2603:10a6:10:36:cafe::c9) by DB7PR05CA0023.outlook.office365.com
- (2603:10a6:10:36::36) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9203.10 via Frontend Transport; Fri,
- 10 Oct 2025 13:39:22 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 195.60.68.100)
- smtp.mailfrom=axis.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=axis.com;
-Received-SPF: Pass (protection.outlook.com: domain of axis.com designates
- 195.60.68.100 as permitted sender) receiver=protection.outlook.com;
- client-ip=195.60.68.100; helo=mail.axis.com; pr=C
-Received: from mail.axis.com (195.60.68.100) by
- DU6PEPF0000B61C.mail.protection.outlook.com (10.167.8.135) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.9203.9 via Frontend Transport; Fri, 10 Oct 2025 13:39:22 +0000
-Received: from pc52311-2249 (10.4.0.13) by se-mail01w.axis.com (10.20.40.7)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.58; Fri, 10 Oct
- 2025 15:39:21 +0200
-From: Waqar Hameed <waqar.hameed@axis.com>
-To: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>
-CC: <kernel@axis.com>, <linux-phy@lists.infradead.org>,
-	<linux-arm-kernel@lists.infradead.org>, <linux-samsung-soc@vger.kernel.org>,
-	<linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v2] phy: exynos5-usbdrd: Remove error print for
- devm_add_action_or_reset()
-In-Reply-To: <pnd34a6m7tc.a.out@axis.com> (Waqar Hameed's message of "Tue, 5
-	Aug 2025 11:33:35 +0200")
-References: <pnd34a6m7tc.a.out@axis.com>
-User-Agent: a.out
-Date: Fri, 10 Oct 2025 15:39:21 +0200
-Message-ID: <pnd7bx2j2pi.a.out@axis.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F62D2F5A13
+	for <linux-samsung-soc@vger.kernel.org>; Fri, 10 Oct 2025 14:10:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1760105441; cv=none; b=MBnhbs5nvUrL1OeFT8qUk+Av+sWtOMZHfcQ7O2F4ejDs9hQLaHVkSFjl3WpBs5ydLXez1Ng/3dOrI80WUMp4q4S94krEC8CoLVUo9aKLl+fYnFHBeCMRkRU4zJ8toAqwcnRndv8W2OqMSIwY+gjsj2iZdJJX6lUtHy/v3jnS/3A=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1760105441; c=relaxed/simple;
+	bh=BVqR6BSVlRCmZYhYYZFBvrAOLZNktKtRyNOjkZoSw50=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WfFkc51KrbBguCLTWh75TK2k0z2r7mVj9ZU07e6CSX9npzukEKy7nUeadmRYYamNGB3M0Cz26iKDYq10OBFNfEW8qHcgpytGMUgAQNs2cr48DsP2lrbHIw8fzrJBjGnlwTeosb/JB2z2LLRMWXLp9C7qmD6nrMOYrot8Azi2OBw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=YtCKZR/M; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59A6WguF002283
+	for <linux-samsung-soc@vger.kernel.org>; Fri, 10 Oct 2025 14:10:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=7wkzrxKudGSviXsY/mtwV95A
+	pO2/F8bqxrMw6rKRUQs=; b=YtCKZR/MKHgtOZi6vcOxpQ3qKxJqn0UgdFTNCXsI
+	sJVqDaRakSag7bU65LgFJK+ZEtLghWpshoZQpGdcZbfU69ysSXSVY6nMYoup7qmn
+	/S69nHAvpHOe+A8qTrFDRHds8Q2JVhmmPdI4LK7R7iLVuFXUhxD0dtlC2opfsn6f
+	CiCfBvQ5lcF+SNXOiycOUAV0cDzWQGeUdCd1qpJ6PjWBMQVSLtJ1NZBmDu+ihbeB
+	2JvToGRINChtwlpNekLtlqubx4oYd1oDeBN5FvHJ02rIK8AadmMX7M1YJz9aigBp
+	U9tuzgu13YAiJua6n3sRGlt4YTW02NVsgH9Hf0qjdcTaJg==
+Received: from mail-oi1-f199.google.com (mail-oi1-f199.google.com [209.85.167.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49pgdsu402-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-samsung-soc@vger.kernel.org>; Fri, 10 Oct 2025 14:10:37 +0000 (GMT)
+Received: by mail-oi1-f199.google.com with SMTP id 5614622812f47-43fb0e63b9fso4477732b6e.2
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 10 Oct 2025 07:10:37 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760105437; x=1760710237;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7wkzrxKudGSviXsY/mtwV95ApO2/F8bqxrMw6rKRUQs=;
+        b=QKACRFVzyrQWv54ymiLMjJOqM3bhLl15j3m/CDHbr8RiaEoR+MhgvRnLEjm2oBzxJO
+         +9D0Seq6J6bcBf/nnJxetUpbuKJUhlop5nY7KtSbAjipp+rBQgObSmHd9KZtjKYZy7Do
+         wJq+6lthrwpYdR8CI5RCWzHogfSG/B+Dpxgt897zhgcs76/UGIEwbroNKoJ7/EMGULNt
+         4T2mCUGwunZHIdh+PYYhd3TeKpiuOqiZaTbDR4MFisp4OsEDjqm057C9tKI2pMF3Hyjg
+         qziGwvt0erko70CDIQ/CEo7XpDwoKIEdgYy7llgPHpsImP10nkQJc28ssRNSkROSUZWE
+         LhvA==
+X-Forwarded-Encrypted: i=1; AJvYcCWYmni6YAnDXoBSoCBQFEpjww577pDWOvFqk8XS6er0TMyCOc7c8Lp1G699Cz+kEdIoEpGcUkiEsmGYNLwokToQhQ==@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy5t/PZ/iWTYiciiTNzc7mg6ZHwBIY5NbLFEHaGZA/HgpB5dIi3
+	nwClTy3kLa4CG5JSJqJayyobqzAhyZ45OJe1Xv41jzknijUpikR+e0kG5i5uidjiCgRmA6rP/ph
+	va7+r4QoIq73WugSVvEelSy6L+zEmplccvZEk4DeRDDDRx0lRmLtbjuqsA0uFoQ7V4FEMdyj/xA
+	==
+X-Gm-Gg: ASbGnctPi44tkJ5YZoW8rdW5+u1NSpig66FVethBFmwHHMxeuu8z7D1Lim5CgyYh2RP
+	RAUvdl+2yArt4iCCjemnn2I6QKsiP98XTDojOeDyE4XkcdH7xCdjxP6x18qqbCcSU98iZDEPrx0
+	TMqlIPIS6GytzF/Jv/+MYt/LCd+MBCik2u+YcOSb9i1ztVbS1e7DKlEkp3HCPI5yV+X1cAZcydR
+	fcs/TPoV9C8NGaBSadXPtCSTcGkVyWpre4A8FK1KiagfsPodASwsDeHc3SdXzE6vkrzC0P08IUX
+	UyNrnHwoUrG7Zg22TXe9/LA66SNuRGkxkR9zCbMD8zNFu6yKgiw0l733kZd2sRRx8g0dR+wyIUb
+	GuIOARQsf1zgnp4rdA2HniQ6bf0RDYl24UWQ1zrK4A9N22T7JDVcG
+X-Received: by 2002:a05:6a20:12cc:b0:2ff:3752:8375 with SMTP id adf61e73a8af0-32da845f843mr16839559637.45.1760104966498;
+        Fri, 10 Oct 2025 07:02:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGx6lmwhdGB5tiz/Bc58mePgSBZ2wqdgFCoifjtltdKT0RsIy6in4D98ACg4FIrT0oC09J4cw==
+X-Received: by 2002:a05:6a20:12cc:b0:2ff:3752:8375 with SMTP id adf61e73a8af0-32da845f843mr16839190637.45.1760104964177;
+        Fri, 10 Oct 2025 07:02:44 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-590881e4de3sm909304e87.1.2025.10.10.07.02.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 Oct 2025 07:02:41 -0700 (PDT)
+Date: Fri, 10 Oct 2025 17:02:39 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Damon Ding <damon.ding@rock-chips.com>
+Cc: Luca Ceresoli <luca.ceresoli@bootlin.com>, andrzej.hajda@intel.com,
+        neil.armstrong@linaro.org, rfoss@kernel.org,
+        Laurent.pinchart@ideasonboard.com, jonas@kwiboo.se,
+        jernej.skrabec@gmail.com, maarten.lankhorst@linux.intel.com,
+        mripard@kernel.org, tzimmermann@suse.de, airlied@gmail.com,
+        simona@ffwll.ch, shawnguo@kernel.org, s.hauer@pengutronix.de,
+        kernel@pengutronix.de, festevam@gmail.com, inki.dae@samsung.com,
+        sw0312.kim@samsung.com, kyungmin.park@samsung.com, krzk@kernel.org,
+        alim.akhtar@samsung.com, jingoohan1@gmail.com, p.zabel@pengutronix.de,
+        hjc@rock-chips.com, heiko@sntech.de, andy.yan@rock-chips.com,
+        dianders@chromium.org, m.szyprowski@samsung.com, jani.nikula@intel.com,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        imx@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-rockchip@lists.infradead.org
+Subject: Re: [PATCH v6 11/18] drm/display: bridge_connector: Ensure last
+ bridge determines EDID/modes detection capabilities
+Message-ID: <dkblceiweall37j4anpgkumizxc5zni3axnxb5hyokv2jlsta5@immpjaczktnh>
+References: <20250930090920.131094-1-damon.ding@rock-chips.com>
+ <20250930090920.131094-12-damon.ding@rock-chips.com>
+ <20251001180922.6bbe42ac@booty>
+ <a42ebdca-1cbc-498c-b859-336557823f26@rock-chips.com>
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ClientProxiedBy: se-mail02w.axis.com (10.20.40.8) To se-mail01w.axis.com
- (10.20.40.7)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DU6PEPF0000B61C:EE_|GVXPR02MB11133:EE_
-X-MS-Office365-Filtering-Correlation-Id: 7a48c1fa-e92d-42fb-ad9a-08de08026bee
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|82310400026|1800799024|36860700013;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?5g/58upOCZQxAZSgXlg4IcdSa3eTbnjf8fgeUgLBKOy1KT5qfL/uVYa8Ab7d?=
- =?us-ascii?Q?J9fAq/7QphZC/SKToJxkeIFG90LR2x4BaxyH1CxCDzJKtlMAmiVmgS15+Vat?=
- =?us-ascii?Q?s6c93uSesDngDYfdr5wIR/PY2Ji3V3cRZMu8eEK5c0WLBa/ma4sWaiftLAa7?=
- =?us-ascii?Q?7JvMZavkpddq5H5M5KxNBt86Lbw6eoffTRWoYT05Gho4PtZBJN7zBEJbJ3R3?=
- =?us-ascii?Q?VvK2Zuc/ideVdQTkf+5SrlM+SEabbc8lE5iRzBX4I0wRxLm+/SnKAj1jD9Mc?=
- =?us-ascii?Q?+L0meOZq+jKAe5cIkvm1z2ryPMWYcldDQM8VID5F+Kr3HVuaUez9Rzgiqpjc?=
- =?us-ascii?Q?uFqnCLxsEDDZ9ZTONUiu1Sct25oNZvWQCLsMhAnraYQRDDgGrDlulpZT0y9O?=
- =?us-ascii?Q?GqV25DGa9zozLjRmvyDvnOHSY1bTHcsrGHpP7UTpH0BSiJNPy1/UJD2ZW0Pa?=
- =?us-ascii?Q?gBrsuuConI2Li6BOtdE35iQPVhjqnRk6AEy82ncvG4YWnfryb7XtIiIezEmn?=
- =?us-ascii?Q?BGNrBnoZJY9ndqMgJs0JshGsjJpg2rExetshR5OA2pNHvT19RH0vZM7Rd1ys?=
- =?us-ascii?Q?9i6OcCDDw0M9mbbx8/UW8GSfTNC19JSAkAn4OLpzxOV5tD47lFWFZ2cGkf3f?=
- =?us-ascii?Q?+a6AqDpxteW0QkRqpNZWzz0tCkrhXRx44bwazawoq+5mDTICtCv1TvAXrQ2I?=
- =?us-ascii?Q?n3eZvU+Q2OlK3uk5eiKmf3YInkYQrUe4970veX/PvtgXoMY0Yg+HRyTfDtNM?=
- =?us-ascii?Q?EYoe32JhDc4Y26mmwfF5cGsRJjVgOcCHxcIQf9cSFaW12W6sAgMZQWmbxSZF?=
- =?us-ascii?Q?IaDaUxybLqsq84196aK32I3hdnIeMlugEJLE+Elo/CKrdxNX/0rWnmBj5hum?=
- =?us-ascii?Q?3/2kSrIR/xknWZQsX7gOvkQoYQUYR+TMkpL+ZLgIYa9+IxCBAtYfqKYkZTCl?=
- =?us-ascii?Q?fau3z0X3LzUWQx6ngQgiNqhQVXnm3M92bvYQnRdrHIY/gR4TMfZIBFddoleZ?=
- =?us-ascii?Q?py0MkVbHAM4nNVndbB/+snfZI3uXeLeK5dexiRA7BGaB9XUCnVJMlUT4q0NS?=
- =?us-ascii?Q?5Ev92sOghmYTx/8CAN0BFVlGtvwi9f6nExiTH+VvonE+HMctvBJpQAwItmuX?=
- =?us-ascii?Q?pLU5rMaVA6hVjefaSXhp3rek8lXs11xPX7Q9H7xMWlwesYnqRGvBou7I9PzA?=
- =?us-ascii?Q?2JHpmlo4NqB0WUi/tQeNCNnhRV2upQPZZ1/F9dhPWZzpgIvfrzABv2ZeT8TX?=
- =?us-ascii?Q?VtRdznXcRUcIrTnjL6AeW5v9Z31Dgeaw367OVbSn+hlZK3YEYuc2c6roqdNi?=
- =?us-ascii?Q?XeBr8u2t9qH/sIdc8q3yqwoXN9U62nJmnaxNwGDF72/ZNNtyi5C8QCZ8OB4o?=
- =?us-ascii?Q?2rYsdQLnM9Yb2ROwGrbtar8wWqjBgXZHb5sMQkhfLL5fV+0ZD5tDBx2yjhlZ?=
- =?us-ascii?Q?gN89ABq0PVfJEBUUKQo2+bL+3htDC/Jjo3uizp0HAzDhDBjeCDXGfxnV+tRW?=
- =?us-ascii?Q?01gr1VZ/IDKqgyU6cvqYinSNw6zC+DdZV6QKdnb6nHlEmoL1TV6WslO/TV3c?=
- =?us-ascii?Q?KzyLR6ZSDur4r/tVTIs=3D?=
-X-Forefront-Antispam-Report:
-	CIP:195.60.68.100;CTRY:SE;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.axis.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(376014)(82310400026)(1800799024)(36860700013);DIR:OUT;SFP:1101;
-X-OriginatorOrg: axis.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Oct 2025 13:39:22.6440
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7a48c1fa-e92d-42fb-ad9a-08de08026bee
-X-MS-Exchange-CrossTenant-Id: 78703d3c-b907-432f-b066-88f7af9ca3af
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=78703d3c-b907-432f-b066-88f7af9ca3af;Ip=[195.60.68.100];Helo=[mail.axis.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	DU6PEPF0000B61C.eurprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: GVXPR02MB11133
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a42ebdca-1cbc-498c-b859-336557823f26@rock-chips.com>
+X-Proofpoint-ORIG-GUID: TEIedl0A0QRYumBinzP2jk5xjiRwzo57
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA5MDA5OCBTYWx0ZWRfX7+xFYKmgIKaB
+ 8Sz5LiLhZP8HEwmt/T9InsfQL+BcJb7r5ESQglY8lBKeu/aKu7fybKNJWcbm8ZHkG0rrTOueve9
+ wRZAgEs/T9umsq3mdt3ipkJaN/Fhj+568PFxRLRjDr8L/sxWzt6mxw3kRuV6yYup8G7gMZA2YWB
+ z9aSg9tsNn2iNlZcZ5jvA/0pLGGKECR8IChcKIMuJ1JndZkk0sxkXBN8FXamwQFh4b5K95sEUQ1
+ 0kThA7uaOJhJ3Icm7jk5m9EFsUJszFmwXaf/2D7D2M7gZdZAYy2mwxxb8zP2Yr1JNX52ViwoGRT
+ JiKdKm2aWxsLpTHpOubMBB5cHBHZUUrT0gBZaTn6HSnFpsWuHuK7DtTjv1RvzupkNPAGgB35fz3
+ 9wEiC8Yv/qYltERnAi0zg7NHiOIjkQ==
+X-Authority-Analysis: v=2.4 cv=DISCIiNb c=1 sm=1 tr=0 ts=68e913dd cx=c_pps
+ a=yymyAM/LQ7lj/HqAiIiKTw==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=x6icFKpwvdMA:10 a=VwQbUJbxAAAA:8 a=P-IC7800AAAA:8 a=s8YR1HE3AAAA:8
+ a=Y6CNJq9B8L7KKZcxe68A:9 a=CjuIK1q_8ugA:10 a=efpaJB4zofY2dbm2aIRb:22
+ a=d3PnA9EDa4IxuAV0gXij:22 a=jGH_LyMDp9YhSvY-UuyI:22
+X-Proofpoint-GUID: TEIedl0A0QRYumBinzP2jk5xjiRwzo57
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-10_03,2025-10-06_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 malwarescore=0 spamscore=0 clxscore=1015
+ priorityscore=1501 suspectscore=0 phishscore=0 impostorscore=0 adultscore=0
+ bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2510020000
+ definitions=main-2510090098
 
-On Tue, Aug 05, 2025 at 11:33 +0200 Waqar Hameed <waqar.hameed@axis.com> wrote:
+On Thu, Oct 09, 2025 at 12:10:42PM +0800, Damon Ding wrote:
+> Hi Luca,
+> 
+> On 10/2/2025 12:09 AM, Luca Ceresoli wrote:
+> > Hello Damon,
+> > 
+> > On Tue, 30 Sep 2025 17:09:13 +0800
+> > Damon Ding <damon.ding@rock-chips.com> wrote:
+> > 
+> > > When multiple bridges are present, EDID detection capability
+> > > (DRM_BRIDGE_OP_EDID) takes precedence over modes detection
+> > > (DRM_BRIDGE_OP_MODES). To ensure the above two capabilities are
+> > > determined by the last bridge in the chain, we handle three cases:
+> > > 
+> > > Case 1: The later bridge declares only DRM_BRIDGE_OP_MODES
+> > >   - If the previous bridge declares DRM_BRIDGE_OP_EDID, set
+> > >     &drm_bridge_connector.bridge_edid to NULL and set
+> > >     &drm_bridge_connector.bridge_modes to the later bridge.
+> > >   - Ensure modes detection capability of the later bridge will not
+> > >     be ignored.
+> > > 
+> > > Case 2: The later bridge declares only DRM_BRIDGE_OP_EDID
+> > >   - If the previous bridge declares DRM_BRIDGE_OP_MODES, set
+> > >     &drm_bridge_connector.bridge_modes to NULL and set
+> > >     &drm_bridge_connector.bridge_edid to the later bridge.
+> > >   - Although EDID detection capability has higher priority, this
+> > >     operation is for balance and makes sense.
+> > > 
+> > > Case 3: the later bridge declares both of them
+> > >   - Assign later bridge as &drm_bridge_connector.bridge_edid and
+> > >     and &drm_bridge_connector.bridge_modes to this bridge.
+> > >   - Just leave transfer of these two capabilities as before.
+> > 
+> > I think the whole explanation can be more concisely rewritten as:
+> > 
+> > If the later bridge declares OP_EDID, OP_MODES or both, then both
+> > .bridge_modes and .bridge_edid should be set to NULL (if any was set
+> > from a previous bridge), and then .bridge_modes and/or .bridge_edid be
+> > set to the later bridge as is done already.
+> > 
+> > Does this look correct (i.e. does it convey the same meaning)?
+> > 
+> > > --- a/drivers/gpu/drm/display/drm_bridge_connector.c
+> > > +++ b/drivers/gpu/drm/display/drm_bridge_connector.c
+> > > @@ -640,6 +640,7 @@ struct drm_connector *drm_bridge_connector_init(struct drm_device *drm,
+> > >   	struct drm_connector *connector;
+> > >   	struct i2c_adapter *ddc = NULL;
+> > >   	struct drm_bridge *bridge, *panel_bridge = NULL;
+> > > +	struct drm_bridge *pre_bridge_edid, *pre_bridge_modes;
+> > >   	unsigned int supported_formats = BIT(HDMI_COLORSPACE_RGB);
+> > >   	unsigned int max_bpc = 8;
+> > >   	bool support_hdcp = false;
+> > > @@ -668,6 +669,9 @@ struct drm_connector *drm_bridge_connector_init(struct drm_device *drm,
+> > >   	 */
+> > >   	connector_type = DRM_MODE_CONNECTOR_Unknown;
+> > >   	drm_for_each_bridge_in_chain(encoder, bridge) {
+> > > +		pre_bridge_edid = bridge_connector->bridge_edid;
+> > > +		pre_bridge_modes = bridge_connector->bridge_modes;
+> > > +
+> > >   		if (!bridge->interlace_allowed)
+> > >   			connector->interlace_allowed = false;
+> > >   		if (!bridge->ycbcr_420_allowed)
+> > > @@ -681,6 +685,44 @@ struct drm_connector *drm_bridge_connector_init(struct drm_device *drm,
+> > >   			bridge_connector->bridge_detect = bridge;
+> > >   		if (bridge->ops & DRM_BRIDGE_OP_MODES)
+> > >   			bridge_connector->bridge_modes = bridge;
+> > > +
+> > > +		/*
+> > > +		 * When multiple bridges are present, EDID detection capability
+> > > +		 * (DRM_BRIDGE_OP_EDID) takes precedence over modes detection
+> > > +		 * (DRM_BRIDGE_OP_MODES). To ensure the above two capabilities
+> > > +		 * are determined by the last bridge in the chain, we handle
+> > > +		 * three cases:
+> > > +		 *
+> > > +		 * Case 1: The later bridge declares only DRM_BRIDGE_OP_MODES
+> > > +		 *  - If the previous bridge declares DRM_BRIDGE_OP_EDID, set
+> > > +		 *    &drm_bridge_connector.bridge_edid to NULL and set
+> > > +		 *    &drm_bridge_connector.bridge_modes to the later bridge.
+> > > +		 *  - Ensure modes detection capability of the later bridge
+> > > +		 *    will not be ignored.
+> > > +		 *
+> > > +		 * Case 2: The later bridge declares only DRM_BRIDGE_OP_EDID
+> > > +		 *  - If the previous bridge declares DRM_BRIDGE_OP_MODES, set
+> > > +		 *    &drm_bridge_connector.bridge_modes to NULL and set
+> > > +		 *    &drm_bridge_connector.bridge_edid to the later bridge.
+> > > +		 *  - Although EDID detection capability has higher priority,
+> > > +		 *    this operation is for balance and makes sense.
+> > > +		 *
+> > > +		 * Case 3: the later bridge declares both of them
+> > > +		 *  - Assign later bridge as &drm_bridge_connector.bridge_edid
+> > > +		 *    and &drm_bridge_connector.bridge_modes to this bridge.
+> > > +		 *  - Just leave transfer of these two capabilities as before.
+> > > +		 */
+> > > +		if (bridge->ops & DRM_BRIDGE_OP_EDID &&
+> > > +		    !(bridge->ops & DRM_BRIDGE_OP_MODES)) {
+> > > +			if (pre_bridge_modes)
+> > > +				bridge_connector->bridge_modes = NULL;
+> > > +		}
+> > > +		if (bridge->ops & DRM_BRIDGE_OP_MODES &&
+> > > +		    !(bridge->ops & DRM_BRIDGE_OP_EDID)) {
+> > > +			if (pre_bridge_edid)
+> > > +				bridge_connector->bridge_edid = NULL;
+> > > +		}
+> > > +
+> > 
+> > If the above rewrite is correct, then I think this patch can be
+> > rewritten in a simple way (build tested only):
+> > 
+> > diff --git a/drivers/gpu/drm/display/drm_bridge_connector.c b/drivers/gpu/drm/display/drm_bridge_connector.c
+> > index a5bdd6c10643..bd5dbafe88bc 100644
+> > --- a/drivers/gpu/drm/display/drm_bridge_connector.c
+> > +++ b/drivers/gpu/drm/display/drm_bridge_connector.c
+> > @@ -672,14 +672,18 @@ struct drm_connector *drm_bridge_connector_init(struct drm_device *drm,
+> >                  if (!bridge->ycbcr_420_allowed)
+> >                          connector->ycbcr_420_allowed = false;
+> > -               if (bridge->ops & DRM_BRIDGE_OP_EDID)
+> > -                       bridge_connector->bridge_edid = bridge;
+> > +               if (bridge->ops & DRM_BRIDGE_OP_EDID || bridge->ops & DRM_BRIDGE_OP_MODES) {
+> > +                       bridge_connector->bridge_edid = NULL;
+> > +                       bridge_connector->bridge_modes = NULL;
+> > +                       if (bridge->ops & DRM_BRIDGE_OP_EDID)
+> > +                               bridge_connector->bridge_edid = bridge;
+> > +                       if (bridge->ops & DRM_BRIDGE_OP_MODES)
+> > +                               bridge_connector->bridge_modes = bridge;
+> > +               }
+> >                  if (bridge->ops & DRM_BRIDGE_OP_HPD)
+> >                          bridge_connector->bridge_hpd = bridge;
+> >                  if (bridge->ops & DRM_BRIDGE_OP_DETECT)
+> >                          bridge_connector->bridge_detect = bridge;
+> > -               if (bridge->ops & DRM_BRIDGE_OP_MODES)
+> > -                       bridge_connector->bridge_modes = bridge;
+> >                  if (bridge->ops & DRM_BRIDGE_OP_HDMI) {
+> >                          if (bridge_connector->bridge_hdmi)
+> >                                  return ERR_PTR(-EBUSY);
+> > 
+> 
+> Yes, this is correct and maintains functional equivalence with the previous
+> implementation.
+> 
+> I previously attempted to implement this feature by modifying the logic in
+> this section. However, that approach would obscure the explicit propagation
+> semantics of the bridge chain flags (OP_EDID/OP_HPD/OP_DETECT/OP_MODES).
+> Therefore, I finally decided to implemented it as a specific check after
+> this code block.
+> 
+> Dmitry, what's your take on this?
 
-> When `devm_add_action_or_reset()` fails, it is due to a failed memory
-> allocation and will thus return `-ENOMEM`. `dev_err_probe()` doesn't do
-> anything when error is `-ENOMEM`. Therefore, remove the useless call to
-> `dev_err_probe()` when `devm_add_action_or_reset()` fails, and just
-> return the value instead.
+I think I prefer Luca's code, it is simpler and easier to understand. It
+doesn't need a huge comment, something like "leave the last bridge which
+provides either OP_EDID or OP_MODES" should be enough.
 
-Friendly ping incoming!
+> 
+> > Another thing to note is that this patch conflicts with [0], which I
+> > plan to apply in the next few days. The two patches are orthogonal but
+> > they insist on the same lines (those assigning
+> > bridge_connector->bridge_* = bridge). Not a big deal, whichever patch
+> > comes later will be easily adapted. Just wanted to ensure you are aware.
+> > 
+> > [0] https://lore.kernel.org/all/20250926-drm-bridge-alloc-getput-bridge-connector-v2-1-138b4bb70576@bootlin.com/
+> > 
+> 
+> This is indeed a clever approach to the managing bridge resource cleanup in
+> drm_bridge_connector. Thanks a lot for the heads-up! I'll resolve this
+> conflict and rebase the patch series.
+> 
+> Apologies for the delayed reply as I was on vacation. ;-)
+> 
+> Best regards,
+> Damon
+> 
+
+-- 
+With best wishes
+Dmitry
 
