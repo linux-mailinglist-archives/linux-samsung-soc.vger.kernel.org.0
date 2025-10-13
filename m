@@ -1,79 +1,79 @@
-Return-Path: <linux-samsung-soc+bounces-11583-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-11589-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id A27A3BD36EB
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 13 Oct 2025 16:18:06 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 091F6BD36DE
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 13 Oct 2025 16:18:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 881164F2CA3
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 13 Oct 2025 14:17:25 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 29B0E189A278
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 13 Oct 2025 14:18:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2F79430B506;
-	Mon, 13 Oct 2025 14:15:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E7142749C1;
+	Mon, 13 Oct 2025 14:15:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="C7jMGw5a"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="V2fql6D5"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
+Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 188193090C4
-	for <linux-samsung-soc@vger.kernel.org>; Mon, 13 Oct 2025 14:15:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76CA52EBDF9
+	for <linux-samsung-soc@vger.kernel.org>; Mon, 13 Oct 2025 14:15:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760364918; cv=none; b=ZYixOYqCP+xmLDRoMRF/Nk7WBakDi7o//wrFLXh1UGq9thWQ46ek9Ni65SUlK2vvaZwjjYMDhcgmqRGVEOXUIxPOcFd5rBTOqTuP5/0AF/Lmwr/4xpnQHyF1ggGo1gVlUUuTh+qPPA9/SulN22OnD2NRNWrcGq+Yj/Upbrlq+nQ=
+	t=1760364924; cv=none; b=Iv/lorIiaTnV8rRHSSmbd+Me7uwmTUZ+gZGnD8tJYPNR01eS10O+ivcSwaZOf0cjTuUaAeKaWVGxy/WprSX14DHWwwANZcrW5HYhKLyhqdqQgTV89rvvqGlqLmIlpA5l0+9Oe/sGirvCmvKBNGDbQdyzllu5wSTh0LDJviTHEqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760364918; c=relaxed/simple;
-	bh=Pzzu7GhYxyifz0hH0hqoTi5DPNxH7bOKzjeCFjKc3co=;
+	s=arc-20240116; t=1760364924; c=relaxed/simple;
+	bh=8RLalehrPbI0nVV069+gt8p26w3tCNH5+ujATmPll/c=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=kZVKQ7oXj6fldf4kR+ASVL9HspF+7sxHlfnp0D8tezU+AYeBwLwAln8UA0QkcfNYqZjRD4Kt48d9IlrgxyuEab6Qrv5RNXQ2WIll0IDVA+drM4QL9AU0yQjm0pLlnwpES0v+wCT9a+rn810XQLXv+KWkHoFBIOoVPZvaAeafwwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=C7jMGw5a; arc=none smtp.client-ip=209.85.167.48
+	 In-Reply-To:To:Cc; b=qKJunGzCCwvWNe4fowekGRTyBJMM/sy9HL5lIgt17h9mUlUJigkI7T1p9xwfEX4cqpaN2Rxxu1ftF+Frevn7lrezKBecgncB5fI94GG7GRAH8o/zVRgTOA5x9kRlS1nDDLcTEDoAzanLWJXNmBjGMqfBjr4hXdd8TF/S8C2Tb5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=V2fql6D5; arc=none smtp.client-ip=209.85.208.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-57a59124323so4619787e87.2
+Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-36a6a39752bso40631281fa.0
         for <linux-samsung-soc@vger.kernel.org>; Mon, 13 Oct 2025 07:15:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google; t=1760364901; x=1760969701; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=uQZvCnP1P0SuqiqaQUtwVRm3JfcVlv6UnYBLGV8/TWE=;
-        b=C7jMGw5ap0b3UkHYi5TYPhtTGUfLpuyWVjuXwsJrSLgqJxJDxv8Jrs+je2ZCgNLctd
-         IPAHDOh3zhmKkw1CCI7aS2w3211raMFFlAQpiKVI+vR9tZpuhjrFx+t0h9uNW3k+nvfq
-         MIg4WjxOOEXDLl6YAqKyAG9au+eMxO3EnQrx0=
+        bh=BSJdC/O4+ZsAqBeRWK64BAxaBhpHQ02dQ2HoRNMjbAI=;
+        b=V2fql6D5U2BZb/+KU6vl5cEnZ/gS1gTOUzW//ljbqC37R1VI1sE4eqTI9I8mJ2vM24
+         vc2PvsrBEAV1In63fqLhTPoy5zQg1MUmUrjyzSKiPS1D4+l3cCk8weIFoGspp67CUkRG
+         A2lpZVm+mcIOJasf9/3INfvQf/15M2nrhaHak=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1760364901; x=1760969701;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=uQZvCnP1P0SuqiqaQUtwVRm3JfcVlv6UnYBLGV8/TWE=;
-        b=I1OC+BNfjTATwGu7hZu5iNKKh5iQEzZ0rfcq1n8Y1iLaQXRUutSf/z1eAa2lvH76wW
-         gJBdIryRviEQM9JO2f8delB+SrxPe5CSCcWFCGJCcIzcItstNko+Mbvu+8GQ4hVOofgA
-         0n5h2KWWTO5Ehx7gdDa3meqp8wSionhobEwhXuoTFNwglVZJfp0efewdsQneYzkqWh9G
-         XFmlF/ov7MYbQNmD94fXdC55/ftiF0/ydXxltU8VRJkdK1s2YrFuEAWZZYon74x8k+ZW
-         kSzEbjeekHhFt4n551oyDzoKZ5bs64F0Ss2BaCoRSURAa+mymRwfjMtR/39mxk95N6jK
-         Urow==
-X-Forwarded-Encrypted: i=1; AJvYcCW4rVbqaXFNsdBu4OTW0RMUr4CpVv6cxBNN2oNKl/gBbQwrAIHKobbXe0oGLzcQZ6c2hbxQmTK7WW25diI362l6DA==@vger.kernel.org
-X-Gm-Message-State: AOJu0YxmxTcidvSy6Y8va/bYsAl9qhUrlsu89ShvxjeN5eu8JtniMU2f
-	J2tdw71UH0nfLZxs4LNu976t2JoCc34UUupGeEA7GxGsVi1YddomLURWp6wOu4ISnw==
-X-Gm-Gg: ASbGncvnO+yXn4t9WHgYMVhz53HCJPT6cv9p2VCL9VKHdBsTrhYNUxP/6QZAyKZ4UFW
-	teC8oilBOTlgtQimJXKlnvhEN5aFoABxPM+LCRuqWIUAzGcsqGo1hqyZKZf7zWKIAO4AiIU2Nxk
-	Xzm8RfB0HXfaCnvquAYbdHmsbgVu9UcPtgs2NhrlqcusmD4PUDIKdrFvwHFFMwgtwgfyGBqFA6B
-	f/rwsaGOLgrLgznmZxpU6UldfW/zz9frdqHcSJtd4FELG5pyTfV4+p4AK1/GrdIzWwaqegReg4G
-	Nn3ikESh9zvxo6SvmTXOsUNZcyuL5zneGCkBeuC8tfFKMrHzGSyI2Wgp0aDMSzCOxznhaZ3P1+2
-	2cD/XQHS045i6iNTWrYDUx/9HObtvD8szeyYhpUk1CumkrxJo/6PMPRL4iVkzgdcmrSuV1nLeVT
-	rVJQMhU3F7SZx5qQz2a4JwA2AiO4TI
-X-Google-Smtp-Source: AGHT+IHp8qUEbZiZFjcq8gL768jxh7/txPc1OJzdAQ1KXrMavPh6zmcAuzYCqI5NGEMHZ2sFOcmEXw==
-X-Received: by 2002:a05:6512:a90:b0:55f:6759:a792 with SMTP id 2adb3069b0e04-5906d8ed836mr5438343e87.34.1760364900643;
-        Mon, 13 Oct 2025 07:15:00 -0700 (PDT)
+        bh=BSJdC/O4+ZsAqBeRWK64BAxaBhpHQ02dQ2HoRNMjbAI=;
+        b=J4edvjwKNRLQ7N8GYIOJBlnwZR+2y/skPUWvmNH1K0QbgRescWexD19UXR/leQ8uOd
+         0FSbH3SL4XoQHL2SA2/2YTi6Jwvgf6VUQEAIX4o5vczLS5IRo+N1IOmQSQTqhssrwNr/
+         4znAWPEAx9uONmUDs/GNoy0aKtBmyVacZx5AGS6+kEqnqRsePBJrIUiIlPjBEf5oUSQZ
+         LeRMGkflixu6PChtZrPQEAb8hnwXA8Mfa6/WOiCSyBNT2Je/GXfAqrpLwFPcXg0T8VyL
+         xcRsR6G1aIVK9dDksGnYSmof1S6xxd+9aGrbmOVSUk/aaxzTtfMqMwEKC3MGruW5vPUM
+         nzCw==
+X-Forwarded-Encrypted: i=1; AJvYcCVQL20Gf9wjVTl02Krz+uWAgDbLXpci687nwtDqNHP7Z9STag/Z1piHUWypBTPNWwOKARokSc399rbq3O+USM3+4w==@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy8ih2YogcfanqUJVHH+ivPtKI0hiYZt8qh6DqLDtR3axiLQqnu
+	Jz8Q5WK7I1T7Sa3ztW63IeGqGKdS14QXJHRN/LjLXkKfC2JVt9t2mP46PfjJapjRFg==
+X-Gm-Gg: ASbGncuL3K59xqrAhpsipBWgqzYcMGi/f1sUdtXgP+7WzSFnheS+AsKumaGoX9o2Vo9
+	PIEYnKSnraFY9u1WR6xncyTHEUYMt/Xt+TnJGMn36Dp1x+CZ9NMYBNirrPdMF0Xn9DWLTf/0yJM
+	oddIsXReuT9maz+ZhRhNId/InEMpXvQb5LbqqeB0EvI4C8+czMT0oNdThm8a5w32MivY7biVV6C
+	lLxtdBKFvbkRrZwpDJInKdf6/2551CPDiIoUDK1mHXrEitGqdM4muDDr8bFkegTD3Smr9MWh1pG
+	6bnTTWsKjkoxujyUCxPGImZ3wFZkQqM6fHo1+w/2xKzvac/alklugWUcBZdHCrQhKdpe8gIoPq0
+	A/jg3458r8rm3d3D9yprvTH5cgw3Aql5xptLQRWsupO3waQy7LQQKxBqDsE5ajZU7LJKQTbo24T
+	+F0qHndqKGbfbYJS5CdQ2kn+W/Dp/8BZOujOIP2dE=
+X-Google-Smtp-Source: AGHT+IHaXYtEGcC0lCeqZAPaJ1Eba36sEUnGMYsHL1RWVLLcW4i0NjVadIfSh/QN3FLm+/VJwSwBng==
+X-Received: by 2002:a05:651c:3617:b0:36d:501:76d8 with SMTP id 38308e7fff4ca-37609e5e0b9mr54139201fa.31.1760364901230;
+        Mon, 13 Oct 2025 07:15:01 -0700 (PDT)
 Received: from ribalda.c.googlers.com (56.213.88.34.bc.googleusercontent.com. [34.88.213.56])
         by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-590881e4e58sm4165256e87.25.2025.10.13.07.15.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Mon, 13 Oct 2025 07:15:00 -0700 (PDT)
 From: Ricardo Ribalda <ribalda@chromium.org>
-Date: Mon, 13 Oct 2025 14:14:59 +0000
-Subject: [PATCH 19/32] media: rj54n1cb0c: Use %pe format specifier
+Date: Mon, 13 Oct 2025 14:15:00 +0000
+Subject: [PATCH 20/32] media: i2c: st-mipid02: Use %pe format specifier
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
@@ -82,7 +82,7 @@ List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251013-ptr_err-v1-19-2c5efbd82952@chromium.org>
+Message-Id: <20251013-ptr_err-v1-20-2c5efbd82952@chromium.org>
 References: <20251013-ptr_err-v1-0-2c5efbd82952@chromium.org>
 In-Reply-To: <20251013-ptr_err-v1-0-2c5efbd82952@chromium.org>
 To: Linus Walleij <linus.walleij@linaro.org>, 
@@ -135,40 +135,28 @@ a symbolic error name (eg. -EINVAL) and it makes the code simpler by
 omitting PTR_ERR().
 
 This patch fixes this cocci report:
-./i2c/rj54n1cb0c.c:1361:4-11: WARNING: Consider using %pe to print PTR_ERR()
-./i2c/rj54n1cb0c.c:1370:4-11: WARNING: Consider using %pe to print PTR_ERR()
+./i2c/st-mipid02.c:751:3-10: WARNING: Consider using %pe to print PTR_ERR()
 
 Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
 ---
- drivers/media/i2c/rj54n1cb0c.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/media/i2c/st-mipid02.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/i2c/rj54n1cb0c.c b/drivers/media/i2c/rj54n1cb0c.c
-index 6dfc912168510fb1bd308f834911f9de705844b7..e95342d706c39a853e8c18de1ce447a5fa508565 100644
---- a/drivers/media/i2c/rj54n1cb0c.c
-+++ b/drivers/media/i2c/rj54n1cb0c.c
-@@ -1357,8 +1357,8 @@ static int rj54n1_probe(struct i2c_client *client)
- 	rj54n1->pwup_gpio = gpiod_get_optional(&client->dev, "powerup",
- 					       GPIOD_OUT_LOW);
- 	if (IS_ERR(rj54n1->pwup_gpio)) {
--		dev_info(&client->dev, "Unable to get GPIO \"powerup\": %ld\n",
--			 PTR_ERR(rj54n1->pwup_gpio));
-+		dev_info(&client->dev, "Unable to get GPIO \"powerup\": %pe\n",
-+			 rj54n1->pwup_gpio);
- 		ret = PTR_ERR(rj54n1->pwup_gpio);
- 		goto err_clk_put;
+diff --git a/drivers/media/i2c/st-mipid02.c b/drivers/media/i2c/st-mipid02.c
+index 41ae25b0911f02517f137d6b5307d13154266e07..4675181af5fb00df837c8b796fc32d50e077a480 100644
+--- a/drivers/media/i2c/st-mipid02.c
++++ b/drivers/media/i2c/st-mipid02.c
+@@ -747,8 +747,8 @@ static int mipid02_parse_rx_ep(struct mipid02_dev *bridge)
+ 	of_node_put(ep_node);
+ 
+ 	if (IS_ERR(asd)) {
+-		dev_err(&client->dev, "fail to register asd to notifier %ld",
+-			PTR_ERR(asd));
++		dev_err(&client->dev, "fail to register asd to notifier %pe",
++			asd);
+ 		return PTR_ERR(asd);
  	}
-@@ -1366,8 +1366,8 @@ static int rj54n1_probe(struct i2c_client *client)
- 	rj54n1->enable_gpio = gpiod_get_optional(&client->dev, "enable",
- 						 GPIOD_OUT_LOW);
- 	if (IS_ERR(rj54n1->enable_gpio)) {
--		dev_info(&client->dev, "Unable to get GPIO \"enable\": %ld\n",
--			 PTR_ERR(rj54n1->enable_gpio));
-+		dev_info(&client->dev, "Unable to get GPIO \"enable\": %pe\n",
-+			 rj54n1->enable_gpio);
- 		ret = PTR_ERR(rj54n1->enable_gpio);
- 		goto err_gpio_put;
- 	}
+ 	bridge->notifier.ops = &mipid02_notifier_ops;
 
 -- 
 2.51.0.760.g7b8bcc2412-goog
