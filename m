@@ -1,79 +1,79 @@
-Return-Path: <linux-samsung-soc+bounces-11589-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-11582-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 091F6BD36DE
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 13 Oct 2025 16:18:00 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 713B6BD3756
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 13 Oct 2025 16:19:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 29B0E189A278
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 13 Oct 2025 14:18:23 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2EE753AF979
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 13 Oct 2025 14:17:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E7142749C1;
-	Mon, 13 Oct 2025 14:15:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E47D230AD0C;
+	Mon, 13 Oct 2025 14:15:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="V2fql6D5"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="oTtzD0MG"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76CA52EBDF9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 185B02EC08A
 	for <linux-samsung-soc@vger.kernel.org>; Mon, 13 Oct 2025 14:15:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760364924; cv=none; b=Iv/lorIiaTnV8rRHSSmbd+Me7uwmTUZ+gZGnD8tJYPNR01eS10O+ivcSwaZOf0cjTuUaAeKaWVGxy/WprSX14DHWwwANZcrW5HYhKLyhqdqQgTV89rvvqGlqLmIlpA5l0+9Oe/sGirvCmvKBNGDbQdyzllu5wSTh0LDJviTHEqk=
+	t=1760364916; cv=none; b=RmxOu1udPMSl7IfZTOU/DGtAkSAlrq6EjkrYymMD1Wn/GwvIF7PlEZ02kusQwTxmsGd5wRmVF2opgvjgx9qS7xERO448jwK1ijeCtpcmthsOtuODiEaVIPSUaStOItIU+koRx6THX+qrYhoYcY7urhij7g3uxy0nTyOpyRRX7bc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760364924; c=relaxed/simple;
-	bh=8RLalehrPbI0nVV069+gt8p26w3tCNH5+ujATmPll/c=;
+	s=arc-20240116; t=1760364916; c=relaxed/simple;
+	bh=Pr7uYtACvfrJdA0iTcAeWQURuxIqSlR2/8LxrEHEZVY=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=qKJunGzCCwvWNe4fowekGRTyBJMM/sy9HL5lIgt17h9mUlUJigkI7T1p9xwfEX4cqpaN2Rxxu1ftF+Frevn7lrezKBecgncB5fI94GG7GRAH8o/zVRgTOA5x9kRlS1nDDLcTEDoAzanLWJXNmBjGMqfBjr4hXdd8TF/S8C2Tb5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=V2fql6D5; arc=none smtp.client-ip=209.85.208.173
+	 In-Reply-To:To:Cc; b=HqBsIRPFd1mTF1FXJ2n+Kobva9C5rZDtAxgxYU0lfR35LRut43UQsK9domklp+VJNenVHqHh7WMaPaRTslzt8wInqPmbpXOrp1ddPLQqIpOmRoqzRCigSv9OY1TF3MfSJwoG3ohNKwTRH3YFC8pOIj5fdccPZeCCQAwk+i6AN/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=oTtzD0MG; arc=none smtp.client-ip=209.85.167.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-36a6a39752bso40631281fa.0
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 13 Oct 2025 07:15:04 -0700 (PDT)
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-579d7104c37so5206994e87.3
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 13 Oct 2025 07:15:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1760364901; x=1760969701; darn=vger.kernel.org;
+        d=chromium.org; s=google; t=1760364902; x=1760969702; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=BSJdC/O4+ZsAqBeRWK64BAxaBhpHQ02dQ2HoRNMjbAI=;
-        b=V2fql6D5U2BZb/+KU6vl5cEnZ/gS1gTOUzW//ljbqC37R1VI1sE4eqTI9I8mJ2vM24
-         vc2PvsrBEAV1In63fqLhTPoy5zQg1MUmUrjyzSKiPS1D4+l3cCk8weIFoGspp67CUkRG
-         A2lpZVm+mcIOJasf9/3INfvQf/15M2nrhaHak=
+        bh=Xp5+d2aM9HDmwL1D3Ee1aFLEQL7phGBi28Bq8ZC4kWY=;
+        b=oTtzD0MGAaFl2nYxEEX+709h/SDmu6So9mFVSNgkbc+0F28FkITOAgAvQGVvbdx/IQ
+         fT9uPnXKAu/J8QuRbvs76Tn3A1KPSQuydIB+66Z+OCCZIgVNzpIHasHphxNeTs7avYzd
+         UyDjCOuWLi0BmgmCfOehC4e1N9e6vB6ONxWyU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760364901; x=1760969701;
+        d=1e100.net; s=20230601; t=1760364902; x=1760969702;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=BSJdC/O4+ZsAqBeRWK64BAxaBhpHQ02dQ2HoRNMjbAI=;
-        b=J4edvjwKNRLQ7N8GYIOJBlnwZR+2y/skPUWvmNH1K0QbgRescWexD19UXR/leQ8uOd
-         0FSbH3SL4XoQHL2SA2/2YTi6Jwvgf6VUQEAIX4o5vczLS5IRo+N1IOmQSQTqhssrwNr/
-         4znAWPEAx9uONmUDs/GNoy0aKtBmyVacZx5AGS6+kEqnqRsePBJrIUiIlPjBEf5oUSQZ
-         LeRMGkflixu6PChtZrPQEAb8hnwXA8Mfa6/WOiCSyBNT2Je/GXfAqrpLwFPcXg0T8VyL
-         xcRsR6G1aIVK9dDksGnYSmof1S6xxd+9aGrbmOVSUk/aaxzTtfMqMwEKC3MGruW5vPUM
-         nzCw==
-X-Forwarded-Encrypted: i=1; AJvYcCVQL20Gf9wjVTl02Krz+uWAgDbLXpci687nwtDqNHP7Z9STag/Z1piHUWypBTPNWwOKARokSc399rbq3O+USM3+4w==@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy8ih2YogcfanqUJVHH+ivPtKI0hiYZt8qh6DqLDtR3axiLQqnu
-	Jz8Q5WK7I1T7Sa3ztW63IeGqGKdS14QXJHRN/LjLXkKfC2JVt9t2mP46PfjJapjRFg==
-X-Gm-Gg: ASbGncuL3K59xqrAhpsipBWgqzYcMGi/f1sUdtXgP+7WzSFnheS+AsKumaGoX9o2Vo9
-	PIEYnKSnraFY9u1WR6xncyTHEUYMt/Xt+TnJGMn36Dp1x+CZ9NMYBNirrPdMF0Xn9DWLTf/0yJM
-	oddIsXReuT9maz+ZhRhNId/InEMpXvQb5LbqqeB0EvI4C8+czMT0oNdThm8a5w32MivY7biVV6C
-	lLxtdBKFvbkRrZwpDJInKdf6/2551CPDiIoUDK1mHXrEitGqdM4muDDr8bFkegTD3Smr9MWh1pG
-	6bnTTWsKjkoxujyUCxPGImZ3wFZkQqM6fHo1+w/2xKzvac/alklugWUcBZdHCrQhKdpe8gIoPq0
-	A/jg3458r8rm3d3D9yprvTH5cgw3Aql5xptLQRWsupO3waQy7LQQKxBqDsE5ajZU7LJKQTbo24T
-	+F0qHndqKGbfbYJS5CdQ2kn+W/Dp/8BZOujOIP2dE=
-X-Google-Smtp-Source: AGHT+IHaXYtEGcC0lCeqZAPaJ1Eba36sEUnGMYsHL1RWVLLcW4i0NjVadIfSh/QN3FLm+/VJwSwBng==
-X-Received: by 2002:a05:651c:3617:b0:36d:501:76d8 with SMTP id 38308e7fff4ca-37609e5e0b9mr54139201fa.31.1760364901230;
+        bh=Xp5+d2aM9HDmwL1D3Ee1aFLEQL7phGBi28Bq8ZC4kWY=;
+        b=CMaIVmcoeyzFS+jjp7sX3JvyVSLmG91qDh0Cj+/mIc3bqoqt5+kkFGSB/FfzJrvjl+
+         xk27+tzvq+/12jcZBQLs1hCSlfVzKUBbaTA9H4Wa99MR6faW1yBhzQhZ9I8jSXyR3IYT
+         uZpbQKDbeCxQvEE49SFvWi157p5MCkYLxmUONR6C1oYlILS/vdB6U427G3pdCZM9rE24
+         xR+PmVwQOGKTy4VjD316p3cCtCchOV7STzJqeKEWGurebPZDxHl+OqL4GSA9z5U1fjY4
+         EvBbVeWXA4AbdGgarhtRqWMblkdrL4G+tvGqD5MiSMuaAA4uh/VIwrZKphqnPrKwXfz4
+         6Twg==
+X-Forwarded-Encrypted: i=1; AJvYcCUWlUQPOTO6LsbsAWLirjl/ZXlNjvvV+4QIWB53Zb1KNTfcLclmXVbOp4U0KIPXXNi2LvAvPtK3BanMJc3xIuFbHw==@vger.kernel.org
+X-Gm-Message-State: AOJu0YwiEV1yJWpSNOW8dpJvaQoNJVgvZCewy5f/oAyB1J/KNHOTJ0bC
+	Ac94W2gPDZfK95TnqVmDvbx1j6eaJasj9JT/G535evHaiQByZu2hjC9k32ed59/8oQ==
+X-Gm-Gg: ASbGncuKzsJQ0ZrSY+l6Xdx1vIYCIeLX/YeYSHQ08gS7KP2qhutrewf7zzrrCHaf7Y0
+	fFXu91VRtbmieTAAObyhmwuNlKhSwB6a9XbHnGQ8n21wusZ0JWop7ik1MYJ02r4cUfmmggr4RQX
+	y2S6ChzrUjhv6lByqzBCbd+3Q5E9evnxk6S+WDUn+X2otTAMcjQj48M0978M59n26R51fhj50DY
+	lYWFMi9V3MDJhbxUSIlQIZjH4vsWSAorkN/O/Iud9Rp6869/PsLDQtdzQ9hy2F18Xuesgk8s7HG
+	jloawP3qe4NWkMz5zZcBn1U4YCgZUZ2DhOSaoZRGGINlKYzA2LSYAPYqwvS0WW23ONT0oi1vQZF
+	kD6vc056TDN/SqyOkCJhZU+F7s2cyT8pyLVRvgFeXzMKwtuINtfpXidHSNOlBppPoUTkCwwP468
+	L4Y3h6v8oI1qQAglaRAde+DMd6vB+l
+X-Google-Smtp-Source: AGHT+IG5Jbn8AREYVQz4yshVmuRi7HcTs/B5++Cc/GK88THJwh0ZT5hT0MoIErPfPNNX7o2ai5GIJw==
+X-Received: by 2002:a05:6512:1389:b0:583:ac7e:4e07 with SMTP id 2adb3069b0e04-5906d89243fmr6542710e87.14.1760364901812;
         Mon, 13 Oct 2025 07:15:01 -0700 (PDT)
 Received: from ribalda.c.googlers.com (56.213.88.34.bc.googleusercontent.com. [34.88.213.56])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-590881e4e58sm4165256e87.25.2025.10.13.07.15.00
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-590881e4e58sm4165256e87.25.2025.10.13.07.15.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Oct 2025 07:15:00 -0700 (PDT)
+        Mon, 13 Oct 2025 07:15:01 -0700 (PDT)
 From: Ricardo Ribalda <ribalda@chromium.org>
-Date: Mon, 13 Oct 2025 14:15:00 +0000
-Subject: [PATCH 20/32] media: i2c: st-mipid02: Use %pe format specifier
+Date: Mon, 13 Oct 2025 14:15:01 +0000
+Subject: [PATCH 21/32] media: ipu-bridge: Use %pe format specifier
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
@@ -82,7 +82,7 @@ List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251013-ptr_err-v1-20-2c5efbd82952@chromium.org>
+Message-Id: <20251013-ptr_err-v1-21-2c5efbd82952@chromium.org>
 References: <20251013-ptr_err-v1-0-2c5efbd82952@chromium.org>
 In-Reply-To: <20251013-ptr_err-v1-0-2c5efbd82952@chromium.org>
 To: Linus Walleij <linus.walleij@linaro.org>, 
@@ -135,28 +135,28 @@ a symbolic error name (eg. -EINVAL) and it makes the code simpler by
 omitting PTR_ERR().
 
 This patch fixes this cocci report:
-./i2c/st-mipid02.c:751:3-10: WARNING: Consider using %pe to print PTR_ERR()
+./pci/intel/ipu-bridge.c:567:3-10: WARNING: Consider using %pe to print PTR_ERR()
 
 Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
 ---
- drivers/media/i2c/st-mipid02.c | 4 ++--
+ drivers/media/pci/intel/ipu-bridge.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/i2c/st-mipid02.c b/drivers/media/i2c/st-mipid02.c
-index 41ae25b0911f02517f137d6b5307d13154266e07..4675181af5fb00df837c8b796fc32d50e077a480 100644
---- a/drivers/media/i2c/st-mipid02.c
-+++ b/drivers/media/i2c/st-mipid02.c
-@@ -747,8 +747,8 @@ static int mipid02_parse_rx_ep(struct mipid02_dev *bridge)
- 	of_node_put(ep_node);
- 
- 	if (IS_ERR(asd)) {
--		dev_err(&client->dev, "fail to register asd to notifier %ld",
--			PTR_ERR(asd));
-+		dev_err(&client->dev, "fail to register asd to notifier %pe",
-+			asd);
- 		return PTR_ERR(asd);
+diff --git a/drivers/media/pci/intel/ipu-bridge.c b/drivers/media/pci/intel/ipu-bridge.c
+index 4e579352ab2c0be656576fa223429432940747d8..153b2f3685b447130b7ddfc2f971ffca8acd68aa 100644
+--- a/drivers/media/pci/intel/ipu-bridge.c
++++ b/drivers/media/pci/intel/ipu-bridge.c
+@@ -563,8 +563,8 @@ static void ipu_bridge_instantiate_vcm_work(struct work_struct *work)
+ 	vcm_client = i2c_acpi_new_device_by_fwnode(acpi_fwnode_handle(adev),
+ 						   1, &data->board_info);
+ 	if (IS_ERR(vcm_client)) {
+-		dev_err(data->sensor, "Error instantiating VCM client: %ld\n",
+-			PTR_ERR(vcm_client));
++		dev_err(data->sensor, "Error instantiating VCM client: %pe\n",
++			vcm_client);
+ 		goto out_pm_put;
  	}
- 	bridge->notifier.ops = &mipid02_notifier_ops;
+ 
 
 -- 
 2.51.0.760.g7b8bcc2412-goog
