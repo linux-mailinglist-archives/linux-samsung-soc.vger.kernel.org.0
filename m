@@ -1,79 +1,79 @@
-Return-Path: <linux-samsung-soc+bounces-11573-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-11579-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1F751BD3671
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 13 Oct 2025 16:16:32 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0F553BD370E
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 13 Oct 2025 16:18:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id BDB7E4F3199
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 13 Oct 2025 14:16:00 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id ACE113E0D80
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 13 Oct 2025 14:16:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2ADD13093DE;
-	Mon, 13 Oct 2025 14:15:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD44326C3BC;
+	Mon, 13 Oct 2025 14:15:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="XEDSeT2F"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="F0MXKH8X"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E23826656F
-	for <linux-samsung-soc@vger.kernel.org>; Mon, 13 Oct 2025 14:14:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 111C2308F1F
+	for <linux-samsung-soc@vger.kernel.org>; Mon, 13 Oct 2025 14:15:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760364904; cv=none; b=XwHutYTX8hBivssdv04tv9kX8TlLpXsn8KzSQlCvpmRg6GkPb4QJgYPE7ny+vRNPiiCMuvJ829is2qTXye1+DoXrAQdUU4c8l+uJkM2XRqlja5lhB70bCHGZ3f6LCpDVGyK4gOifMnUX/0lHlBEjCHaORhvTn7TlMPLXUtc4mts=
+	t=1760364914; cv=none; b=jPdf/yCq1jq2Lq/v4J3vNXmNTrZIu1sCFwhy+wiahz2fcUKl6iX9zvxuOIZqmWAbnLDcrWHZC/iXb9Jtd+mrMBccZXuytsT7E2SjHjCX0EXH3JiFY4wQ/R9JGFIexwymwWI+BNmb/bCDE2XlMB84fC1bY1nJjapcbiRZ/l2TbxI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760364904; c=relaxed/simple;
-	bh=PoPtHLGESxHSet6DKhSq32L4rnbboY4bB4TsHRSTKBk=;
+	s=arc-20240116; t=1760364914; c=relaxed/simple;
+	bh=IYbyVo3NUXYVIwRmrClYpoFVDSCS8PA6N1mE0EyDE2w=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=gq/ekrLoE8y+pNFmqTO1cLygCHGr4HdAtY7UOSXHKfOwtJYFrmKWNsFtZeHJhH29TymLxg/NxaMTxa5L9W+eCWlHC4MorR4awUsICg1a8fvlaV55rvsByVVljUtqo1JRv/blEsMxb6MXuOh3raXQk7sfvY1BiGJfefUE+6ZgwUk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=XEDSeT2F; arc=none smtp.client-ip=209.85.167.41
+	 In-Reply-To:To:Cc; b=qU6q6YhPySB5+VqwVvsckrSwHwHOSz3C5ctgudrZGlUWfXuiptov9hOYLtz5Fe5NfTyytnZQWEAKcBvEVxQv1m/8S+YKq0s6mFa2XeH20X7Z2g1J4kV+5q4qcAsnv26Qn3FkrR+gtZNavRW0tsMJqQM6GNjSpg+uSeT0VjPaUcs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=F0MXKH8X; arc=none smtp.client-ip=209.85.167.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-57bd04f2e84so4681826e87.1
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 13 Oct 2025 07:14:59 -0700 (PDT)
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-59093864727so2839249e87.3
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 13 Oct 2025 07:15:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google; t=1760364898; x=1760969698; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=h/KkfbsbDFUpgpWR/Q+1n2e+SsZd/m2BbfBCG6Meudo=;
-        b=XEDSeT2F4b1hw1txr+gV6rS/DIfjBKvYcomtDjmiUyO3XsaM6alkVnnzztSmS2lcii
-         thfDO9/Dy1DHTHohdQ0owiRufRA+ZVIQyS6DByElS1aTBixn4Xs4C/ZfKl7SjW3yr6wM
-         cFcxtmKvMJP0UkyDNXKag61cJFndIwpUgI4u0=
+        bh=U+HlSqes1yCsLkQoWVAYYhek4ZxMIKlt6Lo2LEEYk1o=;
+        b=F0MXKH8XD/+Omkozp3JvPJdc/BgEySnoAcDXLAi0YqPufXrNDmTdixfngz/T3eZE4T
+         xqAc86uhTwvo8VZTjgsPwJsZYxVrNylI8VWVHmxHFR1axK1LoY0M3mQoupHyntlc0nQH
+         xRuqav9bqa1CWcf/RF+DFzOH2dFH9//jHYxR4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1760364898; x=1760969698;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=h/KkfbsbDFUpgpWR/Q+1n2e+SsZd/m2BbfBCG6Meudo=;
-        b=GnynU6vWQ7OLdnA982uVhkDmd83o5fKxRREXAN562k3r8Z4XhESMVQ9xzfsKdmfkos
-         CFpQ8JjrH5DKhOvBN1lvb/P4JVmqNWB/6ELuIptcvS08mBkQt1qJGixbt9khEBgSI4VM
-         ldOq9I98HmGiZdlFZ2Kolech2o9n0zPdnD7LnAAhmdJYG0gVB/CNJsY3jyISZcn/o6Rs
-         l7gGV5UCDS3cK0lZI95MhQHDIK60QjFDD5k85kMNOOwamsPQUF1LnTGsx7EJMs941xBH
-         Dsr8vmjTgm/ZHhEVCKc76zC7t+k7IG3yA4TqHrU4JfoRMDtp3bBzcTLi1ixVFh+y//CG
-         hKyA==
-X-Forwarded-Encrypted: i=1; AJvYcCUsyueAKLP9nCQkFwAiBLO089zLN0Kg6QJgcI1Ped0q+KFLl2y+QHC0JQiqOhozvhHubcc88/VnWTSWDJ79/squdg==@vger.kernel.org
-X-Gm-Message-State: AOJu0YySq2425oql2uOqXdayPCCSuNWuvhZPfSFRYMld41RwDNqBnFJZ
-	BXMGaQPrs+YTrAqfQ7NPGeOOwhNHCw8CPGhYfeqnu8tSDTOYyNytdRVNjm+NLTq0ng==
-X-Gm-Gg: ASbGncsB72crJ079ZYnOkmaW4kdYDnZQNaDa8UC1pNsnRIhwuQf17jt55LsDXBJ3hE5
-	J01WH7ArHgr/yvvgYojmplIcb1DQ+3Sh+U5do2LzPqnVGyyJzM6Hcqw4XamF2aAIyvCrt9dss0W
-	6neoxpSPmNRFjhYkTq7Tg5vL2mB2r8VKvrD2pcjbcAZdc8NFzCvOOh80rQaytQ5m8d0Bp7dhfrl
-	tcmilPN4hx1sn8TXmcMTNwWsazUkkQyxk3yXLVtvGChT0b1rVv93LATdaMUCzrn958iS/Sl8z/Z
-	JBbp8TR8CR35/HSPI9czNOm0VCHtvMsuUiD+mVevxtV2SVNhKv2QICs5ODBktOWMqxDodPKuy08
-	Q4dXMrEmJK1/jRFCAVKTqtICEUI5NSK0yWqRe46L+LKkIe1QA5iPvM4+bRG1Ki3AF6HIZkhOfVG
-	P4x7B+LwkD6+yD48jG23c1J4bfL+Pk
-X-Google-Smtp-Source: AGHT+IHydw0CVPv6HxiK0rxt7/F7rhhFXqFXXsY7vFrPuGUIbADwLidmgxRKInXX5MSWX37dI8vbkg==
-X-Received: by 2002:a05:6512:3d17:b0:57d:9f0b:fd4b with SMTP id 2adb3069b0e04-5906db0ccd1mr6079921e87.6.1760364897595;
-        Mon, 13 Oct 2025 07:14:57 -0700 (PDT)
+        bh=U+HlSqes1yCsLkQoWVAYYhek4ZxMIKlt6Lo2LEEYk1o=;
+        b=gTKt3Q4cipErZvQXJM5IocQoikwYf4cd/5BCy13TBl/mujVuhcJLnFqjwgLCFp0XEg
+         dRZitH3+he2lSG2speZ4MiImFFP8gwWQ3J+31v1hI491UELFktJY1pzQCN2SCps6Dln4
+         wimtbVHX7HWrhA3GUpgHxJvrvyc+6GFDMidVHhox++9ECq2EvXc0qIF/6BLFO1PEDxCs
+         7awijeZOQ6fQdh+fvhI40kCczVtux22IV/84SsJ+5pvkD0lB4cIxjFFdvJs7CHa/Hu5i
+         KFvDSXuNO4rmHmhrzK5GYtMza7cK/3l7/khIDi+d81zfuALP0dUmxQ6PL/qEKHPUNN3M
+         q0Nw==
+X-Forwarded-Encrypted: i=1; AJvYcCWJoz2pRoV1ak2ys7CGwY8fNQeg4HYpff1apGj48f5W/gKgSMu+laNusU8uMnfd3VJlLEnW3koHKDl1VLHeB7JVIQ==@vger.kernel.org
+X-Gm-Message-State: AOJu0YzpfCy+q5QPY4gpNCplJD3AbAHYJwzX+hYr95Vc3jL61/y2ABSF
+	CBFzJqRFqvYANHNSZoHWeGkWv1UMxN+fpbUg2mRX9XJBhCEPuUkLWGw0u2QPlOU8wQ==
+X-Gm-Gg: ASbGncvxZWI6rqIVdcHve7msu9cEMuwFDpSrPunTXi/TraQ02DS90g5jJyYuNvRGZfX
+	spfdnm6f95TRInrjGbmMtqSE9DNT5Bi9AGMjhlLR6nVC4YLszs0BZXCKCMAxEiSaQGkf5S4+6Yp
+	a3c5yRpegA3sEJzeHbghSHLOCWpkLyWWF+Sg4rkp3R5zWYmTNsuKTSTibykKTjzETAiNKw0u1RC
+	zwmYRvst48tfFa+hB6sR0yF4plx3KYEHutNXhpT6hQRcWxlS2Ih2grNnVZJ1gQQxa9vIxwf7t8l
+	WgIzxIRl7q2K6hvOI/YkciYnNkdS0fEggFLae3ERcAoZM37mPqxr/auXiKVhzpFcw4JHpTWuGhw
+	e2hqib6VoeWSSB8tkj/vwmsxQ2caoUkihv/rOuWFhLdLlz/4/eohTZHaN3yNX7lgzdwc7E/8CeP
+	kCaYxfXYgocgCKZkyIuQ==
+X-Google-Smtp-Source: AGHT+IH27CfYjloqEXA5bxWZfYaU4LA1SVwbUAxn03k9AIO/MXhXvYZJr7Cls4Tsp0u6mygHRedkXg==
+X-Received: by 2002:a05:6512:3d94:b0:579:d89:20c7 with SMTP id 2adb3069b0e04-5906d896e12mr6073927e87.9.1760364898078;
+        Mon, 13 Oct 2025 07:14:58 -0700 (PDT)
 Received: from ribalda.c.googlers.com (56.213.88.34.bc.googleusercontent.com. [34.88.213.56])
         by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-590881e4e58sm4165256e87.25.2025.10.13.07.14.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Mon, 13 Oct 2025 07:14:57 -0700 (PDT)
 From: Ricardo Ribalda <ribalda@chromium.org>
-Date: Mon, 13 Oct 2025 14:14:53 +0000
-Subject: [PATCH 13/32] media: i2c: max96717: Use %pe format specifier
+Date: Mon, 13 Oct 2025 14:14:54 +0000
+Subject: [PATCH 14/32] media: i2c: mt9m111: Use %pe format specifier
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
@@ -82,7 +82,7 @@ List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251013-ptr_err-v1-13-2c5efbd82952@chromium.org>
+Message-Id: <20251013-ptr_err-v1-14-2c5efbd82952@chromium.org>
 References: <20251013-ptr_err-v1-0-2c5efbd82952@chromium.org>
 In-Reply-To: <20251013-ptr_err-v1-0-2c5efbd82952@chromium.org>
 To: Linus Walleij <linus.walleij@linaro.org>, 
@@ -135,26 +135,28 @@ a symbolic error name (eg. -EINVAL) and it makes the code simpler by
 omitting PTR_ERR().
 
 This patch fixes this cocci report:
-./i2c/max96717.c:653:44-51: WARNING: Consider using %pe to print PTR_ERR()
+./i2c/mt9m111.c:1290:3-10: WARNING: Consider using %pe to print PTR_ERR()
 
 Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
 ---
- drivers/media/i2c/max96717.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/i2c/mt9m111.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/i2c/max96717.c b/drivers/media/i2c/max96717.c
-index c8ae7890d9fa87a78084df1f3be631004acbf57b..71ec4fdb8e3d96dddc23ab090a63b23b1d093fd4 100644
---- a/drivers/media/i2c/max96717.c
-+++ b/drivers/media/i2c/max96717.c
-@@ -650,7 +650,7 @@ static int max96717_v4l2_notifier_register(struct max96717_priv *priv)
- 	fwnode_handle_put(ep_fwnode);
+diff --git a/drivers/media/i2c/mt9m111.c b/drivers/media/i2c/mt9m111.c
+index 05dcf37c6f013b1cefb5d85f893af08f4533c7b4..3532c7c38becc21df88957f8f323c77033026a81 100644
+--- a/drivers/media/i2c/mt9m111.c
++++ b/drivers/media/i2c/mt9m111.c
+@@ -1286,8 +1286,8 @@ static int mt9m111_probe(struct i2c_client *client)
  
- 	if (IS_ERR(asd)) {
--		dev_err(dev, "Failed to add subdev: %ld", PTR_ERR(asd));
-+		dev_err(dev, "Failed to add subdev: %pe", asd);
- 		v4l2_async_nf_cleanup(&priv->notifier);
- 		return PTR_ERR(asd);
+ 	mt9m111->regulator = devm_regulator_get(&client->dev, "vdd");
+ 	if (IS_ERR(mt9m111->regulator)) {
+-		dev_err(&client->dev, "regulator not found: %ld\n",
+-			PTR_ERR(mt9m111->regulator));
++		dev_err(&client->dev, "regulator not found: %pe\n",
++			mt9m111->regulator);
+ 		return PTR_ERR(mt9m111->regulator);
  	}
+ 
 
 -- 
 2.51.0.760.g7b8bcc2412-goog
