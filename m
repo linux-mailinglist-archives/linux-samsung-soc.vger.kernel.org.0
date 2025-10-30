@@ -1,550 +1,209 @@
-Return-Path: <linux-samsung-soc+bounces-11868-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-11872-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4827EC1EADD
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 30 Oct 2025 08:07:30 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8F9A2C1ECD5
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 30 Oct 2025 08:38:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1D87C3A7A72
-	for <lists+linux-samsung-soc@lfdr.de>; Thu, 30 Oct 2025 07:07:28 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7CF44189E6FE
+	for <lists+linux-samsung-soc@lfdr.de>; Thu, 30 Oct 2025 07:38:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E775133509D;
-	Thu, 30 Oct 2025 07:07:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB6C233769D;
+	Thu, 30 Oct 2025 07:37:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="pK0D2X4B"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BTu0b8qN"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mailout2.samsung.com (mailout2.samsung.com [203.254.224.25])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ED6F23F27B
-	for <linux-samsung-soc@vger.kernel.org>; Thu, 30 Oct 2025 07:07:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.25
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A07FA189F3B;
+	Thu, 30 Oct 2025 07:37:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761808043; cv=none; b=aCU/8QaV67cEHpp7EyBvSuXRhl6itnaJu6imVJtE02QIFv8zS4yYPZ6QOoXQvFWeN+dLSuByzBYLEcDcOyVL6dI4dM4lycYbyqLXs9OzJ+UpRYvQs/uk6mbPr1sJQrtk81nakKYG61kM3Mm/ls2GAERH5dd5lgTGrMC1NCtDHbU=
+	t=1761809871; cv=none; b=X/V8BuAWTiNaoFiZt4Eq2dsMgzMngw4H6UOuQKQJ1x2DiQCge5zyIclD/PTvaSPnIZTwSV7sqr/9OfXLTzal5J0oVAvpIP2ksUre2bHcEaPk/t34+YklFelQBvu+mvg6B3e6ncU4m/cmibQZyfjBtxEt29ZKHNQPWDC4qt2Oe6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761808043; c=relaxed/simple;
-	bh=9uICUoLbunFaYrqthhSqg3turK9EvwGSpT6tuM6Vyyw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:MIME-Version:
-	 Content-Type:References; b=fz4N9WNGc9dWkTgNq546y5VRIo0gK9nl1s2yHjiHsI5Fr68pmRHS9KNJg+T7IgF2z8JHTtvWDK1oxWqlCxWVwAHmZhacxL5Rvc1Z2n07ArGtCep0eFuZ9cREy9dk22v2hOSQF5Z8sDYs+0TY3UgsC08a6ULRvzbkEgEk5OhtFmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=pK0D2X4B; arc=none smtp.client-ip=203.254.224.25
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
-Received: from epcas2p3.samsung.com (unknown [182.195.41.55])
-	by mailout2.samsung.com (KnoxPortal) with ESMTP id 20251030070719epoutp023799cfc244616180332fa7bc19d15da2~zMxO-TzDo1473314733epoutp02z
-	for <linux-samsung-soc@vger.kernel.org>; Thu, 30 Oct 2025 07:07:19 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.samsung.com 20251030070719epoutp023799cfc244616180332fa7bc19d15da2~zMxO-TzDo1473314733epoutp02z
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1761808039;
-	bh=nFWWNPB0U+yN5g9VWpUZhtMoCfwQ9SvKveW352qxGWc=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pK0D2X4B/nenPVOPgQ5QGu9gCmekbyCnvTLWCuKPrREYRRlaPNeOOuKNkAye3lc8R
-	 Z1yRHatbtlkap0CUTkArIGU+syGrQCB3GinOQTvqVgakroe9O5+pGd+sbMRk5rJwe9
-	 8eQtEEPBYhb+edjfguLYn6NCCknLTiibQ4IxVwRU=
-Received: from epsnrtp02.localdomain (unknown [182.195.42.154]) by
-	epcas2p4.samsung.com (KnoxPortal) with ESMTPS id
-	20251030070718epcas2p430fa46a8b7a2db2771d8ea580052c941~zMxOVG4IM1433014330epcas2p4t;
-	Thu, 30 Oct 2025 07:07:18 +0000 (GMT)
-Received: from epcas2p1.samsung.com (unknown [182.195.38.206]) by
-	epsnrtp02.localdomain (Postfix) with ESMTP id 4cxwCp0cLwz2SSKZ; Thu, 30 Oct
-	2025 07:07:18 +0000 (GMT)
-Received: from epsmtip2.samsung.com (unknown [182.195.34.31]) by
-	epcas2p3.samsung.com (KnoxPortal) with ESMTPA id
-	20251030070717epcas2p3009a167a6d881be5d3b88f960dfd177d~zMxNAGkN02559825598epcas2p3_;
-	Thu, 30 Oct 2025 07:07:17 +0000 (GMT)
-Received: from asswp60 (unknown [10.229.9.60]) by epsmtip2.samsung.com
-	(KnoxPortal) with ESMTPA id
-	20251030070716epsmtip27abf5e8dff06fa243767ab8cd5be86dd~zMxM5lO2B1278412784epsmtip2c;
-	Thu, 30 Oct 2025 07:07:16 +0000 (GMT)
-From: Shin Son <shin.son@samsung.com>
-To: Bartlomiej Zolnierkiewicz <bzolnier@gmail.com>, Krzysztof Kozlowski
-	<krzk@kernel.org>, "Rafael J . Wysocki" <rafael@kernel.org>, Daniel Lezcano
-	<daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>, Lukasz Luba
-	<lukasz.luba@arm.com>, Rob Herring <robh@kernel.org>, Conor Dooley
-	<conor+dt@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>, Henrik Grimler
-	<henrik@grimler.se>
-Cc: Shin Son <shin.son@samsung.com>, linux-pm@vger.kernel.org,
-	linux-samsung-soc@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v7 RESEND 3/3] arm64: dts: exynosautov920: Add multiple
- sensors
-Date: Thu, 30 Oct 2025 16:07:12 +0900
-Message-ID: <20251030070712.248065-4-shin.son@samsung.com>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20251030070712.248065-1-shin.son@samsung.com>
+	s=arc-20240116; t=1761809871; c=relaxed/simple;
+	bh=p5DHJywARmB6vgwsW87ali+itZaEbJODsI/RAOXtFCU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=T9VkA5TztRz/wslyuaNsnaE/p1ng9HB23uofqVx8R0PELYOuBqLtcpuNMxs4VXkUs7oxc0lEP2bYjMI4xgGW0c0pTS81l6lakVyzpuEoatmScV6u5/tKi26I3fDaoypAPpWS7sgZwdQBhXy6RGTrm/5gYDoMFRrvFEgCFd51JxI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BTu0b8qN; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E2C8C4CEF1;
+	Thu, 30 Oct 2025 07:37:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1761809871;
+	bh=p5DHJywARmB6vgwsW87ali+itZaEbJODsI/RAOXtFCU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=BTu0b8qNGle6R+nWGmP4sNLndzagsCvdS/cbADesFxlULifaO76DGm7ScTcoqCjfZ
+	 fP5A7qc+k+GR7FJ13+GWv4Rw59IycUpgKVZ6ZJiGv3Plx/qxok01KYRsRvBcKe9+G1
+	 Dv9ssTxAPwWBqV6erVoEaiFEvLsGTUDvIT1icXMUvwlJRE8dHDlaHEnUWomt04+sOz
+	 yRTLDWvk0P2VxTjrQpx02G5OaH0kGK3OMmpm3i7lekjMcE1Df15k5rOgRrgWje0dln
+	 yGJDcg4EEc5LXOxsc3ty2JeUUHgFecigDQ0w58W0Y0Q30kw1Lh9pkcdXgj3Z2P/PD6
+	 iLjEuL9hL0tNg==
+Date: Thu, 30 Oct 2025 08:37:48 +0100
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Roy Luo <royluo@google.com>
+Cc: Vinod Koul <vkoul@kernel.org>, 
+	Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Philipp Zabel <p.zabel@pengutronix.de>, Peter Griffin <peter.griffin@linaro.org>, 
+	=?utf-8?B?QW5kcsOp?= Draszik <andre.draszik@linaro.org>, Tudor Ambarus <tudor.ambarus@linaro.org>, 
+	Doug Anderson <dianders@google.com>, Joy Chakraborty <joychakr@google.com>, 
+	Naveen Kumar <mnkumar@google.com>, Badhri Jagan Sridharan <badhri@google.com>, 
+	linux-phy@lists.infradead.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org
+Subject: Re: [PATCH v5 1/2] dt-bindings: phy: google: Add Google Tensor G5
+ USB PHY
+Message-ID: <20251030-cunning-copper-jellyfish-1b5f3b@kuoka>
+References: <20251029214032.3175261-1-royluo@google.com>
+ <20251029214032.3175261-2-royluo@google.com>
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CMS-MailID: 20251030070717epcas2p3009a167a6d881be5d3b88f960dfd177d
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: AUTO_CONFIDENTIAL
-CMS-TYPE: 102P
-cpgsPolicy: CPGSC10-234,Y
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20251030070717epcas2p3009a167a6d881be5d3b88f960dfd177d
-References: <20251030070712.248065-1-shin.son@samsung.com>
-	<CGME20251030070717epcas2p3009a167a6d881be5d3b88f960dfd177d@epcas2p3.samsung.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20251029214032.3175261-2-royluo@google.com>
 
-Create a new exynosautov920-tmu.dtsi describing new TMU hardware
-and include it from exynosautov920.dtsi.
+On Wed, Oct 29, 2025 at 09:40:31PM +0000, Roy Luo wrote:
+> Document the device tree bindings for the USB PHY interfaces integrated
+> with the DWC3 controller on Google Tensor SoCs, starting with G5
+> generation. The USB PHY on Tensor G5 includes two integrated Synopsys
+> PHY IPs: the eUSB 2.0 PHY IP and the USB 3.2/DisplayPort combo PHY IP.
+> 
+> Due to a complete architectural overhaul in the Google Tensor G5, the
+> existing Samsung/Exynos USB PHY binding for older generations of Google
+> silicons such as gs101 are no longer compatible, necessitating this new
+> device tree binding.
+> 
+> Signed-off-by: Roy Luo <royluo@google.com>
+> ---
+>  .../bindings/phy/google,gs5-usb-phy.yaml      | 127 ++++++++++++++++++
+>  1 file changed, 127 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/phy/google,gs5-usb-phy.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/phy/google,gs5-usb-phy.yaml b/Documentation/devicetree/bindings/phy/google,gs5-usb-phy.yaml
+> new file mode 100644
+> index 000000000000..8a590036fbac
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/phy/google,gs5-usb-phy.yaml
+> @@ -0,0 +1,127 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +# Copyright (C) 2025, Google LLC
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/phy/google,gs5-usb-phy.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Google Tensor Series (G5+) USB PHY
+> +
+> +maintainers:
+> +  - Roy Luo <royluo@google.com>
+> +
+> +description: |
+> +  Describes the USB PHY interfaces integrated with the DWC3 USB controller on
+> +  Google Tensor SoCs, starting with the G5 generation.
+> +  Two specific PHY IPs from Synopsys are integrated, including eUSB 2.0 PHY IP
+> +  and USB 3.2/DisplayPort combo PHY IP.
+> +
+> +properties:
+> +  compatible:
+> +    const: google,gs5-usb-phy
+> +
+> +  reg:
+> +    items:
+> +      - description: USB3.2/DisplayPort combo PHY core registers.
+> +      - description: USB3.2/DisplayPort combo PHY Type-C Assist registers.
+> +      - description: USB2 PHY configuration registers.
+> +      - description: USB3.2/DisplayPort combo PHY top-level registers.
+> +
+> +  reg-names:
+> +    items:
+> +      - const: usb3_core
+> +      - const: usb3_tca
+> +      - const: usb2_cfg
+> +      - const: usb3_top
 
-The exynosautov920-tmu node uses the misc clock as its source.
+These prefixes are redundant. Also, you are still referencing here
+completely different devices. MMIO of IP blocks do not have size of 0xc
+and they do not span over other blocks (0x0c410000 and then next one is
+0x0c637000).
 
-This TMU binding defines multiple thermal zones with a critical trip point
-at 125 degrees:
 
-tmu_top : cpus0-0, cpus0-1, cpus0-2, cpus0-3,
-          cpus1-0, cpus1-1, cpus1-2, cpus1-3,
-	  cpus1-4, cpus1-5, cpus1-6, cpus1-7
+> +            reg = <0 0x0c410000 0 0x20000>,
+> +                  <0 0x0c430000 0 0x1000>,
+> +                  <0 0x0c450014 0 0xc>,
+> +                  <0 0x0c637000 0 0xa0>;
+> +
+> +  "#phy-cells":
+> +    description: |
+> +      The phandle's argument in the PHY specifier selects one of the three
+> +      following PHY interfaces.
+> +      - 0 for USB high-speed.
+> +      - 1 for USB super-speed.
+> +      - 2 for DisplayPort.
+> +    const: 1
+> +
+> +  clocks:
+> +    minItems: 2
+> +    items:
+> +      - description: USB2 PHY clock.
+> +      - description: USB2 PHY APB clock.
+> +      - description: USB3.2/DisplayPort combo PHY clock.
+> +      - description: USB3.2/DisplayPort combo PHY firmware clock.
+> +    description:
+> +      USB3 clocks are optional if the device is intended for USB2-only
+> +      operation.
 
-tmu_sub0: cpus0-4, cpus0-5, cpus0-6, cpus0-7,
-          cpus2-0, cpus2-1, cpus2-2, cpus2-3
+No, they are not. SoCs are not made that internal wires are being
+disconnected when you solder it to a different board.
 
-tmu_sub1: gpu0, gpu1, gpu2, gpu3, npu0, npu1
+I stopped reviewing here.
 
-Signed-off-by: Shin Son <shin.son@samsung.com>
----
- .../boot/dts/exynos/exynosautov920-tmu.dtsi   | 377 ++++++++++++++++++
- .../arm64/boot/dts/exynos/exynosautov920.dtsi |  31 ++
- 2 files changed, 408 insertions(+)
- create mode 100644 arch/arm64/boot/dts/exynos/exynosautov920-tmu.dtsi
+You are making unusual, unexpected big changes after v4. At v4 you
+received only few nits because the review process was about to finish.
 
-diff --git a/arch/arm64/boot/dts/exynos/exynosautov920-tmu.dtsi b/arch/arm64/boot/dts/exynos/exynosautov920-tmu.dtsi
-new file mode 100644
-index 000000000000..641d142e0eeb
---- /dev/null
-+++ b/arch/arm64/boot/dts/exynos/exynosautov920-tmu.dtsi
-@@ -0,0 +1,377 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Samsung's ExynosAuto920 TMU configurations device tree source
-+ *
-+ * Copyright (c) 2020 Samsung Electronics Co., Ltd.
-+ *
-+ * Samsung's ExynosAuto920 SoC TMU(Thermal Managemenut Unit) are listed as
-+ * device tree nodes in this file.
-+ */
-+
-+/ {
-+	thermal-zones {
-+		cpus0-0-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tmu_top 9>;
-+
-+			trips {
-+				cpus0_0_critical: cpus0-0-critical {
-+					temperature = <125000>;	/* millicelsius */
-+					hysteresis = <0>;	/* millicelsius */
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		cpus0-1-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tmu_top 10>;
-+
-+			trips {
-+				cpus0_1_critical: cpus0-1-critical {
-+					temperature = <125000>;	/* millicelsius */
-+					hysteresis = <0>;	/* millicelsius */
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		cpus0-2-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tmu_top 11>;
-+
-+			trips {
-+				cpus0_2_critical: cpus0-2-critical {
-+					temperature = <125000>;	/* millicelsius */
-+					hysteresis = <0>;	/* millicelsius */
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		cpus0-3-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tmu_top 12>;
-+
-+			trips {
-+				cpus0_3_critical: cpus0-3-critical {
-+					temperature = <125000>;	/* millicelsius */
-+					hysteresis = <0>;	/* millicelsius */
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		cpus0-4-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tmu_sub0 7>;
-+
-+			trips {
-+				cpus0_4_critical: cpus0-4-critical {
-+					temperature = <125000>;	/* millicelsius */
-+					hysteresis = <0>;	/* millicelsius */
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		cpus0-5-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tmu_sub0 8>;
-+
-+			trips {
-+				cpus0_5_critical: cpus0-5-critical {
-+					temperature = <125000>;	/* millicelsius */
-+					hysteresis = <0>;	/* millicelsius */
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		cpus0-6-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tmu_sub0 9>;
-+
-+			trips {
-+				cpus0_6_critical: cpus0-6-critical {
-+					temperature = <125000>;	/* millicelsius */
-+					hysteresis = <0>;	/* millicelsius */
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		cpus0-7-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tmu_sub0 10>;
-+
-+			trips {
-+				cpus0_7_critical: cpus0-7-critical {
-+					temperature = <125000>;	/* millicelsius */
-+					hysteresis = <0>;	/* millicelsius */
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		cpus1-0-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tmu_top 1>;
-+
-+			trips {
-+				cpus1_0_critical: cpus1-0-critical {
-+					temperature = <125000>;	/* millicelsius */
-+					hysteresis = <0>;	/* millicelsius */
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		cpus1-1-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tmu_top 2>;
-+
-+			trips {
-+				cpus1_1_critical: cpus1-1-critical {
-+					temperature = <125000>;	/* millicelsius */
-+					hysteresis = <0>;	/* millicelsius */
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		cpus1-2-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tmu_top 3>;
-+
-+			trips {
-+				cpus1_2_critical: cpus1-2-critical {
-+					temperature = <125000>;	/* millicelsius */
-+					hysteresis = <0>;	/* millicelsius */
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		cpus1-3-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tmu_top 4>;
-+
-+			trips {
-+				cpus1_3_critical: cpus1-3-critical {
-+					temperature = <125000>;	/* millicelsius */
-+					hysteresis = <0>;	/* millicelsius */
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		cpus1-4-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tmu_top 5>;
-+
-+			trips {
-+				cpus1_4_critical: cpus1-4-critical {
-+					temperature = <125000>;	/* millicelsius */
-+					hysteresis = <0>;	/* millicelsius */
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		cpus1-5-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tmu_top 6>;
-+
-+			trips {
-+				cpus1_5_critical: cpus1-5-critical {
-+					temperature = <125000>;	/* millicelsius */
-+					hysteresis = <0>;	/* millicelsius */
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		cpus1-6-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tmu_top 7>;
-+
-+			trips {
-+				cpus1_6_critical: cpus1-6-critical {
-+					temperature = <125000>;	/* millicelsius */
-+					hysteresis = <0>;	/* millicelsius */
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		cpus1-7-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tmu_top 8>;
-+
-+			trips {
-+				cpus1_7_critical: cpus1-7-critical {
-+					temperature = <125000>;	/* millicelsius */
-+					hysteresis = <0>;	/* millicelsius */
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		cpus2-0-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tmu_sub0 3>;
-+
-+			trips {
-+				cpus2_0_critical: cpus2-0-critical {
-+					temperature = <125000>;	/* millicelsius */
-+					hysteresis = <0>;	/* millicelsius */
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		cpus2-1-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tmu_sub0 4>;
-+
-+			trips {
-+				cpus2_1_critical: cpus2-1-critical {
-+					temperature = <125000>;	/* millicelsius */
-+					hysteresis = <0>;	/* millicelsius */
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		cpus2-2-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tmu_sub0 5>;
-+
-+			trips {
-+				cpus2_2_critical: cpus2-2-critical {
-+					temperature = <125000>;	/* millicelsius */
-+					hysteresis = <0>;	/* millicelsius */
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		cpus2-3-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tmu_sub0 6>;
-+
-+			trips {
-+				cpus2_3_critical: cpus2-3-critical {
-+					temperature = <125000>;	/* millicelsius */
-+					hysteresis = <0>;	/* millicelsius */
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		gpu0-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tmu_sub1 1>;
-+
-+			trips {
-+				gpu0_critical: gpu0-critical {
-+					temperature = <125000>;	/* millicelsius */
-+					hysteresis = <0>;	/* millicelsius */
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		gpu1-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tmu_sub1 2>;
-+
-+			trips {
-+				gpu1_critical: gpu1-critical {
-+					temperature = <125000>;	/* millicelsius */
-+					hysteresis = <0>;	/* millicelsius */
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		gpu2-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tmu_sub1 3>;
-+
-+			trips {
-+				gpu2_critical: gpu2-critical {
-+					temperature = <125000>;	/* millicelsius */
-+					hysteresis = <0>;	/* millicelsius */
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		gpu3-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tmu_sub1 4>;
-+
-+			trips {
-+				gpu3_critical: gpu3-critical {
-+					temperature = <125000>;	/* millicelsius */
-+					hysteresis = <0>;	/* millicelsius */
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		npu0-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tmu_sub1 6>;
-+
-+			trips {
-+				npu0_critical: npu0-critical {
-+					temperature = <125000>;	/* millicelsius */
-+					hysteresis = <0>;	/* millicelsius */
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		npu1-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tmu_sub1 7>;
-+
-+			trips {
-+				npu1_critical: npu1-critical {
-+					temperature = <125000>;	/* millicelsius */
-+					hysteresis = <0>;	/* millicelsius */
-+					type = "critical";
-+				};
-+			};
-+		};
-+	};
-+};
-diff --git a/arch/arm64/boot/dts/exynos/exynosautov920.dtsi b/arch/arm64/boot/dts/exynos/exynosautov920.dtsi
-index 0fdf2062930a..884fe2466691 100644
---- a/arch/arm64/boot/dts/exynos/exynosautov920.dtsi
-+++ b/arch/arm64/boot/dts/exynos/exynosautov920.dtsi
-@@ -330,6 +330,36 @@ watchdog_cl1: watchdog@10070000 {
- 			samsung,cluster-index = <1>;
- 		};
- 
-+		tmu_top: tmu@100a0000 {
-+			compatible = "samsung,exynosautov920-tmu";
-+			reg = <0x100a0000 0x1000>;
-+			interrupts = <GIC_SPI 951 IRQ_TYPE_LEVEL_HIGH>;
-+			#thermal-sensor-cells = <1>;
-+			clocks = <&cmu_misc CLK_DOUT_MISC_NOCP>;
-+			clock-names = "tmu_apbif";
-+			samsung,sensors = <12>;
-+		};
-+
-+		tmu_sub0: tmu@100b0000 {
-+			compatible = "samsung,exynosautov920-tmu";
-+			reg = <0x100b0000 0x1000>;
-+			interrupts = <GIC_SPI 950 IRQ_TYPE_LEVEL_HIGH>;
-+			#thermal-sensor-cells = <1>;
-+			clocks = <&cmu_misc CLK_DOUT_MISC_NOCP>;
-+			clock-names = "tmu_apbif";
-+			samsung,sensors = <10>;
-+		};
-+
-+		tmu_sub1: tmu@100c0000 {
-+			compatible = "samsung,exynosautov920-tmu";
-+			reg = <0x100c0000 0x1000>;
-+			interrupts = <GIC_SPI 949 IRQ_TYPE_LEVEL_HIGH>;
-+			#thermal-sensor-cells = <1>;
-+			clocks = <&cmu_misc CLK_DOUT_MISC_NOCP>;
-+			clock-names = "tmu_apbif";
-+			samsung,sensors = <7>;
-+		};
-+
- 		gic: interrupt-controller@10400000 {
- 			compatible = "arm,gic-v3";
- 			#interrupt-cells = <3>;
-@@ -1507,3 +1537,4 @@ timer {
- };
- 
- #include "exynosautov920-pinctrl.dtsi"
-+#include "exynosautov920-tmu.dtsi"
--- 
-2.50.1
+Now you rewrite everything so you ask me to re-review from scratch.
+
+> +
+> +  clock-names:
+> +    minItems: 2
+> +    items:
+> +      - const: usb2
+> +      - const: usb2_apb
+> +      - const: usb3
+> +      - const: usb3_fw
+
+Again, what's with the prefixes? apb is bus clock, so how you could have
+bus clock for usb2 and usb3? This means you have two busses, so two
+devices.
+
+> +
+> +  resets:
+> +    minItems: 2
+> +    items:
+> +      - description: USB2 PHY reset.
+> +      - description: USB2 PHY APB reset.
+> +      - description: USB3.2/DisplayPort combo PHY reset.
+> +    description:
+> +      USB3 clocks are optional if the device is intended for USB2-only
+> +      operation.
+> +
+> +  reset-names:
+> +    minItems: 2
+> +    items:
+> +      - const: usb2
+> +      - const: usb2_apb
+> +      - const: usb3
+
+And here?
+
+This all looks like downstream code.
+
+Best regards,
+Krzysztof
 
 
