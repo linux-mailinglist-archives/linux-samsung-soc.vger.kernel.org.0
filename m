@@ -1,82 +1,83 @@
-Return-Path: <linux-samsung-soc+bounces-11886-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-11888-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id E31E9C2511F
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 31 Oct 2025 13:45:37 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 961F3C2512E
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 31 Oct 2025 13:45:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id CB7274F1759
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 31 Oct 2025 12:45:36 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 4A26434D683
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 31 Oct 2025 12:45:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA7E8348889;
-	Fri, 31 Oct 2025 12:45:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2FA23346FCC;
+	Fri, 31 Oct 2025 12:45:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="a4Ffj/nJ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="r21dU9u5"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 073711D5147
-	for <linux-samsung-soc@vger.kernel.org>; Fri, 31 Oct 2025 12:45:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22EF21F419B
+	for <linux-samsung-soc@vger.kernel.org>; Fri, 31 Oct 2025 12:45:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761914725; cv=none; b=dYgrsEmca50sB8iMVvnftvBRYaKADAtg/RhGoMCylSb8rfffDWp1VvL9kSzi29DzMG4tGVILv8G/JUcb314eBVNN4yzwSjshEQ3a3BhNPE26UuzHmi8JgA7iNZSWzImUDU+wrn11OcMnWYFfGUvO+DS63ULcFJ7i5xYA8HCnaD8=
+	t=1761914727; cv=none; b=JaIPD89VZDvzYanoNo4848tN4LcPgwUgzsI+RyELNCbvFYdei2M1yoMZHh6UVQiG2yoH54cIUbWadPToW+dnDSo5IYXOk2/nR0JxQvNn3KLXOl6587FYpUA5kvYXLCZyWUCsTqxWQ8BsAIjSO3UykVmfPuH8T+c6WTMuKku320k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761914725; c=relaxed/simple;
-	bh=jbtOQh+KZGaronPKGSCjW9AW/6hcLTFo8o99haI6DgE=;
+	s=arc-20240116; t=1761914727; c=relaxed/simple;
+	bh=BRKY3GPe1+dBZ+eX+MLZ66l0mvit2jHge4hZNEeZzx0=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ePAiNW5ix/Zey+VZA/1bbxKXV/2TGpV/GRexy9xnl0yurEb23eAad2Sifi8UC3sLaKX8iXBIjODWJylZyjA0FhDPnKeg7LtFbkS0mscUHM89yw2cQW7cIViA5y813/JeljPWps7x4FqkjRobGPo6lEWxKtSUi27gjTcrLz02eQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=a4Ffj/nJ; arc=none smtp.client-ip=209.85.128.43
+	 In-Reply-To:To:Cc; b=m1wP/exqV4NYwE4cBmtcWXXgHCiTw8cSPk65hXZWZor2zId6mCyjyyO+gknmcaN1Ieww/nnqL5eqnrLyYQLnO5WxnmA5zKTghHLe1yrF5kzI//V7V9bTHqegxetk4jOFfgEfqRLdG5GL2n74oJOmTY34aCLwJ5V5xLb2hFeeQ2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=r21dU9u5; arc=none smtp.client-ip=209.85.128.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-475dbb524e4so13307895e9.2
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 31 Oct 2025 05:45:22 -0700 (PDT)
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4710a1f9e4cso18075175e9.0
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 31 Oct 2025 05:45:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1761914721; x=1762519521; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1761914722; x=1762519522; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=+LI8bIiPiGdrKa8u7FU/JStfXK2j48QfKQas4QVWIkY=;
-        b=a4Ffj/nJRpGs3i+ujW7Qpz8i2DnyHbJL4wgiFhyxqDwpIEGeU9vL9kelwr8cnT291a
-         44fa/xNTNSof/X+oWEyJ2WuIsfRlkjfbnl4cTyNOfPTtY/7VVjBacjjy+IyScSzpz1kt
-         lGweZWqzwQWIAspHqUNogJZWPOfGyNzTRmmu7wxx7igUU2OipAzN6JG2KHOcW8eoelwx
-         HO1H00Ptl+RnioxNyiiiyv2zQH3AVHlTj3V318e/mjENYmRjMj/S12+VbZhwF1qktqjH
-         4G6tMvhWqLH5CTZl3Br7jEYq708AQoEn2wZV21lGW3lQzpb2uPwRjAJME82dxDdcs7mN
-         xpaw==
+        bh=kEEzVDPaPo+3opvcFtHcUqZXHRFcLJbK7RKFKgESsWk=;
+        b=r21dU9u5HEoMAYmQNFOUW09/rZPM+Lo098a7nuG0KikNfEMxOpMnWox0ze8t/PTvQo
+         7HxhuWMr4vZgfKUPQyY5YHazN6599J9FOzstFgRniveYbdZs4yUBddCU2c2gqoWK6d+5
+         iTi5tmbdStm+lYGk2sSfhT6x5fefKAInGjHiNgpJHaCExPrjxNbx+KBgsNLivYNt6N4D
+         kLuOOy4Jm7bpBefJtbmGn5u5yBz+ye1YSyb+hK39PUsDIsIpTBuZNV+pQbAWxF8LmoH7
+         VjfLpvQpHMTlib1aTTddMY/F31s0w3iwlGWCnBV5Gvyq8KApYR/rinCoSk/DuZVh3UEM
+         QVqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761914721; x=1762519521;
+        d=1e100.net; s=20230601; t=1761914722; x=1762519522;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=+LI8bIiPiGdrKa8u7FU/JStfXK2j48QfKQas4QVWIkY=;
-        b=fK2k4pAP34PD18e567qt5P4nKRHCdjUdi4hfDEF9ck20zX9Ob68XSBp2g18UT5rhIG
-         pH9wsq+YwwP4XJdlj/7oaPm5W7YwQ4IVCDXfKEPphJu1T8ecuHP+GX10gINGuILS4scZ
-         eZCqlNp9DHUob0RZ/EvEWikiVduukL/NQoCWfL1N8rA8a5xfUWU2l/Oq9F0wRZNkzfWi
-         vFqRan1+LEyWRChdDGQEuA1rERedKDWJzXBhCq7WQLZo1RqpixJrJJzjwPGEdRbnqX4t
-         tw/LspmCxPakAKAXA56zzzv9L/qf+OLGwWp/dr/D/eoKhQnPzXFU+YgVYbbIn9YL35gF
-         F/Sg==
-X-Forwarded-Encrypted: i=1; AJvYcCXG699JJNlCmmeQzoxp2ZdmbN1WLOtjALoU3Freg7/yHVhAmY5S2YiGOo4Ma7lHKo3xAsh8tB7+/L7HIFU4B8Tf3g==@vger.kernel.org
-X-Gm-Message-State: AOJu0YwfbwdWJFdH5W7aQrlmyMQ3EF4yODyIX995fc1AtKESalqR+mPg
-	It47+c1OYhtkqC3gBO7vKreQvsuDu3m+wWXtJBjwnPkarxczlpqjHQmpYdT0/7S9/y4=
-X-Gm-Gg: ASbGncuF239dr02XZwGtscgteDa8u7i98DZjH4/5c7J6pJ462gdVXonDVa5Tf7Bf4Fk
-	7FF4M4eceQMVF0cn4tuDkfAKBiEyd61OVlv9jSGNbX4D+mcSSo7hcguZLQC2JISQtvkKwc4kOQO
-	RZbA+VJ8jvFg8O1/nIbBvx2094dlBA/CiNvcVPGzQB1dunR93ZqGaji/fl5j3Vg+ZUOj/YsZ/Ky
-	3zNkkv5vtPeVfFlJWbjcDW/QP/MVPT4K1N66S59IhqSN8hxEm3IrOT1SOA6L/SBzjqnk+NE/oYM
-	RDH8F62v4fFnYYwMy8VndspQ7RWPJKtAbtc++qcwm3UEG6OwuJyyGuApH1Y/2Ke8GKQ7Gg7L+d0
-	W3XXdIUw9F0fPjxrNa81M2UqOM4GltlbuANXP+NQ678Yu344fpTUVoZkGpTUOmH15sH668o3kI4
-	owiVcr+1jBXhGxcmBArqi3AFxSK+VnIl6rw31Ccc7mHxbyD44W8EEg
-X-Google-Smtp-Source: AGHT+IHOR9o3pN2qjHmH3aj2ibwtFk8fBD1ANgqBkHALk2NU/zxtz1qYd7JTDoI7nz6jygMlz28LcA==
-X-Received: by 2002:a05:600c:314d:b0:471:1d8e:3c4f with SMTP id 5b1f17b1804b1-477308aa77emr31810825e9.24.1761914721275;
-        Fri, 31 Oct 2025 05:45:21 -0700 (PDT)
+        bh=kEEzVDPaPo+3opvcFtHcUqZXHRFcLJbK7RKFKgESsWk=;
+        b=XYe5/iznK1M6oXr8QlJdZX4Q8wAWH9RsOl79W6p/ydJik9ZBnv7JzrzveOTzSVSkIA
+         fHFQwp2eir29CQhIl3GKKofVk5mwpsgXB7EusXwbUztBLYpXagw3WFPs4BqQFVcMG1Qu
+         6Pzm0bA8pIFNuB63dwBvotCsD5AJAh5Kd+YU8Y8efAuYl21eP8icfzWYjRc+sxPuMMX6
+         c5EwZ7NlW3q02KyUADJx+KMSCQ8ecO38Awcg7sGqXh5RwI5L4A4hs9a9FZ6qfPvI2oek
+         TjgW0a7pdbCnmuG/DOOLxHQUcv7GGip34l+AT7YbAlNa28MabQjVL3ZlhbSXRmzT0Xo+
+         QktQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXaXmswYtVEROzgjEZgOQ6TWK96WofFsUNDnWVUc4uI1QVJC7kw+WQGWOL8Mv4BuD4dOwUw4iCYePbpwIbWIQX8kQ==@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyydebizhr+soltIsNYNYcrXtdrFy9ay9E9X3hRHasPiSCgrO4V
+	7rcOPjaZYjifpRV9xK+2yapJdMuS72K3VmXf1ExbaAmbZybyhwo7L1oQA/94GbI3+mA=
+X-Gm-Gg: ASbGncvk/zKJf/md4vmum15rZZr31KYV6VmnNNQf9Qfe4jvzTqHB0C32HCSmGP+6+6h
+	7kF01RnujPLqNJ3T9r2v6itd4Oy2deaKAaDJ0rSJzc15bMhcJ1ckhr4yJxhGav1bcIwQP8S7p4v
+	IKvlLK67+3dxXunaQvYyPOcOln11j6Of6DI9owtsqU2iFHgBh7hmvRtrYtf1P5DxX0QNc6pRZvK
+	1CEfTYDUCASNUOy+xenIYfmZNCaBejb22TdsjfFz+ZA1cndH56wQbv2YrI//7R+mQVbYZHN9J+/
+	rgvPT2j26NfMU/JWOd6N03XoG3oszoirRGMtklFHDJCZctKlbbrX70WOOeSexLxugH5oCvC1XjW
+	KIf2wbIFz+hBJPFDCd8dO66zz0xJOWDr44lnuZYwczSei+o71LWcUxJp1vTbwUL+6SV3uTU4bML
+	UCbY2HOI1JRWgqnOt/hYqgawStaBSuUd6Q2jQxZFyu7QwJMdYGCU22
+X-Google-Smtp-Source: AGHT+IGudjMOXqaJcnSNpcKIftQR6nLMDH8mkpNCYaYHTE5PBNCG7YLAiVUUFPpv+vByeUUIkYFsMA==
+X-Received: by 2002:a05:600d:4393:b0:46e:32a5:bd8d with SMTP id 5b1f17b1804b1-477331db3ccmr15144245e9.3.1761914722313;
+        Fri, 31 Oct 2025 05:45:22 -0700 (PDT)
 Received: from ta2.c.googlers.com (213.53.77.34.bc.googleusercontent.com. [34.77.53.213])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47732ff7fdbsm31077535e9.16.2025.10.31.05.45.20
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47732ff7fdbsm31077535e9.16.2025.10.31.05.45.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 31 Oct 2025 05:45:20 -0700 (PDT)
+        Fri, 31 Oct 2025 05:45:21 -0700 (PDT)
 From: Tudor Ambarus <tudor.ambarus@linaro.org>
-Date: Fri, 31 Oct 2025 12:45:12 +0000
-Subject: [PATCH 4/5] arm64: defconfig: enable Samsung Exynos OTP controller
+Date: Fri, 31 Oct 2025 12:45:13 +0000
+Subject: [PATCH 5/5] MAINTAINERS: add entry for the Samsung Exynos OTP
+ controller driver
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
@@ -85,7 +86,7 @@ List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251031-gs101-otp-v1-4-2a54f6c4e7b6@linaro.org>
+Message-Id: <20251031-gs101-otp-v1-5-2a54f6c4e7b6@linaro.org>
 References: <20251031-gs101-otp-v1-0-2a54f6c4e7b6@linaro.org>
 In-Reply-To: <20251031-gs101-otp-v1-0-2a54f6c4e7b6@linaro.org>
 To: Srinivas Kandagatla <srini@kernel.org>, Rob Herring <robh@kernel.org>, 
@@ -100,35 +101,40 @@ Cc: semen.protsenko@linaro.org, willmcvicker@google.com,
  linux-arm-kernel@lists.infradead.org, 
  Tudor Ambarus <tudor.ambarus@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1761914716; l=915;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1761914716; l=979;
  i=tudor.ambarus@linaro.org; s=20241212; h=from:subject:message-id;
- bh=jbtOQh+KZGaronPKGSCjW9AW/6hcLTFo8o99haI6DgE=;
- b=anPmmraBvSuRYrza8lT7XXPyLkgmlAH/yyD7w1SjaBtSE3hCPJZEkgDHb0kPl8CtR+4Ta8bjR
- mEUElj9TnrgDeBa4TOQQUClCBg6x6jMhPpnKkx/DI+wT0L+NvF59rcO
+ bh=BRKY3GPe1+dBZ+eX+MLZ66l0mvit2jHge4hZNEeZzx0=;
+ b=kaB+fFcB2Da40OLIuL4pYpifdRadcaa8Qg7wjSD6cQePf9r8H8vzcuSNE/jhnhWzXLFwTTsAf
+ ljjUdOxSwlEA3FtVZA0GGk3QXkQ/RXgqhsL3tx8kww9VrOB6mnl68KR
 X-Developer-Key: i=tudor.ambarus@linaro.org; a=ed25519;
  pk=uQzE0NXo3dIjeowMTOPCpIiPHEz12IA/MbyzrZVh9WI=
 
-Enable the exynos-otp nvmem driver for fuse access on the Samsung Exynos
-SoCs. The fuse block stores various system information (Product ID,
-Chip ID, TMU, ASV, etc.) which will be accessed by client drivers.
+Add an entry for the Samsung Exynos OTP controller driver.
 
 Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
 ---
- arch/arm64/configs/defconfig | 1 +
- 1 file changed, 1 insertion(+)
+ MAINTAINERS | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index 646097e94efe7f1a18fb59d5b6dfc6268be91383..6433e3c0f88b892ce6f2ee190f866a6ab4889771 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -1682,6 +1682,7 @@ CONFIG_ARM_CORESIGHT_PMU_ARCH_SYSTEM_PMU=m
- CONFIG_NVIDIA_CORESIGHT_PMU_ARCH_SYSTEM_PMU=m
- CONFIG_MESON_DDR_PMU=m
- CONFIG_NVMEM_LAYOUT_SL28_VPD=m
-+CONFIG_NVMEM_EXYNOS_OTP=m
- CONFIG_NVMEM_IMX_OCOTP=y
- CONFIG_NVMEM_IMX_OCOTP_ELE=m
- CONFIG_NVMEM_IMX_OCOTP_SCU=y
+diff --git a/MAINTAINERS b/MAINTAINERS
+index ab00eca640e02d40dd80949986d6cd6216ee6194..813a098475ab7d5371c811020ea022f63d1acb35 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -22775,6 +22775,14 @@ F:	Documentation/devicetree/bindings/mailbox/google,gs101-mbox.yaml
+ F:	drivers/mailbox/exynos-mailbox.c
+ F:	include/linux/mailbox/exynos-message.h
+ 
++SAMSUNG EXYNOS OTP DRIVER
++M:	Tudor Ambarus <tudor.ambarus@linaro.org>
++L:	linux-kernel@vger.kernel.org
++L:	linux-samsung-soc@vger.kernel.org
++S:	Supported
++F:	Documentation/devicetree/bindings/nvmem/google,gs101-otp.yaml
++F:	drivers/nvmem/exynos-otp.c
++
+ SAMSUNG EXYNOS PSEUDO RANDOM NUMBER GENERATOR (RNG) DRIVER
+ M:	Krzysztof Kozlowski <krzk@kernel.org>
+ L:	linux-crypto@vger.kernel.org
 
 -- 
 2.51.1.930.gacf6e81ea2-goog
