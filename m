@@ -1,83 +1,83 @@
-Return-Path: <linux-samsung-soc+bounces-11943-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-11950-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C67EEC2DD6F
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 03 Nov 2025 20:15:38 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9027BC2DD96
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 03 Nov 2025 20:15:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A38AE3AD889
-	for <lists+linux-samsung-soc@lfdr.de>; Mon,  3 Nov 2025 19:15:26 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 3CAB634BECC
+	for <lists+linux-samsung-soc@lfdr.de>; Mon,  3 Nov 2025 19:15:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C8F5325480;
-	Mon,  3 Nov 2025 19:14:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D0D4832255C;
+	Mon,  3 Nov 2025 19:14:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ggpNOXEC"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VRFun7YI"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
+Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EC50280017
-	for <linux-samsung-soc@vger.kernel.org>; Mon,  3 Nov 2025 19:14:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E90229992A
+	for <linux-samsung-soc@vger.kernel.org>; Mon,  3 Nov 2025 19:14:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762197294; cv=none; b=WijpF7RU6QDO9hhYfttxPMqRUJlQvty+tET34LrJhcX4fZoZiVPmK8sIcPhKohg+aCHCtL+VgmDybiX+S0Rp8VcT3eb6ZIpnJMzyhybVSx48GMy/ywfmCDNzcwOoNGH3EG0HzNEd+0vtAPRQOx8mQHFKhPdyS2bSM9aoBKlL40w=
+	t=1762197299; cv=none; b=mS71JpegGZekBZrRo9xWpkg0Y/akcGD4m3SvcCjlPUH15yjdDYj20GTaF2Odg5U6yKZFdUqZ7qh6d0XcsKda7rbjGl3DDj01EQmfXwkAUecYGRuZdFVdS9oGr+0MG4l0hqrlGxUq0aW5L+dCx4Xuhl8EmHDlW/48oOeX+PZrqXk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762197294; c=relaxed/simple;
-	bh=BzOY7xFqFUUnN3PD+Nik686oui3xmNMlf7Dt/c4aSB8=;
+	s=arc-20240116; t=1762197299; c=relaxed/simple;
+	bh=cLBJsaXRCjW8ED7+56uxdLLlUd8ALRghlBAhPAVov44=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=lbf1FD6HJiwPe4EV5OPb/cUi2gdZg0n4RwYSNjzVRGKAKj+0pKgE/61KcIBlkyQhQfq3w/QSivYoqtumX3YgTuN71rtgMyNic5c+nBTB550Zy/s4bofW3PRSvp0YEhEURVAJHZxMWXI6Ip3yVw7XHHx7R8atub4UFopCX167qfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ggpNOXEC; arc=none smtp.client-ip=209.85.218.52
+	 In-Reply-To:To:Cc; b=Fs5J1nKFUytm5ebSR0K1EDigT/hXSuGvgNCS96ryIh1Cvp2f8Hilw68N7jEkBHNwLeWNNQ9eisNIH+NHEfAmc20+tueg6OHvlh7yU+jyJdo1JlRoibz+RlMJmornUTwa3X0IClLLyyi3PYRGYIX678yHf7Oa1m1LhlVdAqEfAZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VRFun7YI; arc=none smtp.client-ip=209.85.218.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-b3e9d633b78so1130401166b.1
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 03 Nov 2025 11:14:50 -0800 (PST)
+Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-b7200568b13so55956466b.1
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 03 Nov 2025 11:14:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1762197288; x=1762802088; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1762197289; x=1762802089; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=+H9s1G6YtgeqluWZseo7SuZhZNZyldAYEc85O7etNJ0=;
-        b=ggpNOXECDGMlgIwPSzOb8a8yxZJSFajxHfelynNZzMdhgK7O+DPMqu4gpRd0KYqvEE
-         LBJ6yBg/WUXKYJsdj4JRHSmnDkdbjN+OAbQ6MI5qnlQ1eT26KXWyMt8UVWrocqjvLwap
-         jnH5wPh+9HeR3w3pLbqtvyYR5xmZfmSuirbD26TGd+Etd6I7HMmlkdI3D/KBTp/ril/U
-         MYtF7DRdI8WkEi2VmURQDklA+Jk3zfg6nyZiGNibHJp5udV7YdRA30+5WY7H61YmtZl5
-         D+2t+5+BaXxG7gqH1ZGkdtTNjcZGb0/EKR0007qCrRo1Oc3ikzlP5rx/JfBupJaY5/QU
-         +e+g==
+        bh=icN5yYkXgcEYignZ+Xa1ClAR+0DBwP6iwKaUoFu4GLY=;
+        b=VRFun7YIS2I3ggIfibtlAWO0MT2KlFGqgYEhDHxunMlGdyoxV7oQSeTsWu7qVumpvS
+         2QAdSdKwOnGAsrwjvwzy/4LfVt2txV9ixmqRbjSeFB54XQiVEbSvWpg4fwCv2Ru4EAiY
+         SgxLTX2OOmDF3nAbH61XIck+kixvQRNOeg4YdCdO4cKfqbaLIqCEiNl4dNdWcjNMRWoP
+         yLXlZfbmeDwTVpNw0r7P/aAD8tYssHRUvGFtpZfnuiJwLZXgcuDwp3L4sUMAuAgcikAa
+         7St9LvgDBiuv294fEvdkx1by0I10nCEX15MY0tAtbaf6idY20WSfOYkkbTzF2t1fEa6n
+         KZzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762197288; x=1762802088;
+        d=1e100.net; s=20230601; t=1762197289; x=1762802089;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=+H9s1G6YtgeqluWZseo7SuZhZNZyldAYEc85O7etNJ0=;
-        b=EBhh0rElMmaVNKH0ftCjKEYmvp0L35behmCSTPrskYdSaJZdkxSAWdDxwolAqe4O+i
-         Uf2YnvF5geNr6ZSvMmOg/440ShnGt49y5Httz9IY+dSDhPbdYIuCNSUIB9Rtu8FRSRty
-         zTWwQrucvkkQb+U6Niarz0Wa2EsEDf/0Enode6D8e2fMnX+d/WhEg2emPBghtsHo0OjP
-         4SVAvMv9syPkAju1qK1UCr+kMUKF15WtoyH+hjXT27/1ZsTkAbyvAxjPI7ffHewD0i6C
-         H3H1RIop7N4dEserUg8lydNKae/Bme64Mq6C6c0ounJgeBF1S91gfyj5oPw5W9mmvSQS
-         ENJQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVinNXTGrXWWiQUebLB5QKTSfDLR8VIMMUPn7ItvGo7uzzuKD1YeW/PL+Q7CkVTSWmCsD/bmizdkYuux6DKE6s9Hw==@vger.kernel.org
-X-Gm-Message-State: AOJu0YyGTpO/7rwowwiWLdvQrMa82aHQlRqhi3wq0dGlHQPWTN+zDmf1
-	lD+aDdB3i4KTVSbcbRDr3jhmy8xpuqKI7XGUvnfcSPbCMKIYGF6FHKdPm+lT9nak4h7p28jHHu+
-	dxl9uwOAyrw==
-X-Gm-Gg: ASbGncvORJAkKUFKPvrk0qol8T/rgImQ+ghyBsiZX33/q+pjgWGcSs7aBfc6U1hWUCa
-	gAahFqQJH5kvQ83lHvQ1x6NTFNR8H/wHVCSbOSq5dsTXOI3v4j9yL078y6dauiy7H8pihg3hPHg
-	kDnwj5RrP1IEyylPSwhA6JyJr3UdUgTixhJr2+sKVFTyJw8wT8uUzpXtwMujHxEDOQbwQCZaiOc
-	OryPwU4Ms5gegBBZTy3HGVuGufll74LRoMIOBRs34tUj3mOX4pEV4Ja2mz1TTVwB6ncveNRd7CX
-	dHtp9JibSJKLoUAhrboQJzpIeceBMzUNf5QJCfnU4eN4c9RzjbE5t/Q+/cuZUx7uxUy1lruFQFj
-	q/PbS7+OXTEaRRCneO0l7rL8FyHr8Drhyfz5uceLprCVqN0Na5iVehOz3igJ3mRA/zW8VOyx5/u
-	5msS2qke8suJp6QooP/6CMWy5RV7VGCxEpr4wZxwmmENT0ekGB4gtq/LnhOB/Dfz2/ABnP2z4=
-X-Google-Smtp-Source: AGHT+IHrMiuYLZd0vMCvo+Ek4nTQVztiZC07CKVGfY4NotHksO5aFELwrIdhsXO+9Y0y3M22E4+puQ==
-X-Received: by 2002:a17:906:dc92:b0:b3e:c99b:c77f with SMTP id a640c23a62f3a-b7217387225mr57792566b.24.1762197288276;
+        bh=icN5yYkXgcEYignZ+Xa1ClAR+0DBwP6iwKaUoFu4GLY=;
+        b=pn/bjHOZP15Gv0XeJicYuTqGb80y0ZGr2GdY4N4tcYuZ4jwd7j7D6ZZfCMCfWMixkL
+         L29qgkJKI6Usdwhwnw+wfuE+8nOGZJdbjXR7uA2Zsp1IeZm6VmfZekcrTTkSAJDDfGq/
+         4JvL/5dV9pJ5z/Jk9WqRGhiur97GtdHMWh7gkUoDqEU1eUpBilgzhHnnnMS+GyNEq26s
+         MTqt1bQwSp1qeqbj4ANZfg4eCQUE9ocWkNrnRZdYb0AeFjVvTHEHfukV26GNJiB2IqO6
+         ED0Miu7dFI6DKYKRqODWoVUane4SKpd96X+FmYxmYz4QLAislH9sLmqi+d3vK7J4rIGI
+         aCCg==
+X-Forwarded-Encrypted: i=1; AJvYcCX6Yjz4edt5+o+qFtKt8BeVErw4yzRh1raVWXsc+FGVMkfQ1IF7epvNegezV4HQEZ0RXAsRpRyn+qz9Zzg+7qJbvA==@vger.kernel.org
+X-Gm-Message-State: AOJu0YyCl4vaCChkxYraaGobL1fD3NCbt3rAHy7WgkraQ0TLNoC4xWh5
+	vZjXRZg2PFGunSfurWTZLaq0kJhtOvzCsvV0tWZAKJHZoykrmH5mShwnof+lrruS7ik=
+X-Gm-Gg: ASbGnctVvQNPbSohJeERhmRn1AyWo1aDyovo+Dt97+zVNo5MGHFdMDIjyho9bCtwtqa
+	mAsL5P0MwqHlHFfiw9y7VTSvb4J5ht4x5xTg1nSYKlOVupXKjA/O3sPfP97FbMXwtAG85q5l6+L
+	sDPnKMXyH71PKCJ23RmwYrdNfnIS8negQl77X1yKnUB1zCAQ1oQX0+MMTsexdZi26gzLiMw/Eb/
+	oKauhock1nf2O0Oy+NOTQ7Z8rsS+JKf7+yGjNLwnt4YOvH54paTomykG0Qb7ss4KCvZ6C73Szy1
+	zpwOfZd4CsvH3Qy9PhGkGPCFTk1HBEsDmZJ6/v1HnspoYjqi32xFABS/i42qm5TfuYvnoC0sAD+
+	H2AhcpMXKmFTl5y9yzvYrQSK92rCSIR0/dYf2vM6+ky3eSnDxUd/R6TuuvNDPCi5efxX9tB7Xji
+	cU5LdhSEpBGq69TffG9ZtZ6mq+nCQTHfRG1IV40YEvj6hdUmg1djHN3FF9ratUyytF6To1ri8=
+X-Google-Smtp-Source: AGHT+IG5Udj3lRW+AqeTrbpalAuPKgShqrf7tFTaxqWNlY3DqKR8V5lRcyVUxOq5iUJ4O0Pi32zz9A==
+X-Received: by 2002:a17:906:6984:b0:b6d:c44a:b698 with SMTP id a640c23a62f3a-b70704c5a0amr981892566b.40.1762197288829;
         Mon, 03 Nov 2025 11:14:48 -0800 (PST)
 Received: from puffmais2.c.googlers.com (254.48.34.34.bc.googleusercontent.com. [34.34.48.254])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b70b9f29c8asm466765066b.8.2025.11.03.11.14.47
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b70b9f29c8asm466765066b.8.2025.11.03.11.14.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Nov 2025 11:14:47 -0800 (PST)
+        Mon, 03 Nov 2025 11:14:48 -0800 (PST)
 From: =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>
-Date: Mon, 03 Nov 2025 19:14:49 +0000
-Subject: [PATCH v3 10/20] regulator: add REGULATOR_LINEAR_VRANGE macro
+Date: Mon, 03 Nov 2025 19:14:50 +0000
+Subject: [PATCH v3 11/20] regulator: s2mps11: drop two needless variable
+ initialisations
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
@@ -86,7 +86,7 @@ List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20251103-s2mpg1x-regulators-v3-10-b8b96b79e058@linaro.org>
+Message-Id: <20251103-s2mpg1x-regulators-v3-11-b8b96b79e058@linaro.org>
 References: <20251103-s2mpg1x-regulators-v3-0-b8b96b79e058@linaro.org>
 In-Reply-To: <20251103-s2mpg1x-regulators-v3-0-b8b96b79e058@linaro.org>
 To: Tudor Ambarus <tudor.ambarus@linaro.org>, Rob Herring <robh@kernel.org>, 
@@ -102,43 +102,32 @@ Cc: Peter Griffin <peter.griffin@linaro.org>,
  =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>
 X-Mailer: b4 0.14.2
 
-REGULATOR_LINEAR_VRANGE is similar to REGULATOR_LINEAR_RANGE, but
-allows a more natural declaration of a voltage range for a regulator,
-in that it expects the minimum and maximum values as voltages rather
-than as selectors.
-
-Using voltages arguably makes this macro easier to use by drivers and
-code using it can become easier to read compared to
-REGULATOR_LINEAR_RANGE.
+The initialisations being removed are needless, as both variables are
+being assigned values unconditionally further down. Additionally, doing
+this eager init here might lead to preventing the compiler from issuing
+a warning if a future code change actually forgets to assign a useful
+value in some code path.
 
 Signed-off-by: André Draszik <andre.draszik@linaro.org>
-
 ---
-While this commit doesn't introduce any users, the upcoming s2mpg10 and
-s2mpg11 drivers are using it.
+ drivers/regulator/s2mps11.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-v3:
-- new patch
----
- include/linux/regulator/driver.h | 5 +++++
- 1 file changed, 5 insertions(+)
-
-diff --git a/include/linux/regulator/driver.h b/include/linux/regulator/driver.h
-index 978cf593b6624228fe1fd9c2a3e186b53ef172f8..977755db64c6dfaea7246067eab0d9a2971caa01 100644
---- a/include/linux/regulator/driver.h
-+++ b/include/linux/regulator/driver.h
-@@ -53,6 +53,11 @@ enum regulator_detection_severity {
- #define REGULATOR_LINEAR_RANGE(_min_uV, _min_sel, _max_sel, _step_uV)	\
- 	LINEAR_RANGE(_min_uV, _min_sel, _max_sel, _step_uV)
+diff --git a/drivers/regulator/s2mps11.c b/drivers/regulator/s2mps11.c
+index 04ae9c6150bd5ae9dba47b9b3cfcfb62e4698b6d..1f51fbc6c7b6e158f9707c04d9f030b9eee5e842 100644
+--- a/drivers/regulator/s2mps11.c
++++ b/drivers/regulator/s2mps11.c
+@@ -1207,8 +1207,8 @@ static int s2mps11_pmic_probe(struct platform_device *pdev)
+ 	struct sec_pmic_dev *iodev = dev_get_drvdata(pdev->dev.parent);
+ 	struct regulator_config config = { };
+ 	struct s2mps11_info *s2mps11;
+-	unsigned int rdev_num = 0;
+-	int i, ret = 0;
++	unsigned int rdev_num;
++	int i, ret;
+ 	const struct regulator_desc *regulators;
  
-+/* Initialize struct linear_range using voltages, not selectors */
-+#define REGULATOR_LINEAR_VRANGE(_offs_uV, _min_uV, _max_uV, _step_uV)	\
-+	LINEAR_RANGE(_min_uV, ((_min_uV) - (_offs_uV)) / (_step_uV),	\
-+		     ((_max_uV) - (_offs_uV)) / (_step_uV), _step_uV)
-+
- /**
-  * struct regulator_ops - regulator operations.
-  *
+ 	s2mps11 = devm_kzalloc(&pdev->dev, sizeof(struct s2mps11_info),
 
 -- 
 2.51.2.997.g839fc31de9-goog
