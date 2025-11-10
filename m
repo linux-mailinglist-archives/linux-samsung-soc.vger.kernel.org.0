@@ -1,83 +1,83 @@
-Return-Path: <linux-samsung-soc+bounces-12025-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-12026-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6448BC4907A
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 10 Nov 2025 20:30:02 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id C44ADC4907C
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 10 Nov 2025 20:30:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 4180A34B134
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 10 Nov 2025 19:30:01 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id A381F4ECC07
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 10 Nov 2025 19:30:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8422D33A018;
-	Mon, 10 Nov 2025 19:29:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3AAF733A037;
+	Mon, 10 Nov 2025 19:29:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ms1jfwD7"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vUV2Dt3s"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B6F2336EEB
-	for <linux-samsung-soc@vger.kernel.org>; Mon, 10 Nov 2025 19:29:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE77F337101
+	for <linux-samsung-soc@vger.kernel.org>; Mon, 10 Nov 2025 19:29:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762802949; cv=none; b=W61TzRGGQnI5OfF1f9I3jUMP8NH2hG7XDMY7t2jDMwfwJl1Pk+0EPLcc2wSoUt+0vXBf09jNCXiHfMez3vHauCluO6v9HR+qRRHX80r8URbXgFC3eSLJOD5En6u6DTwE8pz1PHm3g0SK0P6Gt7DRZd6+OaU7RJm2SN8fIZH50qk=
+	t=1762802949; cv=none; b=rpFC54XjO3rB61Z8KE7G6GykkOajqaBNuG10ueVIMYEFCWaeGClodM6XcwlDUIxyfH2a3qhDdBbSzrRf8FOMNUxC43OnxgLGef5lRcPIOwwR+w7S5abLIhr7KGjzdwIReTan3OE1gjhjzmUo4u1pDyn0T/8kxMaWJRNmF8Wq2/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1762802949; c=relaxed/simple;
-	bh=vA2Gdm7YJ1N52sMK85uo/763rmuFf8U0qzGCGGyZPX4=;
+	bh=sy0Mp0CqwDgoRltjBRlKUqvsjiUqK2kn5Rq5Mvw2mQM=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=FE1WAqbpUE+3bPOqZh2eOPBEwb7BMEunTrnXyW8ezaeBM5VZm6wIUa1k64bfc45/HXcpUeCYbQDKmv6epiRd675WjeC7ub/uyEIYhKiWJjUKRnV/TlIfVmHq17FGPFZz1br1FFOzd75nKRx6sX+j5zFIiX/xGO8xzEkSWIefcTc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ms1jfwD7; arc=none smtp.client-ip=209.85.218.51
+	 In-Reply-To:To:Cc; b=rHkZt1trAq893KCwTsA01QNw7HihBP7xzPzCDRzCk6RDe774DF05I8MB2iC38KHw0CW/RV/X7kk9+LdF1bnB2EzI+gITNfH17Tou+xF/KedvpNBU/wawjvgmzsMGr/F6W+i9JteoLiJeMp50dRianJ6hREFPQHJ+GTRtc30urGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vUV2Dt3s; arc=none smtp.client-ip=209.85.218.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-b72e43405e2so17266466b.0
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 10 Nov 2025 11:29:04 -0800 (PST)
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-b3e7cc84b82so641550966b.0
+        for <linux-samsung-soc@vger.kernel.org>; Mon, 10 Nov 2025 11:29:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1762802943; x=1763407743; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1762802944; x=1763407744; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=6p9Nm6sl12z8+Vy95pO/T4AqLaimc3KDyy2JPTrj88U=;
-        b=ms1jfwD7+L2vryKX055aXINMnOUX8Ko1EsBMt3PZIBQFDSRKtMGLlUjxf+7P4g1dad
-         wZWt0R98ZGWOy5407N7v3LYotx4oEtbddWR/PMU2sK+IM6mxXjluVWChwjlp4R2MhCfT
-         EoNg5hNTgBTEXwvBoh0os8F2uCbWUygKJ/a4xA01FqNAhMqAdNANOlMCtKbSoSinI/tM
-         V18Fa/lWfDcGumsh6vqVqUxblBbSJb8KTbI75j7iK5E3U77DIpRxe/MJ97Z0ztRQAEYj
-         7wgOa9SKD0whko1QJKD9Bd2DRDuALCRFE7r33bhfjhct8UWhfGGnzm+RDRG4BUoYmmY4
-         9fvw==
+        bh=DXUT8MAbGwFt4h3FDr0cqS9skzUUu9SY72yHCGd4cqg=;
+        b=vUV2Dt3s6FkiygPMAn+cy83drpI7k1DEv9R/dK1v3nF6KqUqQA1S66UNngo7d1rd8C
+         rk7dxUYIPntPtZY9wP005bCVLIa77OrHrFVcuXKA2ZtDPAQhF3HRhXGAjHHc0Vl7CwAx
+         ksOYFaPSTohjUKhdeLTLWUr3nh6ydbXfrK1BHJV6e1eZQT8LJ5cGMUts3FyQ5g7m5T0b
+         C6iQVuxmgL/u1VTJjJa6I7KU2BAJKmpllEXTgFeqiuWpPnd9oADxm486U2KFbS7ZbTL/
+         RD91C7nTZNiwG7Q6yDNEcOr7PJJ9tcW8weUGjTaJK7MYcW52DBu/LO0+KFgQg+9iSWCh
+         rF0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762802943; x=1763407743;
+        d=1e100.net; s=20230601; t=1762802944; x=1763407744;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=6p9Nm6sl12z8+Vy95pO/T4AqLaimc3KDyy2JPTrj88U=;
-        b=Cwi/GPTw89525HUbU/ZVcLqnahKQlB4UjM9nDbIe7v+sYBlTfrKsJQT8QVbp2nzt/r
-         DvU2i/3q0gt2c4aAatyX5KFUuB/Xbe5IdVSFY808MtyGVp77xkZqXESmhiUixB965T5O
-         H4bKxDUkkC4bS4LmEvvKbIgQcDzxVwPN80GTKdxqrVaQhaPhq6vBpFCdOLEpW/+u5jg8
-         Z0Q9RvmMFKBACaKKPziWfb1Uh9IpgeZ4uyYeEKeOwrW9vp/qd2NIhR+jC22OtaJnEDZO
-         cmt0SyuOYD8CrUKqq+/GyrvaR2OzazzG755voPJgHOUd6NsCA3bZohzvPIaB7pzA3jv4
-         xHZQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVgUvuZeW0APZoPf6C4ddrNj6Sm9mdHum5R9VMT8yDyEYGFUFSMWR0z1d7zk+pXV5BhwjUGzfjpU9F25u5zXaKbww==@vger.kernel.org
-X-Gm-Message-State: AOJu0YzuaBsLjGPELcHLYwRiAnP2r/cdXdZN/rRHFHCAIyZmHPRyWje5
-	vgOvgeFfB3ery00hzmXnAaRYHZKK4utxDArnV3qeZpqS4snQz5abOWSdam+N26e4cZw=
-X-Gm-Gg: ASbGnctpLH+Xn4g1I83oXvO4GsMcKfNXvyhQ7Twmvtac83wJtpE0MLRsFj8REg4H1lc
-	axoAAzBRPoc1tJnhWKLZxBpNhSimn0Oi5ComlPE7+8V+0laXYI5n4UsiER9FJtJ5igWKiDwMqVP
-	hikC5t7D01o8pIEtOuFH8P2S7wzsqoGXiWS09hCUR52mkotWVgYRsNc/XZKCuBvkpGjhRQMdQx5
-	0C5FAscEOVKxwpm5MKcBCuC0aa6nfihZui10ZRk85VsVB2nIDr2kt+BYghMk9pKtxxExufGMc9W
-	0RCjPjf+7litrHnb6J/Fw0WfFdPlL9cAVvsiRobjWi7wuANsC53wQ1Zi55mqdwKlFnzISrK+Hgq
-	QEeRsjUmScfLsk1OBDpw/kiR5JCXjsZRtsCdm9FjjBr+jwsWy5lKwTFlfKm/EgY4sijv0Sqz2wM
-	1Nqiay00B2Tm+fztAQqTMvMOnnMXBTSSxIuiXIVi1yiP1cR+Ocq8f8MsU81GAQ
-X-Google-Smtp-Source: AGHT+IEFnMd3Fb98EKBtO0Ewwd4iprmghYyLPzY9g3ZjE02anvmr6mJAUsdol+Fi0Pe+NsXFPJJNXA==
-X-Received: by 2002:a17:907:9405:b0:b73:158a:b4b7 with SMTP id a640c23a62f3a-b731d1c00bemr63920566b.10.1762802943068;
+        bh=DXUT8MAbGwFt4h3FDr0cqS9skzUUu9SY72yHCGd4cqg=;
+        b=EwP4fE1KXxn4C0D7nXVfXih7iOt6hLtErQMETd2VZSo2icKyTDIlljqQQn+Y79FStH
+         1uOZ3/4kV8fTJ7A2wNU2VgN9ehLMAOqX9pb7+NntRRRtpb3cvR2tu0LeUn15Vg3R09Gp
+         LsX6UlX5QtmDtRz1sMhBGmFjl528snZzx0asfaTHaiNilZBNm6VSuUTlTP+63VB9llOg
+         zozuGawZlqTPYd5vGXLcJaqidKpenR6iIf7Oy03l92Q9kmcdgRcGea2RHuCgG5Grnnno
+         5dQ/EndM0L6NfRbvsNIHMLJiyc/4zuuABQOSE5IFoX5S7cxPIJzan8b0yPkM2qY6m1MT
+         xXVQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWIobM7keNcBdhXZraOBCBeEV1N+d6f4wS7DE1ml0u21ma25JsH0kwCt1EcSxAIqVdDMqcQ30lsWnt7ruVaBhMb9w==@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz7otdNoHRyuykjOYIglTuXdbf9V/MacCTZCIBiQkoAcygTMmBd
+	fe86ZMHHpNxx1ypp5JfZvQFhsoq+RHXyxkq6d3lkwET1TpPRKFZaq5mWXd0pxAUqqcQ=
+X-Gm-Gg: ASbGncvECxxWQ6yAVaHTlNIbYBm4P1UeM6QKyciEKnkxd4c+4tb1YZYXS23rvRyzuKq
+	rbXG1VDZ+oYRuQDNq5fIi2HOFjOelf3EWpgAneQShDCCLBRioVVdje4+xp33uU8kZTb5rTg/W/y
+	vPUgXMyTp+nLJhhjqDfoUVuVw8VHDl5z5YUHkhazgjbHvx5sD1ENfsxMuTdhaqilmkbOF29iVn7
+	37xKXbZdmhHjo/Q2u5A3RiGa32T+j6zd+YUmjX+k4HPeEkm53NvpN1pMTTGZYb7O1B8ca3wQEhs
+	KqwPQDCyKK0iqPNtRpsrIYeiOjvInH1oLW1qf5rvt/jr+AO0iqoqnPhU519VLs8XW/0VU5rh2y9
+	hW+ZKTc1ROY+phW8gRingLyz+6BWo6h8O0abbneVB5q1jM8KNB6EtJHkEq1Zd4ZZPGowEpUsqIb
+	RSjHLk/tpK9IK5elzL9WS60a0edgRK3pMBG/NuQJkjaoBaqEegoVCUGJePTagE
+X-Google-Smtp-Source: AGHT+IEZCZuBttQZxzxdOT2T2JySWL8kFMqsfx/CDCdf7WzaLQnmas8T9ycXNltwEnGCHOnuaD/I+A==
+X-Received: by 2002:a17:907:3e85:b0:b72:b289:6de3 with SMTP id a640c23a62f3a-b72e0623fd6mr993695366b.58.1762802943576;
         Mon, 10 Nov 2025 11:29:03 -0800 (PST)
 Received: from puffmais2.c.googlers.com (254.48.34.34.bc.googleusercontent.com. [34.34.48.254])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b72bf97d16esm1168178166b.35.2025.11.10.11.29.02
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b72bf97d16esm1168178166b.35.2025.11.10.11.29.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Nov 2025 11:29:02 -0800 (PST)
+        Mon, 10 Nov 2025 11:29:03 -0800 (PST)
 From: =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>
-Date: Mon, 10 Nov 2025 19:28:50 +0000
-Subject: [PATCH v4 07/20] dt-bindings: firmware: google,gs101-acpm-ipc: add
- S2MPG11 secondary PMIC
+Date: Mon, 10 Nov 2025 19:28:51 +0000
+Subject: [PATCH v4 08/20] mfd: sec-common: Instantiate s2mpg10 bucks and
+ ldos separately
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
@@ -86,7 +86,7 @@ List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20251110-s2mpg1x-regulators-v4-7-94c9e726d4ba@linaro.org>
+Message-Id: <20251110-s2mpg1x-regulators-v4-8-94c9e726d4ba@linaro.org>
 References: <20251110-s2mpg1x-regulators-v4-0-94c9e726d4ba@linaro.org>
 In-Reply-To: <20251110-s2mpg1x-regulators-v4-0-94c9e726d4ba@linaro.org>
 To: Tudor Ambarus <tudor.ambarus@linaro.org>, Rob Herring <robh@kernel.org>, 
@@ -102,129 +102,119 @@ Cc: Peter Griffin <peter.griffin@linaro.org>,
  =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>
 X-Mailer: b4 0.14.2
 
-In a typical system using the Samsung S2MPG10 PMIC, an S2MPG11 is used
-as a sub-PMIC.
+Bucks can conceivably be used as supplies for LDOs, but currently it
+can be impossible to mark BUCKs as LDO supplies. This becomes
+particularly an issue with the upcoming support for the S2MPG11 PMIC.
 
-The interface for both is the ACPM firmware protocol, so update the
-binding to allow the relevant node and update the example here to
-describe the connection for both PMICs.
+The typical use of the S2MPG10 PMIC is in combination with an S2MPG11
+PMIC in a main/sub configuration. Bucks of one are usually used as
+supplies for LDOs of either itself or of the other: several S2MPG10
+LDOs are consumers of various S2MPG10 bucks & S2MPG11 bucks, and
+several S2MPG11 LDOs are supplied by various S2MPG10 bucks & S2MPG11
+bucks.
 
-Since we have two PMICs here, but can not use the 'reg' property (as
-the addressing is based on software, i.e. the ACPM firmware), the node
-names reflect that with their respective suffix. The existing 'pmic'
-therefore becomes deprecated in favour of 'pmic-1'.
+So we have a circular dependency here - LDOs (and potentially also
+bucks) of one PMIC depend on bucks of the other.
 
-While at it, update the example.
+This means that if all S2MPG10 rails are handled by the same instance
+of the S2MPG10 regulator driver, probe of all rails will defer, because
+the supplies to the LDOs can not be resolved during probe. The same
+goes for S2MPG11.
+
+The result is that neither driver can probe successfully and probe will
+ultimately fail. In other words it's currently impossible to mark BUCKs
+as LDO supplies.
+
+Additionally, multiple (LDO-) rails may share the same (buck) supply
+rail and some of these LDOs might supply important consumers, e.g. RAM.
+To stay with RAM, if one of those consumers needs to defer probe before
+the rail supplying RAM has probed, the shared (buck) supply gets
+disabled and the whole system comes to a halt, since Linux hasn't seen
+the DDR-supplying rail yet, and hasn't had a chance to mark the buck
+rail as having another consumer.
+
+By splitting all rails into separate driver instances, the circular
+dependency is gone, each individual instance can probe when its supplies
+are ready. This approach also solves the multiple-consumers-on-one-rail
+issue during probe.
+
+The mfd_cell's ::id field is used to inform the regulator driver which
+regulator to instantiate.
 
 Signed-off-by: André Draszik <andre.draszik@linaro.org>
 
 ---
-v4:
-- Krzysztof:
-  - update commit message / subject
-  - pmic -> pmic-1, pmic2 -> pmic-2
----
- .../bindings/firmware/google,gs101-acpm-ipc.yaml   | 50 +++++++++++++++++++++-
- 1 file changed, 48 insertions(+), 2 deletions(-)
+v3:
+- one instance per actual rail, not per rail type (LDO or buck)
+- more descriptive commit message
 
-diff --git a/Documentation/devicetree/bindings/firmware/google,gs101-acpm-ipc.yaml b/Documentation/devicetree/bindings/firmware/google,gs101-acpm-ipc.yaml
-index 4a1e3e3c0505aad6669cadf9b7b58aa4c7f284cb..e68f9c3ca5e2619bacc0c8d843ec4984c0947fd8 100644
---- a/Documentation/devicetree/bindings/firmware/google,gs101-acpm-ipc.yaml
-+++ b/Documentation/devicetree/bindings/firmware/google,gs101-acpm-ipc.yaml
-@@ -37,6 +37,7 @@ properties:
-     maxItems: 1
+v2:
+- fix commit message typos: s2mp1 -> s2mpg1
+---
+ drivers/mfd/sec-common.c | 43 ++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 42 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/mfd/sec-common.c b/drivers/mfd/sec-common.c
+index 42d55e70e34c8d7cd68cddaecc88017e259365b4..b722481594801e545d24014af6afd5e1e39d7522 100644
+--- a/drivers/mfd/sec-common.c
++++ b/drivers/mfd/sec-common.c
+@@ -14,6 +14,7 @@
+ #include <linux/mfd/core.h>
+ #include <linux/mfd/samsung/core.h>
+ #include <linux/mfd/samsung/irq.h>
++#include <linux/mfd/samsung/s2mpg10.h>
+ #include <linux/mfd/samsung/s2mps11.h>
+ #include <linux/mfd/samsung/s2mps13.h>
+ #include <linux/module.h>
+@@ -35,7 +36,47 @@ static const struct mfd_cell s2dos05_devs[] = {
  
-   pmic:
-+    deprecated: true
-     description: Child node describing the main PMIC.
-     type: object
-     additionalProperties: true
-@@ -45,6 +46,24 @@ properties:
-       compatible:
-         const: samsung,s2mpg10-pmic
- 
-+  pmic-1:
-+    description: Child node describing the main PMIC.
-+    type: object
-+    additionalProperties: true
-+
-+    properties:
-+      compatible:
-+        const: samsung,s2mpg10-pmic
-+
-+  pmic-2:
-+    description: Child node describing the sub PMIC.
-+    type: object
-+    additionalProperties: true
-+
-+    properties:
-+      compatible:
-+        const: samsung,s2mpg11-pmic
-+
-   shmem:
-     description:
-       List of phandle pointing to the shared memory (SHM) area. The memory
-@@ -62,7 +81,9 @@ additionalProperties: false
- 
- examples:
-   - |
-+    #include <dt-bindings/gpio/gpio.h>
-     #include <dt-bindings/interrupt-controller/irq.h>
-+    #include <dt-bindings/regulator/samsung,s2mpg10-regulator.h>
- 
-     power-management {
-         compatible = "google,gs101-acpm-ipc";
-@@ -70,10 +91,12 @@ examples:
-         mboxes = <&ap2apm_mailbox>;
-         shmem = <&apm_sram>;
- 
--        pmic {
-+        pmic-1 {
-             compatible = "samsung,s2mpg10-pmic";
-             interrupts-extended = <&gpa0 6 IRQ_TYPE_LEVEL_LOW>;
- 
-+            vinl3m-supply = <&buck8m>;
-+
-             regulators {
-                 ldo1m {
-                     regulator-name = "vdd_ldo1";
-@@ -82,7 +105,13 @@ examples:
-                     regulator-always-on;
-                 };
- 
--                // ...
-+                ldo20m {
-+                    regulator-name = "vdd_dmics";
-+                    regulator-min-microvolt = <700000>;
-+                    regulator-max-microvolt = <1300000>;
-+                    regulator-always-on;
-+                    samsung,ext-control = <S2MPG10_EXTCTRL_LDO20M_EN2>;
-+                };
- 
-                 buck8m {
-                     regulator-name = "vdd_mif";
-@@ -93,4 +122,21 @@ examples:
-                 };
-             };
-         };
-+
-+        pmic-2 {
-+            compatible = "samsung,s2mpg11-pmic";
-+            interrupts-extended = <&gpa0 7 IRQ_TYPE_LEVEL_LOW>;
-+
-+            vinl1s-supply = <&buck8m>;
-+            vinl2s-supply = <&buck6s>;
-+
-+            regulators {
-+                buckd {
-+                    regulator-name = "vcc_ufs";
-+                    regulator-ramp-delay = <6250>;
-+                    enable-gpios = <&gpp0 1 GPIO_ACTIVE_HIGH>;
-+                    samsung,ext-control = <S2MPG11_EXTCTRL_UFS_EN>;
-+                };
-+            };
-+        };
-     };
+ static const struct mfd_cell s2mpg10_devs[] = {
+ 	MFD_CELL_NAME("s2mpg10-meter"),
+-	MFD_CELL_NAME("s2mpg10-regulator"),
++	MFD_CELL_BASIC("s2mpg10-regulator", NULL, NULL, 0, S2MPG10_BUCK1),
++	MFD_CELL_BASIC("s2mpg10-regulator", NULL, NULL, 0, S2MPG10_BUCK2),
++	MFD_CELL_BASIC("s2mpg10-regulator", NULL, NULL, 0, S2MPG10_BUCK3),
++	MFD_CELL_BASIC("s2mpg10-regulator", NULL, NULL, 0, S2MPG10_BUCK4),
++	MFD_CELL_BASIC("s2mpg10-regulator", NULL, NULL, 0, S2MPG10_BUCK5),
++	MFD_CELL_BASIC("s2mpg10-regulator", NULL, NULL, 0, S2MPG10_BUCK6),
++	MFD_CELL_BASIC("s2mpg10-regulator", NULL, NULL, 0, S2MPG10_BUCK7),
++	MFD_CELL_BASIC("s2mpg10-regulator", NULL, NULL, 0, S2MPG10_BUCK8),
++	MFD_CELL_BASIC("s2mpg10-regulator", NULL, NULL, 0, S2MPG10_BUCK9),
++	MFD_CELL_BASIC("s2mpg10-regulator", NULL, NULL, 0, S2MPG10_BUCK10),
++	MFD_CELL_BASIC("s2mpg10-regulator", NULL, NULL, 0, S2MPG10_LDO1),
++	MFD_CELL_BASIC("s2mpg10-regulator", NULL, NULL, 0, S2MPG10_LDO2),
++	MFD_CELL_BASIC("s2mpg10-regulator", NULL, NULL, 0, S2MPG10_LDO3),
++	MFD_CELL_BASIC("s2mpg10-regulator", NULL, NULL, 0, S2MPG10_LDO4),
++	MFD_CELL_BASIC("s2mpg10-regulator", NULL, NULL, 0, S2MPG10_LDO5),
++	MFD_CELL_BASIC("s2mpg10-regulator", NULL, NULL, 0, S2MPG10_LDO6),
++	MFD_CELL_BASIC("s2mpg10-regulator", NULL, NULL, 0, S2MPG10_LDO7),
++	MFD_CELL_BASIC("s2mpg10-regulator", NULL, NULL, 0, S2MPG10_LDO8),
++	MFD_CELL_BASIC("s2mpg10-regulator", NULL, NULL, 0, S2MPG10_LDO9),
++	MFD_CELL_BASIC("s2mpg10-regulator", NULL, NULL, 0, S2MPG10_LDO10),
++	MFD_CELL_BASIC("s2mpg10-regulator", NULL, NULL, 0, S2MPG10_LDO11),
++	MFD_CELL_BASIC("s2mpg10-regulator", NULL, NULL, 0, S2MPG10_LDO12),
++	MFD_CELL_BASIC("s2mpg10-regulator", NULL, NULL, 0, S2MPG10_LDO13),
++	MFD_CELL_BASIC("s2mpg10-regulator", NULL, NULL, 0, S2MPG10_LDO14),
++	MFD_CELL_BASIC("s2mpg10-regulator", NULL, NULL, 0, S2MPG10_LDO15),
++	MFD_CELL_BASIC("s2mpg10-regulator", NULL, NULL, 0, S2MPG10_LDO16),
++	MFD_CELL_BASIC("s2mpg10-regulator", NULL, NULL, 0, S2MPG10_LDO17),
++	MFD_CELL_BASIC("s2mpg10-regulator", NULL, NULL, 0, S2MPG10_LDO18),
++	MFD_CELL_BASIC("s2mpg10-regulator", NULL, NULL, 0, S2MPG10_LDO19),
++	MFD_CELL_BASIC("s2mpg10-regulator", NULL, NULL, 0, S2MPG10_LDO20),
++	MFD_CELL_BASIC("s2mpg10-regulator", NULL, NULL, 0, S2MPG10_LDO21),
++	MFD_CELL_BASIC("s2mpg10-regulator", NULL, NULL, 0, S2MPG10_LDO22),
++	MFD_CELL_BASIC("s2mpg10-regulator", NULL, NULL, 0, S2MPG10_LDO23),
++	MFD_CELL_BASIC("s2mpg10-regulator", NULL, NULL, 0, S2MPG10_LDO24),
++	MFD_CELL_BASIC("s2mpg10-regulator", NULL, NULL, 0, S2MPG10_LDO25),
++	MFD_CELL_BASIC("s2mpg10-regulator", NULL, NULL, 0, S2MPG10_LDO26),
++	MFD_CELL_BASIC("s2mpg10-regulator", NULL, NULL, 0, S2MPG10_LDO27),
++	MFD_CELL_BASIC("s2mpg10-regulator", NULL, NULL, 0, S2MPG10_LDO28),
++	MFD_CELL_BASIC("s2mpg10-regulator", NULL, NULL, 0, S2MPG10_LDO29),
++	MFD_CELL_BASIC("s2mpg10-regulator", NULL, NULL, 0, S2MPG10_LDO30),
++	MFD_CELL_BASIC("s2mpg10-regulator", NULL, NULL, 0, S2MPG10_LDO31),
+ 	MFD_CELL_NAME("s2mpg10-rtc"),
+ 	MFD_CELL_OF("s2mpg10-clk", NULL, NULL, 0, 0, "samsung,s2mpg10-clk"),
+ 	MFD_CELL_OF("s2mpg10-gpio", NULL, NULL, 0, 0, "samsung,s2mpg10-gpio"),
 
 -- 
 2.51.2.1041.gc1ab5b90ca-goog
