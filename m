@@ -1,135 +1,103 @@
-Return-Path: <linux-samsung-soc+bounces-12037-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-12039-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id BCD21C490FE
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 10 Nov 2025 20:32:07 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id CE6A2C49399
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 10 Nov 2025 21:28:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 40FFA1882E51
-	for <lists+linux-samsung-soc@lfdr.de>; Mon, 10 Nov 2025 19:32:07 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 854393B002F
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 10 Nov 2025 20:27:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8BDA33F37E;
-	Mon, 10 Nov 2025 19:29:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C1232ECD14;
+	Mon, 10 Nov 2025 20:27:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rTnk17oz"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HCUQg3vL"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DA4533B6F7
-	for <linux-samsung-soc@vger.kernel.org>; Mon, 10 Nov 2025 19:29:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D52CD2E8B60;
+	Mon, 10 Nov 2025 20:27:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762802959; cv=none; b=OjAaykQ1s77kyR1T8LWdJzi7OWDgiv8d/0Ej8+S8bag/OpliRjvxU1UEAv0e5zzsIPzO953Z7qrC+ZZ+y58DnlpvKeQye5TeIaOhFY2gaAyjuwvK5eMTiqHkRwF0ShL3djuH7ub1w/NnRvxUaFxT+G63fwLWKJ0iHzzo3HWmHoI=
+	t=1762806475; cv=none; b=EczMQSO73kB4KrZkymW3b6y8D2utYLctfHcDCl8yyP+2CtVNwnSIIhkc1qZ4HbfQGSeyKQqHRkm/yFRoDJYEgjyHBWxL30soxd8t5VzfGYDdTanFpKQSP37okXl3bd0po0/241I4pjs42rMSrOTuTeUk4jfk7mBtTelz1pq2rHI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762802959; c=relaxed/simple;
-	bh=RzBGsCn87G8Sx3N+xmIXdtBJ0l0kWfW0p7tCuHwvI9I=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=CxB6sxtFVfpDg73jVC1XkwBQFwd6r+6d26ygXgILBC/ftX4Exrb4w31WDjSXf2bYodFmCljhLsIkNcRyoe3uLKGYxajUtg+9ezI8ZR97f/tlJjz9SjGn2LOLLsUlbrI0sNUMCGRZkrtWs0H0h5VPJiGKuw/DrD/AACucpRvQWC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=rTnk17oz; arc=none smtp.client-ip=209.85.218.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-b728a43e410so732801866b.1
-        for <linux-samsung-soc@vger.kernel.org>; Mon, 10 Nov 2025 11:29:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1762802950; x=1763407750; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=jumGSBrz6UJPB93YzP/ypMhQMv7kILadjYtPvrV2cZM=;
-        b=rTnk17ozRBwpoSJoTMGRHP/mdkG1ZwdxIj+43UUty2dcF+hxkGHan0pyeiJoAHEPEH
-         hsya4xIr1KJBlJAen6ShfDd87jB4mRKEWLgfGgocYLq2v7DOEesUuDp4z77d69ltanVS
-         ilrXi3OWebiy6izoNvAtyaJu1xrTZ9lawzz+qhZoNi1OA7y7YkTxVMYlob9jgY/Va+i3
-         B36ueBo8zG6C2w4iP34Ngbu1HOrmQehv4XbEF1IMw0Y1HcMytnWqDt8MuYHGMxo59KWC
-         FWBWarqm5C9lAeaOLZQr5g3SypAhdN5McC8fqliq0dqb8lPnlx2E3YOLeA5IB8Y2I/q3
-         RHrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762802950; x=1763407750;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=jumGSBrz6UJPB93YzP/ypMhQMv7kILadjYtPvrV2cZM=;
-        b=SLfiN22bxnz9bBzqBd5bKnzIJELsaknXza+RhuwFB75aNQE1l6/7qefD8p2PysVZTw
-         UqVVGnsh0AKX0Urhasw9bAkzxBvIWgY2s2rgJS2vyc1hrX51oN5NGfcC9lExVlMgaBM/
-         CINm6ckLR2jp+SI84gIQyfPel1EczPNjbG9vBoY0VvXm+F6oYNPzxA9z0u+uracXbndN
-         c7ASKGJs2Ya4Sjezz8HMpzmFnY29hp3FcNuZP54nIKqjEmc6rNzcu9EvipuHuxTh2IeW
-         oSBDPBr8c47Kp67WZLCa3vPr5YctdZvjaZe116liSG720veiWRSmL92EYLxypNTd0ccI
-         NGNw==
-X-Forwarded-Encrypted: i=1; AJvYcCUBkODprCOz9kvGfsaYmYUVwHp+EDkdIcwWoTpJHgubrxuGg6EgDar1ZVDNtE5ZcJT+/6zVpEbVLKX9XJA1IZs0EQ==@vger.kernel.org
-X-Gm-Message-State: AOJu0YwzPW/q++LaP57eJZKPO1gw0eC7CJgaZ6f8GvDFKfVrN91cLB7R
-	MbK0T5MRKJGO5uKZ2arzzigLzRvIKhHRTQmW78TJPqInYTvBe0vxJw8aSwFBUzI+Id8=
-X-Gm-Gg: ASbGnctJgzjUSYJF/WGdR/KRR6ugZ8vowAkWeTmYec+iM5NHIR8l0U8hq+Fe92wJJB7
-	KcyQe0cX0bBp/R3EvS8QqXVYQLM8vdaoqA1IdOFJ8QlnPSp0coJl+IPtS6rUgYagc12xb1M9qj5
-	kifwSULLBJUs9BCo9uwKlbf/8t6SGwp/M4LWfpjweSAZ0TVi7sztzCwEbI7NbpLDwtF1YwSYIs7
-	2u0z8q7fRPADEB8xvFnSuM2iA/JAQ1HScPWDhAoP5yJcefn8jZOrcTSMV+wcfjTS9CdyXzytV+a
-	zvpkhW4e8g8gKdI+qkVungm48FihBrior1uSjzfS4ufOQmOV9QQAyXCNuzi99zYmmAnppZhorQS
-	P6+sIyTc0/8RjgN2feG1ZUYNL9sEfOAtgQ73aTo3CSKZLdHydiAZVRTY+i7+XdTwdJCYl/2pCOs
-	0nVsKznDl4k1ZfIvFBGk/Fk3Nc8LaNvADPiuc2unFbE51KWpAvWLSF/Vxsezct
-X-Google-Smtp-Source: AGHT+IFpqR3MayLxCuVGV8uSOt13EYeoXGaPrtL/jHLhv195Pfx49CWhTUu8/3DnrKLv5DW2F0sE3A==
-X-Received: by 2002:a17:907:5c9:b0:b6d:8da0:9a24 with SMTP id a640c23a62f3a-b72e036c9e5mr914118866b.9.1762802949657;
-        Mon, 10 Nov 2025 11:29:09 -0800 (PST)
-Received: from puffmais2.c.googlers.com (254.48.34.34.bc.googleusercontent.com. [34.34.48.254])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b72bf97d16esm1168178166b.35.2025.11.10.11.29.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Nov 2025 11:29:09 -0800 (PST)
-From: =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>
-Date: Mon, 10 Nov 2025 19:29:03 +0000
-Subject: [PATCH v4 20/20] regulator: s2mps11: more descriptive gpio
- consumer name
+	s=arc-20240116; t=1762806475; c=relaxed/simple;
+	bh=xqht5VPTMHaX/GKxsh9FtHie1CtnNQDDC8CGQ8gGXr4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=QdiEvg2iQnxpose2uqHX6C8x5sxjOozzX9uAMvo2FgZgvhW/XbpyDme4Z333MRJjoXxCaH0AWp+HPQV1VtvnJrGzKcbWwg2fcms/obOZ7vpeSMySbYVoYhpRFgEElGxdYB+kdVOPclbvI2U4Zngmi2WDqSPdaRmhTR8OQ8hDFew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HCUQg3vL; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34040C19423;
+	Mon, 10 Nov 2025 20:27:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1762806475;
+	bh=xqht5VPTMHaX/GKxsh9FtHie1CtnNQDDC8CGQ8gGXr4=;
+	h=From:To:Cc:Subject:Date:From;
+	b=HCUQg3vLPwQzlucTGF4oM4w6xX3PkWVbCkeeYQ3xDLcMdKXVI+rx1Hqc6906H2/oS
+	 ffkOChOrZQ7EJ/WXuQkCxksbLlIXswN1RxFDub1facaE5Ij1kX2EigYLiecaNHleTD
+	 LP35Joo5tOBsh8Wtn+x4bPap3wxpBb+gbqF/Jkq4EG2Reagb9whF00/ZjP0Bf/UVCt
+	 n29Qky/NBvtjSzAY2TfGPp/dFB2/JOoYeqCiIHVwVB5hb4Nxr1+uet/kIxVAy+391V
+	 lHBSX6jMVP9M4KORxi2nAOT2n5D54npZkX2UN3Q8G5hf4+coDwyVqYTu7X5dlyOpa5
+	 IIzBgTOc8dgTw==
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Linus Walleij <linus.walleij@linaro.org>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>,
+	Sylwester Nawrocki <snawrocki@kernel.org>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Peter Griffin <peter.griffin@linaro.org>,
+	linux-arm-kernel@lists.infradead.org,
+	linux-samsung-soc@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-gpio@vger.kernel.org
+Subject: [GIT PULL] pinctrl: samsung: drivers for v6.19
+Date: Mon, 10 Nov 2025 21:27:48 +0100
+Message-ID: <20251110202748.10090-2-krzk@kernel.org>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1609; i=krzk@kernel.org; h=from:subject; bh=xqht5VPTMHaX/GKxsh9FtHie1CtnNQDDC8CGQ8gGXr4=; b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBpEkrEmX3ZkmzBioa40xqUoItANOt8+TThg8hQP SBHRD59ALCJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaRJKxAAKCRDBN2bmhouD 1z5mD/4lksCWQrylzIsRpv9BV8fo0E2sLlWT/KHglodP+t+Qa9oz7X3LDDvbzEqVhRfhqaM8Uh4 WIU+ARcRyvtOKfFM1N/+cOOS7X9+CP1JFtjKwicjlDu+hvT29NwudnUDoaRDEDhxqAgJpN65m6Y ZpFOeSIFCn5eI4COVsIPTBtpmuwcYFOx7kmT22jKxpZNRWTRu8pQMOCssdf2NcNi5CWjaIORb8k GBTM1op3GNFpK/9v2HpwURHHhXuq/zZMGDFYcSdFqThtCN45vJixBiXpJqUU1iYeE+FK2a9NNyS jnwP11IVEPnyOVVCFFVnRY86eeLMupAKu2hoJi7mAY5gR/pj611EegK0JSx2KDujjkspZQsRtBN 4GZjUHx1FlnQqT0s/oncObxD974VeRo2lv9RzmUHP6MPqgR9tVr/em1KbRi6S7R7RJSepxZXx5O QVCzX+QlK0REKj7CSlEwBTOl3jW/o83JAAHbk0OF6qGbR8XtYiH3knbRIvO7njolWUFWpcOqyts MPEaHzGrcEg2hACDrN9jP6K2jUpRpFxYDrSLE/gDyY4yM5ArboV5wr/2x6KG+ZGbtsfX7nWA9H3 Y9tOdeIiPQEs6J2ACsI9P/fTX3OcqvDFRuzJ3qXL6as7g+69Ja1fy4tWZ9bGwqUJLYWiljs4mSO HJeIm/FzxegdlQw==
+X-Developer-Key: i=krzk@kernel.org; a=openpgp; fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
 Content-Transfer-Encoding: 8bit
-Message-Id: <20251110-s2mpg1x-regulators-v4-20-94c9e726d4ba@linaro.org>
-References: <20251110-s2mpg1x-regulators-v4-0-94c9e726d4ba@linaro.org>
-In-Reply-To: <20251110-s2mpg1x-regulators-v4-0-94c9e726d4ba@linaro.org>
-To: Tudor Ambarus <tudor.ambarus@linaro.org>, Rob Herring <robh@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Krzysztof Kozlowski <krzk@kernel.org>, 
- Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
- Lee Jones <lee@kernel.org>, Linus Walleij <linus.walleij@linaro.org>, 
- Bartosz Golaszewski <brgl@bgdev.pl>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>
-Cc: Peter Griffin <peter.griffin@linaro.org>, 
- Will McVicker <willmcvicker@google.com>, kernel-team@android.com, 
- linux-kernel@vger.kernel.org, linux-samsung-soc@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-gpio@vger.kernel.org, 
- =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>
-X-Mailer: b4 0.14.2
 
-Currently, GPIOs claimed by this driver for external rail control
-all show up with "s2mps11-regulator" as consumer, which is not
-very informative.
+The following changes since commit 3a8660878839faadb4f1a6dd72c3179c1df56787:
 
-Switch to using the regulator name via desc->name instead, using the
-device name as fallback.
+  Linux 6.18-rc1 (2025-10-12 13:42:36 -0700)
 
-Signed-off-by: André Draszik <andre.draszik@linaro.org>
----
- drivers/regulator/s2mps11.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+are available in the Git repository at:
 
-diff --git a/drivers/regulator/s2mps11.c b/drivers/regulator/s2mps11.c
-index f19140e97b9d7a5e7c07cdc5e002de345aad32d9..3e9da15081e680d7660c60270af54ba2a4f8da1d 100644
---- a/drivers/regulator/s2mps11.c
-+++ b/drivers/regulator/s2mps11.c
-@@ -363,7 +363,8 @@ static int s2mps11_of_parse_gpiod(struct device_node *np,
- 	ena_gpiod = fwnode_gpiod_get_index(of_fwnode_handle(np), con_id, 0,
- 					   GPIOD_OUT_HIGH |
- 					   GPIOD_FLAGS_BIT_NONEXCLUSIVE,
--					   "s2mps11-regulator");
-+					   desc->name
-+					   ? : dev_name(config->dev));
- 	if (IS_ERR(ena_gpiod)) {
- 		ret = PTR_ERR(ena_gpiod);
- 
+  https://git.kernel.org/pub/scm/linux/kernel/git/pinctrl/samsung.git tags/samsung-pinctrl-6.19
 
--- 
-2.51.2.1041.gc1ab5b90ca-goog
+for you to fetch changes up to 3cfc60e09bdc95483875f0b63cfdc23aea67135b:
 
+  pinctrl: samsung: Add ARTPEC-9 SoC specific configuration (2025-10-13 03:02:21 +0200)
+
+----------------------------------------------------------------
+Samsung pinctrl drivers changes for v6.19
+
+Add pin controller support for Samsung Exynos8890 and Axis ARTPEC-9
+SoCs.  The latter is a newer design of Artpec SoCs made/designed by
+Samsung, thus it shares most of the core blocks with Samsung Exynos,
+including the pinctrl.
+
+----------------------------------------------------------------
+Ivaylo Ivanov (3):
+      dt-bindings: pinctrl: samsung: add exynos8890 compatible
+      dt-bindings: pinctrl: samsung: add exynos8890-wakeup-eint compatible
+      pinctrl: samsung: add exynos8890 SoC pinctrl configuration
+
+SeonGu Kang (2):
+      dt-bindings: pinctrl: samsung: Add compatible for ARTPEC-9 SoC
+      pinctrl: samsung: Add ARTPEC-9 SoC specific configuration
+
+ .../pinctrl/samsung,pinctrl-wakeup-interrupt.yaml  |   1 +
+ .../bindings/pinctrl/samsung,pinctrl.yaml          |   6 +-
+ drivers/pinctrl/samsung/pinctrl-exynos-arm64.c     | 206 +++++++++++++++++++++
+ drivers/pinctrl/samsung/pinctrl-samsung.c          |   4 +
+ drivers/pinctrl/samsung/pinctrl-samsung.h          |   2 +
+ 5 files changed, 218 insertions(+), 1 deletion(-)
 
