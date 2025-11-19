@@ -1,170 +1,117 @@
-Return-Path: <linux-samsung-soc+bounces-12244-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-12246-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 23BE1C6E1D2
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 19 Nov 2025 12:03:43 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id C010FC6E347
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 19 Nov 2025 12:22:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sea.lore.kernel.org (Postfix) with ESMTPS id A9EC62A752
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 19 Nov 2025 11:03:41 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 70F2134D772
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 19 Nov 2025 11:17:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5034534F256;
-	Wed, 19 Nov 2025 11:03:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9142835294A;
+	Wed, 19 Nov 2025 11:16:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="srfoqts+"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ZA77XtmL"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mailout2.samsung.com (mailout2.samsung.com [203.254.224.25])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A86C34E766
-	for <linux-samsung-soc@vger.kernel.org>; Wed, 19 Nov 2025 11:03:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.25
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80FD43164A0
+	for <linux-samsung-soc@vger.kernel.org>; Wed, 19 Nov 2025 11:16:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763550218; cv=none; b=Qc2y0nDBhIoIhMyz22Nbwn6iPHIGL8I0CHFXEk9MfLC1oisSo514VcqEcMqZkNcjyz8+0rub2pRVLss3qLVxuUtyekOsnVG0SzQ0ywUWpa9yyaYSf3qywXqVQBsKtIOMB0zvLEKblAddw42RI58Utv9MH5Ocgv/NIw9qGlJUSrU=
+	t=1763551011; cv=none; b=EcOh+XJ52+EG0v16iv6OVEeg4b50wtQ6yVzIO9JaoZEYGH2G30e7rcfl7LP87voc+d71Odm4sRKwopaHXeC7f9LJN0+9icbVGm15Trii8Ovt2KmIkmiahAeuG4cEGm9HNiIbYAKJyDnd7RtER3YE6o/PjRnKZm7n2bxdR/oLZCk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763550218; c=relaxed/simple;
-	bh=cmsffZOuHxL5Qaqbxv2ybstmIRrQd5fzYigoO3vtk2Q=;
-	h=From:To:Cc:In-Reply-To:Subject:Date:Message-ID:MIME-Version:
-	 Content-Type:References; b=lCuWNxaSn+fo+/oHfS42HzNYGsZ1j48GX9upzOtwqI/pLPANLSxDbLwHLnOuQEdDycMeMVWIOQjKTru4gJU7WEzjThs9pyzyV9rSUQs7nHBYHbrsF/w1RItPi8OCFNKGP9hML/DS8ioc/yn/3woZznCodUjkhS0R4elujh5nRng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=srfoqts+; arc=none smtp.client-ip=203.254.224.25
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
-Received: from epcas5p2.samsung.com (unknown [182.195.41.40])
-	by mailout2.samsung.com (KnoxPortal) with ESMTP id 20251119110333epoutp02c0d1c6c8b74a9e367f5384621a3f66d4~5Y5NSF_mW1624616246epoutp02v
-	for <linux-samsung-soc@vger.kernel.org>; Wed, 19 Nov 2025 11:03:33 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.samsung.com 20251119110333epoutp02c0d1c6c8b74a9e367f5384621a3f66d4~5Y5NSF_mW1624616246epoutp02v
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1763550213;
-	bh=utyQ56Iwp0bE0o5k8NLdtz9Zyjjs9puPqvgpDBjrhts=;
-	h=From:To:Cc:In-Reply-To:Subject:Date:References:From;
-	b=srfoqts+XkaVcY8e7Sn5kdV0lCsbTtpJ22b+7u6hBfvHtjCfH4XCY+YKX594jyM7b
-	 4bZshuCUpQCml8WA/SkJ8m2TcAyeT15FGAYdFlPp4IH1BJJe13ra7MQmi0xiDVU4pC
-	 9ML2ts1t18FJAUW0Pzn39O/PV/zyCrmRze0GzhHA=
-Received: from epsnrtp02.localdomain (unknown [182.195.42.154]) by
-	epcas5p1.samsung.com (KnoxPortal) with ESMTPS id
-	20251119110332epcas5p1e7576a2f6f2f68fdd692f43fa6b456b7~5Y5MUbs-q1958119581epcas5p13;
-	Wed, 19 Nov 2025 11:03:32 +0000 (GMT)
-Received: from epcas5p2.samsung.com (unknown [182.195.38.93]) by
-	epsnrtp02.localdomain (Postfix) with ESMTP id 4dBJW72nQWz2SSKZ; Wed, 19 Nov
-	2025 11:03:31 +0000 (GMT)
-Received: from epsmtip2.samsung.com (unknown [182.195.34.31]) by
-	epcas5p1.samsung.com (KnoxPortal) with ESMTPA id
-	20251119110330epcas5p10fe5035ad50ad1f5cfa3eb42830ac401~5Y5Kj0FOb1937319373epcas5p14;
-	Wed, 19 Nov 2025 11:03:30 +0000 (GMT)
-Received: from FDSFTE411 (unknown [107.122.81.184]) by epsmtip2.samsung.com
-	(KnoxPortal) with ESMTPA id
-	20251119110320epsmtip214c80850a63127e66a162ef624825255~5Y5Auz_Pp1541615416epsmtip2X;
-	Wed, 19 Nov 2025 11:03:19 +0000 (GMT)
-From: "Ravi Patel" <ravi.patel@samsung.com>
-To: <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-	<jesper.nilsson@axis.com>, <lars.persson@axis.com>,
-	<mturquette@baylibre.com>, <sboyd@kernel.org>, <alim.akhtar@samsung.com>,
-	<s.nawrocki@samsung.com>, <cw00.choi@samsung.com>
-Cc: <ksk4725@coasia.com>, <smn1196@coasia.com>, <linux-arm-kernel@axis.com>,
-	<krzk@kernel.org>, <devicetree@vger.kernel.org>,
-	<linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-	<linux-samsung-soc@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-	<pjsin865@coasia.com>, <gwk1013@coasia.com>, <bread@coasia.com>,
-	<jspark@coasia.com>, <limjh0823@coasia.com>, <lightwise@coasia.com>,
-	<hgkim05@coasia.com>, <mingyoungbo@coasia.com>, <shradha.t@samsung.com>,
-	<swathi.ks@samsung.com>, <kenkim@coasia.com>
-In-Reply-To: <20251029130731.51305-1-ravi.patel@samsung.com>
-Subject: RE: [PATCH v3 0/4] Add basic clock and pmu support for the Axis
- ARTPEC-9 SoC
-Date: Wed, 19 Nov 2025 16:33:17 +0530
-Message-ID: <027f01dc5944$239f6890$6ade39b0$@samsung.com>
+	s=arc-20240116; t=1763551011; c=relaxed/simple;
+	bh=Jfm1+IV0dmKR6UvATXbNPaNXa4YJ4/UDhZCRc24a46A=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=ckTFYAdnmCrHzxQZeQ8ecF/SreGT9OfwNj4+30Fw8N3Ou8VRYlbSSMKK36N2wx3s2+UV3RofW59Lna13pIIAJba/6vklLpV7SrTA8QairabnfQv6im+I4O8aUyA03ahvPeKdXF1Zeg37AvlBcKWsyEVPenazVyshze0jTce0BgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ZA77XtmL; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-477770019e4so68912475e9.3
+        for <linux-samsung-soc@vger.kernel.org>; Wed, 19 Nov 2025 03:16:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1763551008; x=1764155808; darn=vger.kernel.org;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Jfm1+IV0dmKR6UvATXbNPaNXa4YJ4/UDhZCRc24a46A=;
+        b=ZA77XtmLwwkJObTivXPBfyDyqMyutSIkl8y3xw6NyX0zWizyH8GREDJ8Xy9KQ1VUAc
+         v5aB2YnBhltBiL/ocqMmMZ0V7/PojY60D8WCO95lJBzqcdeq2kjXf232ERL4UhrFV8Fi
+         8RNkFjsXsPlWa8u0VNf6DaGo8BS5DQffGZRDhz42ii51Kh9cu9eHLM1bShF5OSkvmdp9
+         RMUpOr+vQq8XanN+5hh+h8ZFvd6e64ByWTb8TJakk6t74FH9ptwJYwPcFfmUYGluba6+
+         bGDtqYexC3beYqQ+hfBHFRoQkvzcSJOMyV0HzoAma3X1OK5HmN9tQ+Ln4AfDes8E+6xu
+         zR+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763551008; x=1764155808;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Jfm1+IV0dmKR6UvATXbNPaNXa4YJ4/UDhZCRc24a46A=;
+        b=C1Oe/EoY4+eD0VIPI/Z8x88cgxHAe6TjvzGUysRK7/FgtBjvjz21Eu+MHFg8AcVYaP
+         v90B2+dQM0r8JlsSFO9kTYmOMYFEZEiULOVD0+0EotaSY6dwXe/gZVla75BF9TdYLscr
+         jU5G1Rydw7xMtqMEo1SaxBjXUP9ghXhf1CYs3IUZVCz+p89G8NPcrBm+0owkeB8gji1q
+         ojojPa6+MlBE2DfwJGki2Xya171IXx7JxlvehkiPinLAwBz8GdCEDN/GNusHGItQSow5
+         n5h49JfGWLNALETcn6ZXEOf8RaUxL8KMZGDAlwDQMLI+7O47IRiqvB+lzolK832x+/Jx
+         pIRA==
+X-Forwarded-Encrypted: i=1; AJvYcCWEYjkt1EnoQHAi7lZktoGDjCuj3XpACKvEWboT6aP9LMrdSFfpy+P3YXNM8eqOhotOeTJiTQj7vGD1OEBDx38Qqg==@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywu/CfxZMnoOnfHaSJvG495MJzS3s1EYWf1cz8ehtEQzaOxUn2U
+	HMGoj8R4txIym2VCCEEadVlC/s6DEjMxZFCtgNLnEZE65RK6FLj3f22TeCRY4mL05IE=
+X-Gm-Gg: ASbGncsBaTvHG8e5QZ3Zx2kD0T/Yp4GPDVouNxC8BLCKZPUokxUBzlf2rjexolyEa8F
+	a3Ja5PmFuOhO6Iy9QSqbeuQ2nfuzT1dzwQuuAgcl+xPu23eBveusRRDkmlbmgs/6Bfg/yFC6eL+
+	1sHz/wCItT/VtTQDv14ljgyEB4JboFm+wN2yxhi7BZUJja/8o/AlohYLckfhIXAVlOxryGVreJ6
+	Q00/Mi8s5721ZlHfkXOoNNKsZWkP+/ajpFGQzQ3moU51Ims+Cl90xvpUMMyPDdI0T2mK7qL0Y91
+	wxw5jVu/xQe2zSFqHSoJOBvX5VMRQL/wWfyrWie2+xTUnzhy9bFMwLrddbGnBw2aX606MQpZ8KN
+	/3y9g87nZqP+MMjSRqPmCKAfyE3xfZHA5ajSD/PgaG9WJPyFAhFSw3xMFIJrZ8/pALYaC8NdouR
+	oK8Hx6ygmb+HI8LdgagQ==
+X-Google-Smtp-Source: AGHT+IHxUjgdNCXTiwpOfnXS2oC4TBNMEII+w8M+hOGIH0Djg1ZSLLta8lC5CXkAR753ngvyVq70XA==
+X-Received: by 2002:a05:600c:3542:b0:471:115e:87bd with SMTP id 5b1f17b1804b1-4778fe7d0ecmr189079235e9.26.1763551007791;
+        Wed, 19 Nov 2025 03:16:47 -0800 (PST)
+Received: from [10.1.1.13] ([212.129.77.152])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-477b1013edcsm42553585e9.4.2025.11.19.03.16.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 19 Nov 2025 03:16:47 -0800 (PST)
+Message-ID: <643a5776c383a501b129cd0f867395c0ccf80566.camel@linaro.org>
+Subject: Re: [PATCH] phy: exynos5-usbdrd: fix clock prepare imbalance
+From: =?ISO-8859-1?Q?Andr=E9?= Draszik <andre.draszik@linaro.org>
+To: Vinod Koul <vkoul@kernel.org>
+Cc: Peter Griffin <peter.griffin@linaro.org>, Tudor Ambarus	
+ <tudor.ambarus@linaro.org>, Will McVicker <willmcvicker@google.com>, 
+	kernel-team@android.com, linux-phy@lists.infradead.org, 
+	linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, stable@vger.kernel.org, Kishon Vijay Abraham
+ I	 <kishon@kernel.org>, Krzysztof Kozlowski <krzk@kernel.org>, Alim Akhtar	
+ <alim.akhtar@samsung.com>
+Date: Wed, 19 Nov 2025 11:16:46 +0000
+In-Reply-To: <20251006-gs101-usb-phy-clk-imbalance-v1-1-205b206126cf@linaro.org>
+References: 
+	<20251006-gs101-usb-phy-clk-imbalance-v1-1-205b206126cf@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.2-7 
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQFuBG9fI91CU/dBRNhjuFekaH32YALr0KoHtb8gl/A=
-Content-Language: en-in
-X-CMS-MailID: 20251119110330epcas5p10fe5035ad50ad1f5cfa3eb42830ac401
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-CMS-TYPE: 105P
-cpgsPolicy: CPGSC10-541,Y
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20251029130809epcas5p3cd5341d86ffac5fe18d8541c8018e568
-References: <CGME20251029130809epcas5p3cd5341d86ffac5fe18d8541c8018e568@epcas5p3.samsung.com>
-	<20251029130731.51305-1-ravi.patel@samsung.com>
 
-Gentle reminder to review this patch series.
+On Mon, 2025-10-06 at 09:07 +0100, Andr=C3=A9 Draszik wrote:
+> Commit f4fb9c4d7f94 ("phy: exynos5-usbdrd: allow DWC3 runtime suspend
+> with UDC bound (E850+)") incorrectly added clk_bulk_disable() as the
+> inverse of clk_bulk_prepare_enable() while it should have of course
+> used clk_bulk_disable_unprepare(). This means incorrect reference
+> counts to the CMU driver remain.
+>=20
+> Update the code accordingly.
+>=20
+> Fixes: f4fb9c4d7f94 ("phy: exynos5-usbdrd: allow DWC3 runtime suspend wit=
+h UDC bound (E850+)")
+> CC: stable@vger.kernel.org
+> Signed-off-by: Andr=C3=A9 Draszik <andre.draszik@linaro.org>
 
-Thanks,
-Ravi
-
-> -----Original Message-----
-> From: Ravi Patel <ravi.patel@samsung.com>
-> Sent: 29 October 2025 18:37
-> To: robh@kernel.org; krzk+dt@kernel.org; conor+dt@kernel.org; jesper.nilsson@axis.com; lars.persson@axis.com;
-> mturquette@baylibre.com; sboyd@kernel.org; alim.akhtar@samsung.com; s.nawrocki@samsung.com; cw00.choi@samsung.com
-> Cc: ravi.patel@samsung.com; ksk4725@coasia.com; smn1196@coasia.com; linux-arm-kernel@axis.com; krzk@kernel.org;
-> devicetree@vger.kernel.org; linux-kernel@vger.kernel.org; linux-arm-kernel@lists.infradead.org; linux-samsung-soc@vger.kernel.org;
-> linux-clk@vger.kernel.org; pjsin865@coasia.com; gwk1013@coasia.com; bread@coasia.com; jspark@coasia.com; limjh0823@coasia.com;
-> lightwise@coasia.com; hgkim05@coasia.com; mingyoungbo@coasia.com; shradha.t@samsung.com; swathi.ks@samsung.com;
-> kenkim@coasia.com
-> Subject: [PATCH v3 0/4] Add basic clock and pmu support for the Axis ARTPEC-9 SoC
-> 
-> Add basic clock driver and pmu compatible support for the
-> Axis ARTPEC-9 SoC which contains 6-core Cortex-A55 CPU
-> and other several IPs. This SoC is an Axis-designed chipset
-> used in surveillance camera products.
-> 
-> This ARTPEC-9 SoC has a variety of Samsung-specific IP blocks and
-> Axis-specific IP blocks and SoC is manufactured by Samsung Foundry.
-> 
-> This patch series includes below changes:
-> - CMU (Clock Management Unit) driver and its bindings (patch #1 to #3)
-> - PMU bindings (patch #4)
-> 
-> The patch series has been tested on the ARTPEC-9 EVB with
-> Linux Samsung SoC tree (for-next branch) and intended
-> to be merged via the `arm-soc` tree.
-> 
-> ---
-> Changes in v3:
-> - Resend all patches in single thread
-> 
-> Link to v2: https://lore.kernel.org/linux-samsung-soc/20251029125641.32989-1-ravi.patel@samsung.com/
-> ---
-> 
-> Changes in v2:
-> - Decouple the device tree related patches which was present in v1 (Patch #5 to #7)
->   Device tree related patches will be sent in separate series.
-> - Fix the division issue (in arm target) reported by kernel test in patch #2
-> 
-> Link to v1: https://lore.kernel.org/linux-samsung-soc/20250917085005.89819-1-ravi.patel@samsung.com/
-> ---
-> 
-> GyoungBo Min (3):
->   dt-bindings: clock: Add ARTPEC-9 clock controller
->   clk: samsung: Add clock PLL support for ARTPEC-9 SoC
->   clk: samsung: artpec-9: Add initial clock support for ARTPEC-9 SoC
-> 
-> SungMin Park (1):
->   dt-bindings: samsung: exynos-pmu: Add compatible for ARTPEC-9 SoC
-> 
->  .../bindings/clock/axis,artpec9-clock.yaml    |  232 ++++
->  .../bindings/soc/samsung/exynos-pmu.yaml      |    1 +
->  drivers/clk/samsung/Makefile                  |    1 +
->  drivers/clk/samsung/clk-artpec9.c             | 1224 +++++++++++++++++
->  drivers/clk/samsung/clk-pll.c                 |  185 ++-
->  drivers/clk/samsung/clk-pll.h                 |   17 +
->  include/dt-bindings/clock/axis,artpec9-clk.h  |  195 +++
->  7 files changed, 1847 insertions(+), 8 deletions(-)
->  create mode 100644 Documentation/devicetree/bindings/clock/axis,artpec9-clock.yaml
->  create mode 100644 drivers/clk/samsung/clk-artpec9.c
->  create mode 100644 include/dt-bindings/clock/axis,artpec9-clk.h
-> 
-> --
-> 2.17.1
-
-
+Friendly ping.
 
