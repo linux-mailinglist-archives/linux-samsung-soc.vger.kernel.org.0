@@ -1,48 +1,48 @@
-Return-Path: <linux-samsung-soc+bounces-12257-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-12258-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id 47BC8C6E646
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 19 Nov 2025 13:13:13 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id EA53AC6E67C
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 19 Nov 2025 13:16:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id ECFFC343D22
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 19 Nov 2025 12:12:23 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 44BC14E6484
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 19 Nov 2025 12:14:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 23AC0357738;
-	Wed, 19 Nov 2025 12:12:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B781357A4B;
+	Wed, 19 Nov 2025 12:14:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KPljgb/a"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gaKBS3xg"
 X-Original-To: linux-samsung-soc@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD83334CFC9;
-	Wed, 19 Nov 2025 12:12:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F49B34D4D2;
+	Wed, 19 Nov 2025 12:14:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763554338; cv=none; b=scqjY2CPtxtrRAAM1D84or3pFCBPznTFKImpMvHOabV8n/2jNfS3FUtOya+FQ1z3M0Px1A2Y/P2XPJeTmSkmftaVpH7eMsqntuuUvWBJ20BKBJkFm+o94p8oipAKaqkAb8ia+b9FnsA6WkmhgN/9nBFzOEogqyoNDchgxGDf9hs=
+	t=1763554446; cv=none; b=hCvJ4+tS229bN7mpc/5qmkkl+0ddn32QAenDakdylMxXiiF5Hn1Vvo4KT1CxBIo5zYabn2BghB5IqWt/mlczQJlIm5m0frtZfp/jprBzJX36dy3mDgbxGpOobJNK15RyTaMRNkz3aBZhEzAYhMB8ALd/KWu7s4OyWPwHvnXiMyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763554338; c=relaxed/simple;
-	bh=M0pWsknYQ4B/+y5p7fi+jo79BRzh/3AOxSQ5/8qdynk=;
+	s=arc-20240116; t=1763554446; c=relaxed/simple;
+	bh=QLifMXuofRLvBzC10/jwJe/e8B4mmFP7h0J7ELx0+rw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pQ8VZJss8Rh9FsGrqLTSur/QLxlvrN4Bx4sy3nyz2K9xBVf4Tuu8Zs+ZNeaUC0bVOmoPHaYW6DI3I950o6kZyTgTOrTSYwaOk82QJGITi8mVbYQT1rPSoU/xSs6IREh7TV3ou7AcnyjsizBiyONzGPOMnJrKWkGa9TPoND//FZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KPljgb/a; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0EC9C16AAE;
-	Wed, 19 Nov 2025 12:12:15 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=HqjPSnCxDThZqeOmSP3bRsJgSZgmcUWG2sQ5zCKgPq2CeyIzvH0tqjGjHI3Ueqmv3PZujEiNMJkveFST7HSj+klTQM8B+xLEzCfGPIovOBjpjeeGbPFrK+BnCU2Q+ivonImGb5QV4ChywHgPoOSPCI5TUiqq7sfgbAMsmaKl00c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gaKBS3xg; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6881FC19423;
+	Wed, 19 Nov 2025 12:13:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763554338;
-	bh=M0pWsknYQ4B/+y5p7fi+jo79BRzh/3AOxSQ5/8qdynk=;
+	s=k20201202; t=1763554443;
+	bh=QLifMXuofRLvBzC10/jwJe/e8B4mmFP7h0J7ELx0+rw=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=KPljgb/aiYqjR/2eO0Uy6pBuETB1adM9Bcj08tbRXQxk2ffYmCeuLed3r92eX2ZCO
-	 cVVHIdapeW6a0OeNEU4Yf7FRb6xryQ/PYi7c9cjjkTG0I3fUoqpX0N3xLblnwibcxp
-	 A1QA41wKrGfoV/BxLxEUcPBZzeHunjBQgttLrBjOpapUD193x4qmDbnWL5xWymxwqu
-	 jTEpaIp7atDAbQ4RxJBo0gD3oiqvggjRz6rLncdf2t/PShZANOSeKPC7n3dRJzSi8v
-	 6Xu8nCzKxYM4Ei0kYN6VjlWAxeubVLaQE3BWHvLl8LPiyhZDRoUHalBUB6S8ELzc20
-	 hSwbDqXrlTAvQ==
-Message-ID: <782da69d-d118-4d7c-baf7-a8164fc550b8@kernel.org>
-Date: Wed, 19 Nov 2025 13:12:13 +0100
+	b=gaKBS3xgc/9yjSNbdbVkzSV+xtBY1Y0ofDqeNE7MwaA5OLAYawA5SopweTVP1dhtL
+	 SECob3rFCL2lfikVcv+D7PtbLlBTkvtyaVgdWSLaudbDHwkeBFbnhctOuBVKGoA3l4
+	 HzrRmY1ZsoYXdEY8DxKuxxBfujm46dECKqNKIeyJm2FwU1e+RNtbFxkqqaWK+BVQFC
+	 PWN8JySHzFLjUrd6LNgarW9VQNKc/tUzSCu4ctCnQ+bAcVzELm2AVwvyFuCfsxjMmD
+	 vt0ZwYU50L1FsJAPW6mSCPqIZZNNketfRweC/SNcGGJlgk3kbbxlH4rmF9757hfCqr
+	 xc6hxfjGgq7BA==
+Message-ID: <e25b9f14-b583-434d-ac4f-364b962f0ed1@kernel.org>
+Date: Wed, 19 Nov 2025 13:13:57 +0100
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
@@ -50,14 +50,20 @@ List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/4] soc: samsung: exynos-chipid: trivial updates to
- simplify code
-To: Tudor Ambarus <tudor.ambarus@linaro.org>,
- Alim Akhtar <alim.akhtar@samsung.com>
-Cc: linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org,
- linux-kernel@vger.kernel.org, peter.griffin@linaro.org,
- andre.draszik@linaro.org, willmcvicker@google.com, kernel-team@android.com
-References: <20251112-chipid-trivial-v1-0-ec2dea03bd83@linaro.org>
+Subject: Re: [PATCH v2 3/7] soc: samsung: exynos-chipid: use devm action to
+ unregister soc device
+To: Tudor Ambarus <tudor.ambarus@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>,
+ Peter Griffin <peter.griffin@linaro.org>,
+ =?UTF-8?Q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>,
+ Srinivas Kandagatla <srini@kernel.org>
+Cc: semen.protsenko@linaro.org, willmcvicker@google.com,
+ kernel-team@android.com, devicetree@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20251118-gs101-chipid-v2-0-e9f1e7460e35@linaro.org>
+ <20251118-gs101-chipid-v2-3-e9f1e7460e35@linaro.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -103,25 +109,23 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20251112-chipid-trivial-v1-0-ec2dea03bd83@linaro.org>
+In-Reply-To: <20251118-gs101-chipid-v2-3-e9f1e7460e35@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 12/11/2025 09:48, Tudor Ambarus wrote:
-> Trivial patches to simplify code done while handling the GS101 chipid
-> support. Compile tested only.
+On 18/11/2025 14:56, Tudor Ambarus wrote:
+> Simplify the unwinding of the soc device by using a devm action.
+> Add the action before the exynos_asv_init() to avoid an explicit call
+> to soc_device_unregister().
 > 
 > Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
 > ---
-> Tudor Ambarus (4):
->       soc: samsung: exynos-chipid: prepend exynos_ to a method's name
->       soc: samsung: exynos-chipid: downgrade dev_info to dev_dbg for soc info
->       soc: samsung: exynos-chipid: simplify with dev_err_probe
->       soc: samsung: exynos-chipid: use devm action to unregister soc device
-> 
+>  drivers/soc/samsung/exynos-chipid.c | 27 +++++++++++----------------
 
-AFAIU, this patchset is superseded with v2 using OTP bindings, so I am
-dropping it.
+Can I take the cleanups before new GS support?
+
+That's btw preferred order for all work. Fixes should be independent or
+first in the patchset. Then cleanups before features/new support.
 
 Best regards,
 Krzysztof
