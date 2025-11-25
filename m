@@ -1,46 +1,44 @@
-Return-Path: <linux-samsung-soc+bounces-12449-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-12452-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0B379C85B3F
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 25 Nov 2025 16:13:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id BC2A5C85B62
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 25 Nov 2025 16:14:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3D0753A2E8B
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 25 Nov 2025 15:13:03 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D4DA63AEC98
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 25 Nov 2025 15:13:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8E6BC3271E0;
-	Tue, 25 Nov 2025 15:13:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A5CE328605;
+	Tue, 25 Nov 2025 15:13:05 +0000 (UTC)
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mout-p-101.mailbox.org (mout-p-101.mailbox.org [80.241.56.151])
+Received: from mout-p-201.mailbox.org (mout-p-201.mailbox.org [80.241.56.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45E0A3254AD;
-	Tue, 25 Nov 2025 15:12:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BB7A327C1A;
+	Tue, 25 Nov 2025 15:13:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764083580; cv=none; b=Z/tvQ63tfozIqskRr5VkTKApu3+K2W4cha4lR4S3+Nc9Br68HjJq5n+JoWQcKlly3JVqcB9dOK/p+GIMLWlKRBakXUdsmeXkcqWOF6FBXouo90cBMBAALLCiBMCqC9pQOAZ335hhB8XylSkX6F1IjaezIZdiqQAGQERonA7LDAE=
+	t=1764083585; cv=none; b=IEHsg2ZQQaFPg/jhTjtrvalBPYrucjjXpvPs89kGGAPIxLFc/4AjVl3QRvwQfjXD4sZ63etHikuaJ/ybNkczeFLot0kX5z3UbKalHBqNuxufcTFqPjsFDhAPdA8+8kLZTbVxeDPx1YnKb8/nPZXvkfWVmBnVPi2pg4x809lUWh4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764083580; c=relaxed/simple;
-	bh=52nwkri5zEPXSLbRcRahQUz+KdOaiUGi1d7Hr32ZuHE=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=WCsuAG6H2MKRgzt0Xr8Pf6hGiHCaRFwRdL/e6Ujwc7dV4HscBRtpqsV98WVNPmD+wxJx+2mhU3GLFjULPbfT9VFfvfmEivsMObWlCePWTSsa5CuNuByYMb8LM+zvXJFmkbZ5L80bSHddmo91QRLRmw6z3W+9ENSCadPy5OuukGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=timmermann.space; spf=pass smtp.mailfrom=timmermann.space; arc=none smtp.client-ip=80.241.56.151
+	s=arc-20240116; t=1764083585; c=relaxed/simple;
+	bh=x1v0MJUWK9BMlzbS3/wVIg7Szywnt4X4hx4pJPzYhGk=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=mLunotKN282lID3M9vxULdMJfzeAm4kqkSrQwDp4LlDvDMiluS0D9e/RDfSEDtBiTfJY5de9Pgt5yqZsf6uo2QAutcpJxh0nXnAMwDMCudmm3tNhUP3oOTZ7YyDcA5P1hMVVA3vgIo+sZtVG3pw2CjSoC7AfDX3kkSngDCThq7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=timmermann.space; spf=pass smtp.mailfrom=timmermann.space; arc=none smtp.client-ip=80.241.56.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=timmermann.space
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=timmermann.space
-Received: from smtp2.mailbox.org (smtp2.mailbox.org [IPv6:2001:67c:2050:b231:465::2])
+Received: from smtp2.mailbox.org (smtp2.mailbox.org [10.196.197.2])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by mout-p-101.mailbox.org (Postfix) with ESMTPS id 4dG5m31DRLz9twg;
-	Tue, 25 Nov 2025 16:12:51 +0100 (CET)
-Authentication-Results: outgoing_mbo_mout;
-	dkim=none;
-	spf=pass (outgoing_mbo_mout: domain of linux@timmermann.space designates 2001:67c:2050:b231:465::2 as permitted sender) smtp.mailfrom=linux@timmermann.space
+	by mout-p-201.mailbox.org (Postfix) with ESMTPS id 4dG5m536Knz9v6q;
+	Tue, 25 Nov 2025 16:12:53 +0100 (CET)
 From: Lukas Timmermann <linux@timmermann.space>
-Subject: [PATCH v2 0/3] Add support for exynos5250-manta (Google Nexus 10)
-Date: Tue, 25 Nov 2025 16:12:39 +0100
-Message-Id: <20251125-google-manta-v2-0-0f097cfff39c@timmermann.space>
+Date: Tue, 25 Nov 2025 16:12:40 +0100
+Subject: [PATCH v2 1/3] dt-bindings: ARM: samsung: Add Google Manta (Nexus
+ 10)
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
@@ -49,10 +47,9 @@ List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAGfHJWkC/x3MQQqAIBBA0avIrBNUErGrRAvJyQZKQyMC8e5Jy
- 7f4v0LBTFhgYhUyPlQoxQ41MFh3FwNy8t2ghNJSKs1DSuFAfrp4O26sHjVKY70U0JMr40bvv5u
- X1j5BFZOcXgAAAA==
-X-Change-ID: 20251125-google-manta-79545e179d10
+Message-Id: <20251125-google-manta-v2-1-0f097cfff39c@timmermann.space>
+References: <20251125-google-manta-v2-0-0f097cfff39c@timmermann.space>
+In-Reply-To: <20251125-google-manta-v2-0-0f097cfff39c@timmermann.space>
 To: Krzysztof Kozlowski <krzk@kernel.org>, 
  Alim Akhtar <alim.akhtar@samsung.com>, Rob Herring <robh@kernel.org>, 
  Conor Dooley <conor+dt@kernel.org>, Russell King <linux@armlinux.org.uk>
@@ -60,40 +57,31 @@ Cc: linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
  Lukas Timmermann <linux@timmermann.space>, 
  Alexandre Marquet <tb@a-marquet.fr>
-X-Rspamd-Queue-Id: 4dG5m31DRLz9twg
 
-This patch series adds initial support for the google-manta board, known
-as Google Nexus 10 to users. The device is powered by
-the Exynos 5250 SoC. The notification led driver (as3668) is already 
-(tho not applied) in the kernel mailing list and can be found here:
-https://lore.kernel.org/linux-leds/20251125114015.355487-1-linux@timmermann.space/
+From: Alexandre Marquet <tb@a-marquet.fr>
 
-The first two patches add the necessary device tree files and
-bindings, while the last patch makes a small modification to
-allow CPU1 to boot, as it requires a call to it's underlying firmware.
+Add the Google Nexus 10 board to documentation.
 
-This first iteration only provides basic support to get the board
-up and running and usable via UART and with WiFi support. We will upstream additional 
-features in future patches. All patches have been tested on real hardware.
-
+Signed-off-by: Alexandre Marquet <tb@a-marquet.fr>
 Signed-off-by: Lukas Timmermann <linux@timmermann.space>
 ---
-Alexandre Marquet (3):
-      dt-bindings: ARM: samsung: Add Google Manta (Nexus 10)
-      ARM: dts: exynos: Add Google Manta (Nexus 10)
-      ARM: samsung: exynos5250: Allow CPU1 to boot
+ Documentation/devicetree/bindings/arm/samsung/samsung-boards.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
- .../bindings/arm/samsung/samsung-boards.yaml       |   1 +
- arch/arm/boot/dts/samsung/Makefile                 |   1 +
- arch/arm/boot/dts/samsung/exynos5250-manta.dts     | 516 +++++++++++++++++++++
- arch/arm/mach-exynos/firmware.c                    |   4 +-
- 4 files changed, 520 insertions(+), 2 deletions(-)
----
-base-commit: 6a23ae0a96a600d1d12557add110e0bb6e32730c
-change-id: 20251125-google-manta-79545e179d10
+diff --git a/Documentation/devicetree/bindings/arm/samsung/samsung-boards.yaml b/Documentation/devicetree/bindings/arm/samsung/samsung-boards.yaml
+index f8e20e602c20..13d97257f070 100644
+--- a/Documentation/devicetree/bindings/arm/samsung/samsung-boards.yaml
++++ b/Documentation/devicetree/bindings/arm/samsung/samsung-boards.yaml
+@@ -117,6 +117,7 @@ properties:
+       - description: Exynos5250 based boards
+         items:
+           - enum:
++              - google,manta                    # Google Manta (Nexus 10)
+               - google,snow-rev5                # Google Snow Rev 5+
+               - google,spring                   # Google Spring
+               - insignal,arndale                # Insignal Arndale
 
-Best regards,
 -- 
-Lukas Timmermann <linux@timmermann.space>
+2.52.0
 
 
