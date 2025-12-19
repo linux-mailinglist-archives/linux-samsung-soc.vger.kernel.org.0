@@ -1,120 +1,113 @@
-Return-Path: <linux-samsung-soc+bounces-12720-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-12718-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 891B6CD06D0
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 19 Dec 2025 16:00:58 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id DFB41CD06AB
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 19 Dec 2025 15:58:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 36FA0308D609
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 19 Dec 2025 14:57:15 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 5034A3006993
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 19 Dec 2025 14:54:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 10BB3337680;
-	Fri, 19 Dec 2025 14:57:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D73E33D6D0;
+	Fri, 19 Dec 2025 14:54:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b="L3Mqft++"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xSUVgFWg"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-m15596.qiye.163.com (mail-m15596.qiye.163.com [101.71.155.96])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ED181FF7B3;
-	Fri, 19 Dec 2025 14:57:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=101.71.155.96
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DDF733D6D4
+	for <linux-samsung-soc@vger.kernel.org>; Fri, 19 Dec 2025 14:54:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766156233; cv=none; b=iFPy0eDy/WbXBTFuj634BEoQwGiiSu+XPpRbyFQQom0/N+XFCQYsp+wMzfQAxtHc7Ut3enLJ2WoKuDBQqcWnO/PLg/pFQo/0nyHHwx/ZgoXT5nXyUO8sLz5R0hnDizi7gSr40M87oGfJoSjyORs8exkjCdxcwIPkE6P3veduSNA=
+	t=1766156046; cv=none; b=jWVjTyRzKTdyOu8KsGHwLPb3eJbBzgWOmdPm/Thz04Sd1iIc+yS7pH+XvUm+F2CjSR1qZmDPBHDQicZD4EEvPA0Dja6JuaXrcHpK50o7KqoFtWEgDuy8TORxrmaH7f1a7SB3ZrF8lqN7yIaGXaS5O8oNbJsj1EGHnw+F38bBVTE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766156233; c=relaxed/simple;
-	bh=tg2uhjnb2sKL7o1HVa8W2iAZx+MaYDiybQb1untzHz0=;
-	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=ExKJ4O6qdBpLXx0SqHn1WG/Wh3/EBa6eleWoz6qtW/1IFDj+efTg/q6j89kh1zcaxvIZguDPqVmgnh6gYww5Mu5iF/Q5BaQ1PqF2kddaswTFmv4mJfuOm61wgJf93rC2m4TpJfuoL9bS+Z1HEQ1jpqGRLGdBZJWg13+eoxoo2Y4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com; spf=pass smtp.mailfrom=rock-chips.com; dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b=L3Mqft++; arc=none smtp.client-ip=101.71.155.96
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rock-chips.com
-Received: from [172.16.12.14] (unknown [58.22.7.114])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 2de8ecb5a;
-	Fri, 19 Dec 2025 22:51:48 +0800 (GMT+08:00)
-Message-ID: <1ca8f181-7784-469a-b498-622a39737e1e@rock-chips.com>
-Date: Fri, 19 Dec 2025 22:51:47 +0800
+	s=arc-20240116; t=1766156046; c=relaxed/simple;
+	bh=2SY5w+tUH8s9MZEweKPOypbqcfjFIujvFs5cE+TaQsk=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=VqSVdfovcFVaKWKxR6desoBbSwM47IqmIlKKPPJZE4YtDe0OWCU38Wxt/yhIDouCPmuhUMjgs8u5LXQEhiuo8cq/u5TMXCX0DXwD7ilcaVHD1DZZy2dmvjCIJ27Nnv8uYO3ocs8QlHCnrcJnVY2X90B1zHYCaG8u+alGJ66h5VA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xSUVgFWg; arc=none smtp.client-ip=209.85.214.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2a102494058so14679275ad.0
+        for <linux-samsung-soc@vger.kernel.org>; Fri, 19 Dec 2025 06:54:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1766156044; x=1766760844; darn=vger.kernel.org;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=2SY5w+tUH8s9MZEweKPOypbqcfjFIujvFs5cE+TaQsk=;
+        b=xSUVgFWgtgFSj6LA0if8keTrYc0UGCZbjoOSsblmCIQIEYQyGofoL/FsSdAPzZBWTi
+         /RKPPHp49G7uOIyt1L4Y9GlOUEpvub8RaU7ThLp7mg5Lf40zDKn9UXzLTyFpuBiuF+ua
+         22VYkF8ipNcH5//ARwgwoDF7ccVLfMLoHKR2rVmsXWnjVZBXY6V+UfY4sAAC8IYeDp2t
+         2tj5OiJOZ9YprZjKy1HRWpLTwjAGLN7WtICDApMkkKe98vV79XUO08PxwIz7vekZQw3T
+         uKov3b3OpPZ0iLpfxiObi0/nCtiNBchX8ucdNukY71ltoJqTCneEwXRXNSFfy+XDmcVx
+         S84w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1766156044; x=1766760844;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=2SY5w+tUH8s9MZEweKPOypbqcfjFIujvFs5cE+TaQsk=;
+        b=A1bwqbw5+cUP5zAnv4t6itqAmQOZw6E9aTeELR0NRugLIJ5/fEbtvcJ/3LJbAUVSsV
+         MXwYFYjMd9wb8XsEsfE2Lq2KtVGwGClA24qZBBqUlifXn441aAGWZFshRMeJQBvufbGM
+         Iuo79Xrw0Pb039TRpkcV/oReb9RaGv9GYzyxLeccpoDgrpGLZQde04z6ypE+iUP0VQnl
+         OKsKrPhBWYBom80c3u1tQGBCMtlNntNHm/6mfVvqVIlc4YenmxsKxZxjDDM1w6nqSPQQ
+         WtUO/47d3cc7cyOyfkfACELgIh0QWeR+fgdtBoqvZO/u4biSE7Evg6HgwZlxxm/SIc1m
+         ioTA==
+X-Forwarded-Encrypted: i=1; AJvYcCVHEqpy6CmzTjo2VtCfCqY29nRIDSOqg1a1zBN5FsNEiaSgp0iJuadt4bIvm15mNLsC3KxdYtJnrVlJMuB4TUmm7w==@vger.kernel.org
+X-Gm-Message-State: AOJu0YwzNhcFVbHqjruHnBcmeEeldPNKF409JVSzg2z6T7QTCRQxiHR2
+	5vthIQX1HiOKAEAY2RizdQpgVpMteOb5kNhzCPQQIKuCaX1ZqEesLtPCu9lEFE+bRH4=
+X-Gm-Gg: AY/fxX6Aec1yDqHdpMw4Ux2GSUOXMjioMlIchLQPkIlqFoziNz1gMW0xhTndtgP+M+t
+	d6vDS3W/5eF3NTtVVXGoFRNFwiDQ8uRXcQM+47XUqImwiQLHRf/AZC07zA5V20+xHEWSm/LFYl0
+	ZnaFSraJg9lqXDwRf97FCPvaVeDVF8jAnNrjwEVzqJgd+im5HR5aJvc9wr8W0nsESu9fvRTqIG/
+	vJiSdqZa19qghXLH9ZJHfhCEJhKEfKI+G22lctKIB0RpccL0JxFKLfC3eD+39uizf17j71lhfnt
+	6laYgVc6yXuj0dCsCK2cKW8YazHwg0Wh0I86lEO/3/UawEy6aufGIV8creJYhVw3ehFN5aeMVDc
+	iotSiVOlci1zuCPgVOhYX6y6FnLXVMa2CNUbg5sj0uKXOPja2c5fupC7JPdVnyMmxJdtuTj6K0C
+	GxIlim5XlCWcTooz1a+szc7fRgTayB
+X-Google-Smtp-Source: AGHT+IEfQV9bnP8fsaEkN3KGv8ZqOWPjOs88+7XQncM6ppKvoaKoftTo6/MtRekt02qZ2G9dsu6RDA==
+X-Received: by 2002:a17:903:3508:b0:2a0:9047:a738 with SMTP id d9443c01a7336-2a2cab1635dmr57855615ad.19.1766156043627;
+        Fri, 19 Dec 2025 06:54:03 -0800 (PST)
+Received: from draszik.lan ([212.129.80.126])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a2f3c66bd3sm25192085ad.1.2025.12.19.06.53.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 19 Dec 2025 06:54:03 -0800 (PST)
+Message-ID: <5b366a0c0d7f4dcb6a3daa793ec503a43ea754b4.camel@linaro.org>
+Subject: Re: [PATCH v3 1/6] soc: samsung: exynos-chipid: use devm action to
+ unregister soc device
+From: =?ISO-8859-1?Q?Andr=E9?= Draszik <andre.draszik@linaro.org>
+To: Tudor Ambarus <tudor.ambarus@linaro.org>, Rob Herring <robh@kernel.org>,
+  Krzysztof Kozlowski	 <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Alim Akhtar	 <alim.akhtar@samsung.com>, Peter
+ Griffin <peter.griffin@linaro.org>,  Srinivas Kandagatla	 <srini@kernel.org>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>, semen.protsenko@linaro.org, 
+	willmcvicker@google.com, kernel-team@android.com,
+ devicetree@vger.kernel.org, 	linux-arm-kernel@lists.infradead.org,
+ linux-samsung-soc@vger.kernel.org, 	linux-kernel@vger.kernel.org
+Date: Fri, 19 Dec 2025 14:53:58 +0000
+In-Reply-To: <20251120-gs101-chipid-v3-1-1aeaa8b7fe35@linaro.org>
+References: <20251120-gs101-chipid-v3-0-1aeaa8b7fe35@linaro.org>
+	 <20251120-gs101-chipid-v3-1-1aeaa8b7fe35@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.2-2+build3 
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Cc: shawn.lin@rock-chips.com, linux-iio@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-rockchip@lists.infradead.org
-Subject: Re: [PATCH 4/5] iio: adc: rockchip: Simplify with dev_err_probe
-To: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
- Jonathan Cameron <jic23@kernel.org>, David Lechner <dlechner@baylibre.com>,
- =?UTF-8?Q?Nuno_S=C3=A1?= <nuno.sa@analog.com>,
- Andy Shevchenko <andy@kernel.org>, Joel Stanley <joel@jms.id.au>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Krzysztof Kozlowski <krzk@kernel.org>, Alim Akhtar
- <alim.akhtar@samsung.com>, Heiko Stuebner <heiko@sntech.de>,
- Orson Zhai <orsonzhai@gmail.com>, Baolin Wang
- <baolin.wang@linux.alibaba.com>, Chunyan Zhang <zhang.lyra@gmail.com>
-References: <20251219-iio-dev-err-probe-v1-0-bd0fbc83c8a0@oss.qualcomm.com>
- <20251219-iio-dev-err-probe-v1-4-bd0fbc83c8a0@oss.qualcomm.com>
-From: Shawn Lin <shawn.lin@rock-chips.com>
-In-Reply-To: <20251219-iio-dev-err-probe-v1-4-bd0fbc83c8a0@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-HM-Tid: 0a9b371876c109cckunm523b6161c55b6
-X-HM-MType: 1
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFDSUNOT01LS0k3V1ktWUFJV1kPCRoVCBIfWUFZGkpLQlZISkxISh9MSUxPTUxWFRQJFh
-	oXVRMBExYaEhckFA4PWVdZGBILWUFZTkNVSUlVTFVKSk9ZV1kWGg8SFR0UWUFZT0tIVUpLSU9PT0
-	hVSktLVUpCS0tZBg++
-DKIM-Signature: a=rsa-sha256;
-	b=L3Mqft++QW1keeakifFX4r26Bo0K6b98n4bO3SkNmgCq8A7i7LaIGFWE33BuWDvjygTygfaTOhEhZeN8KwRErxShB2KrucqxNKw+Kd0nc3xTFXibEhJOhbcD08iJuqEY8SBejR1zFuRW/6LxVsItsK6il0sxsFTK4A2FeCidGBw=; c=relaxed/relaxed; s=default; d=rock-chips.com; v=1;
-	bh=+dpxgpVjronVSwUPCPFj5OzYc6xfTN7Fz/RJWrifxaw=;
-	h=date:mime-version:subject:message-id:from;
 
-在 2025/12/19 星期五 22:31, Krzysztof Kozlowski 写道:
-> Use dev_err_probe() to make error code handling simpler and handle
-> deferred probe nicely (avoid spamming logs).
-> 
-
-Reviewed-by: Shawn Lin <shawn.lin@rock-chips.com>
-
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+On Thu, 2025-11-20 at 11:29 +0000, Tudor Ambarus wrote:
+> Simplify the unwinding of the soc device by using a devm action.
+> Add the action before the exynos_asv_init() to avoid an explicit call
+> to soc_device_unregister().
+>=20
+> Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
 > ---
->   drivers/iio/adc/rockchip_saradc.c | 13 +++++--------
->   1 file changed, 5 insertions(+), 8 deletions(-)
-> 
-> diff --git a/drivers/iio/adc/rockchip_saradc.c b/drivers/iio/adc/rockchip_saradc.c
-> index 6721da0ed7bb..263d80c5fc50 100644
-> --- a/drivers/iio/adc/rockchip_saradc.c
-> +++ b/drivers/iio/adc/rockchip_saradc.c
-> @@ -492,10 +492,9 @@ static int rockchip_saradc_probe(struct platform_device *pdev)
->   	 */
->   	info->reset = devm_reset_control_get_optional_exclusive(&pdev->dev,
->   								"saradc-apb");
-> -	if (IS_ERR(info->reset)) {
-> -		ret = PTR_ERR(info->reset);
-> -		return dev_err_probe(&pdev->dev, ret, "failed to get saradc-apb\n");
-> -	}
-> +	if (IS_ERR(info->reset))
-> +		return dev_err_probe(&pdev->dev, PTR_ERR(info->reset),
-> +				     "failed to get saradc-apb\n");
->   
->   	init_completion(&info->completion);
->   
-> @@ -505,10 +504,8 @@ static int rockchip_saradc_probe(struct platform_device *pdev)
->   
->   	ret = devm_request_irq(&pdev->dev, irq, rockchip_saradc_isr,
->   			       0, dev_name(&pdev->dev), info);
-> -	if (ret < 0) {
-> -		dev_err(&pdev->dev, "failed requesting irq %d\n", irq);
-> -		return ret;
-> -	}
-> +	if (ret < 0)
-> +		return dev_err_probe(&pdev->dev, ret, "failed requesting irq %d\n", irq);
->   
->   	info->vref = devm_regulator_get(&pdev->dev, "vref");
->   	if (IS_ERR(info->vref))
-> 
+> =C2=A0drivers/soc/samsung/exynos-chipid.c | 28 ++++++++++++--------------=
+--
+> =C2=A01 file changed, 12 insertions(+), 16 deletions(-)
 
+Reviewed-by: Andr=C3=A9 Draszik <andre.draszik@linaro.org>
 
