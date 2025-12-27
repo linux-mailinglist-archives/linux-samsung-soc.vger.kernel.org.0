@@ -1,175 +1,82 @@
-Return-Path: <linux-samsung-soc+bounces-12810-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-12813-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 00056CDFB01
-	for <lists+linux-samsung-soc@lfdr.de>; Sat, 27 Dec 2025 13:29:25 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id B16D8CE005F
+	for <lists+linux-samsung-soc@lfdr.de>; Sat, 27 Dec 2025 18:44:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 41EDD30456AB
-	for <lists+linux-samsung-soc@lfdr.de>; Sat, 27 Dec 2025 12:26:29 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 326E5300A30B
+	for <lists+linux-samsung-soc@lfdr.de>; Sat, 27 Dec 2025 17:44:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8B48233032D;
-	Sat, 27 Dec 2025 12:24:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D45F62EBDC8;
+	Sat, 27 Dec 2025 17:44:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QgjuHIvC"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="plgRFm2x"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97B60330D5D
-	for <linux-samsung-soc@vger.kernel.org>; Sat, 27 Dec 2025 12:24:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4321846F;
+	Sat, 27 Dec 2025 17:44:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766838290; cv=none; b=uKw01Q2uyjdEmj13ON0H+H0dVwWlT3geNMRg93IPyKdIsOBeqZnx4w2424J9Xrfvgp+LiYELwIoWcE0g6U28T/lOadiBFQCCFawwOIAnfcuGDhDxI1H5AwQp8hcUfdSFSSIsnsFwVMvc52vnTFP5IfBzHPqDPOIajXNgn/ot+x4=
+	t=1766857448; cv=none; b=sMTXgQKRB3jxygiHIwK0W0CDsC0NL+gi3QSh7t/lBLl5kOMzimw7/rjSZ9v09wens3DHKMoHWZp9B5Ece0WNJSI3oyCK/HNHQZx4kQ0ry7XjBbD9yE1xmsGWCHya22Xjwh+CS/g9T5BeyCAE8N9XNLpO5mGMDu2kuSy27TFJA6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766838290; c=relaxed/simple;
-	bh=61ADjJrgT2o/i8020WOTVait6ro421Ajicl8SlsuO9U=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=uTy6FFQmG+qIwGWFKNlF0hr7dTaQwizwEqCjWZe+AcQewOOkNf3y7VrNW755sCioPCFxf4zslwKtuHqZvvA6/E4Tx1b0kAPsSbXfVRsFoRg3Iu2+fPs4vF27gB5srJuZe8uGGn3D43o1QPB83gw9XkuMyPSUUaG7sdnzAvSMCBA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QgjuHIvC; arc=none smtp.client-ip=209.85.208.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-64b9d01e473so10537894a12.2
-        for <linux-samsung-soc@vger.kernel.org>; Sat, 27 Dec 2025 04:24:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1766838281; x=1767443081; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=6RGJHpYPSzzQbbGCB4wy3BgFrQgesxTAcE0/qZgwEOg=;
-        b=QgjuHIvCQ5py7O52/Jj4oZR6bhc4rf8+nVBWdogTfdPsRyC/OHquSadTl163SPvG5A
-         WC9pZDOdodVBwMOWLdIjqDfI4jB/Qb7Er7CXvgSF37SeU8urtVHUDtY0AsI2Rm9wt+4x
-         Lqp+yvsS1Mr1Fnuv+nlmaV13syk3+cgmJsQEoZizieoRVTEUSeJzfMMp3zGqLcJVsdS2
-         znauhuMBjhkCbiTFRABwdht5p/l7tHC0as8ZmgWrSW97+YTbDbq7jF9Ak2ll+nx7l4D1
-         V1XA8gtit4mE/Au8GeCuydaaIYGD3Qf5WKOK2KDV3QxR+qyxCAYldONbMzciJFzOB4NK
-         DM7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766838281; x=1767443081;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=6RGJHpYPSzzQbbGCB4wy3BgFrQgesxTAcE0/qZgwEOg=;
-        b=JkBKiRN2YZ9AeRo+q7dV1TETRSFzh4Irv0fheYDqxVDYYG6TIsVyKjqRcWQwjol+cA
-         i6vYgqMaDgrRhdnlt4gZPU9sZUcX/qBfcxfvu4zPeZr6yN1V0OkxXv/X2z05B4/9PX9s
-         u5SIzQfSZU8BrX3OdSrMcpq58JK8BxvXhcQTHuB35Xz8JzDUZKhTWFD70rNJRoRzrPsH
-         lvynxeV83Bgk6QQaOpEUlSjNL3EjH+kP7d3lsnP8MHrhd7q1q3BA+GRFk+Thl3BF1WKf
-         CgYa6SYRBQxYIHhnmjYF/lPi1WmoSmWg8dmdQ1ywRS26zhXybRc1+wSaURfa4AcJWtOD
-         BQ4Q==
-X-Forwarded-Encrypted: i=1; AJvYcCX1voMjwVs4p9ihclC5UCYIh1DZXJxk5GJvsGYy/TxGsYQ5/lrIUoaWtCQ0v5Z7E0Z0/s9d/CtHDWtmLML/Bd8yQw==@vger.kernel.org
-X-Gm-Message-State: AOJu0YxAcpw94AWWQxr6xnhBMxQnaAOMKeYHk+6yJ0NI+k5zDTuwAEBF
-	uqkK9pgTmL2oppvq5lPRBK3pzuthf+0fLRaenwsjztnWwmt+um2ot0WX9Zlh4QwkTUA=
-X-Gm-Gg: AY/fxX5bO9fTE4v1cm3cCHGaW/uDe6dU3scwLcr09kknHKVJHlaVX3rhP14KZIz8+Eq
-	g7zsizcN4xlSP26LUPTjgRUkLcCCbTvunls2m9qDwkS28ZcQR/lzQatdk2EPxc+gMTOt1OGNmNl
-	vukPM02q4NtITe3VpIe4taJZWmFkbM7JQeLaVQMbBhChEBzyTimzLj+IB1hG8/wzoQ2LVD+Cs16
-	VUOEhRR6NEmb60ZoHR0NqCihumtLvord2SlDD76dhxaHP2sLqqxgtje6SCoFIEVU4oti4yuiWX/
-	ecEEgQpC50rT3lcwsCbakhfXOLzFpxD2niINIH7SsUKSqDyAX4zVPGIVaFW1G61+ZLpq5W6OJpH
-	8EUJpLLBb+R/QeujlvVuKoqRes2pn+WHjDpIVrret0Iy5OY4uDkeo3PKW1SufD2E4Er55e9A+dA
-	J4025xqNztIUTb6OPIVSJCJs9ZXgNUTgoNhSXSZJ8EgKMOZExD5XYzIPSiomQaoAUzZEeSiCLeM
-	0yoxg==
-X-Google-Smtp-Source: AGHT+IEZhhM0KME5WuKQ84Ts8cerCjpsb60R6tSjSyudT0VTKXNA6pzXYu7jRUwWEVFLnHJWn9IpIQ==
-X-Received: by 2002:a05:6402:51cb:b0:64b:3eeb:80b1 with SMTP id 4fb4d7f45d1cf-64b8ec6cb05mr22638603a12.22.1766838281265;
-        Sat, 27 Dec 2025 04:24:41 -0800 (PST)
-Received: from puffmais2.c.googlers.com (244.175.141.34.bc.googleusercontent.com. [34.141.175.244])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-64b916adc61sm25932659a12.31.2025.12.27.04.24.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 27 Dec 2025 04:24:41 -0800 (PST)
-From: =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>
-Date: Sat, 27 Dec 2025 12:24:43 +0000
-Subject: [PATCH v5 21/21] regulator: s2mps11: enable-gpios is optional on
- s2mpg1x
+	s=arc-20240116; t=1766857448; c=relaxed/simple;
+	bh=rEzyn2bOa/coEWORVff+5bDDXl1nAaryf+Cd927xIOk=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=uCitHKt4eoZKCr3UjAKarjNBcYtlUVjHxAH8c+JpCer4KYv0Wvi+LcTO6X8hv/7z2UbnOfFIqBbIBPifSJCBQ9SSf4DyQFomllXVdd4albs+sZHK2P54HrcV2JVuwDARdXTPf5IAUCxmV0kl30VqjQb8YY8RLktbhrbjMoubDTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=plgRFm2x; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CA24C4CEF1;
+	Sat, 27 Dec 2025 17:43:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1766857446;
+	bh=rEzyn2bOa/coEWORVff+5bDDXl1nAaryf+Cd927xIOk=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=plgRFm2xv3fqWW5WRh8lT7O/Wmj2z7xu9xX/s7k4mnHrgMJaVSaAIgUsOCHQxxJxf
+	 e6mTos4LuKjclLyR3T6+coydKFAv2N0HxD4b3au0Nb53KzuTbrBqNdvHEyliG8JKtu
+	 fXiK6hG42cOmNtGWdwQ2HnSUsXb6lFMVGlWV5WG4Y90IjVbaF3u5zWUYaXHUOOHGfi
+	 T4kb34NP9bp5miMS5tqjAdInUe7MkV/qIg2DSNX0OUYLIkOhT8IGd4O9Ht9ptxB6dC
+	 b0B5vlls0XTmDuY9T3iuZHkSWJbQzmzXS9tvbgpr7h2Wiu0YnJGKZbh05vwAISYNZU
+	 Bxz63eR8a1ZCg==
+Date: Sat, 27 Dec 2025 17:43:55 +0000
+From: Jonathan Cameron <jic23@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Cc: David Lechner <dlechner@baylibre.com>, Nuno =?UTF-8?B?U8Oh?=
+ <nuno.sa@analog.com>, Andy Shevchenko <andy@kernel.org>, Joel Stanley
+ <joel@jms.id.au>, Andrew Jeffery <andrew@codeconstruct.com.au>, Krzysztof
+ Kozlowski <krzk@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>, Heiko
+ Stuebner <heiko@sntech.de>, Philipp Zabel <p.zabel@pengutronix.de>,
+ linux-iio@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-aspeed@lists.ozlabs.org, linux-kernel@vger.kernel.org,
+ linux-samsung-soc@vger.kernel.org, linux-rockchip@lists.infradead.org
+Subject: Re: [PATCH 1/3] iio: adc: aspeed: Simplify probe() with local 'dev'
+ and 'np'
+Message-ID: <20251227174355.0677f93f@jic23-huawei>
+In-Reply-To: <20251221142602.47368-4-krzysztof.kozlowski@oss.qualcomm.com>
+References: <20251221142602.47368-4-krzysztof.kozlowski@oss.qualcomm.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.51; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20251227-s2mpg1x-regulators-v5-21-0c04b360b4c9@linaro.org>
-References: <20251227-s2mpg1x-regulators-v5-0-0c04b360b4c9@linaro.org>
-In-Reply-To: <20251227-s2mpg1x-regulators-v5-0-0c04b360b4c9@linaro.org>
-To: Tudor Ambarus <tudor.ambarus@linaro.org>, Rob Herring <robh@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Krzysztof Kozlowski <krzk@kernel.org>, 
- Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
- Lee Jones <lee@kernel.org>, Linus Walleij <linus.walleij@linaro.org>, 
- Bartosz Golaszewski <brgl@bgdev.pl>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Linus Walleij <linusw@kernel.org>, 
- Bartosz Golaszewski <brgl@kernel.org>
-Cc: Peter Griffin <peter.griffin@linaro.org>, 
- Will McVicker <willmcvicker@google.com>, Juan Yescas <jyescas@google.com>, 
- kernel-team@android.com, linux-kernel@vger.kernel.org, 
- linux-samsung-soc@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-gpio@vger.kernel.org, 
- =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>
-X-Mailer: b4 0.14.2
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-For s2mpg1x, enable-gpios is optional, but when not given, the driver
-is complaining quite verbosely about the missing property.
+On Sun, 21 Dec 2025 15:26:03 +0100
+Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com> wrote:
 
-Refactor the code slightly to avoid printing those messages to the
-kernel log in that case.
+> Simplify the probe function by using local 'dev' and 'np' variables
+> instead of full pointer dereferences.  This makes several lines shorter,
+> which allows to avoid wrapping making code more readable.  While
+> touching the return line, simplify by avoiding unnecessary 'ret'
+> assignment.
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+All 3 patches applied to the togreg branch of iio.git.
+Initially pushed out as testing to let the bots have a play.
 
-Signed-off-by: André Draszik <andre.draszik@linaro.org>
----
- drivers/regulator/s2mps11.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
-
-diff --git a/drivers/regulator/s2mps11.c b/drivers/regulator/s2mps11.c
-index 178a032c0dc192874118906aee45441a1bbd8515..2d5510acd0780ab6f9296c48ddcde5efe15ff488 100644
---- a/drivers/regulator/s2mps11.c
-+++ b/drivers/regulator/s2mps11.c
-@@ -352,7 +352,7 @@ static int s2mps11_regulator_set_suspend_disable(struct regulator_dev *rdev)
- }
- 
- static int s2mps11_of_parse_gpiod(struct device_node *np,
--				  const char *con_id,
-+				  const char *con_id, bool optional,
- 				  const struct regulator_desc *desc,
- 				  struct regulator_config *config)
- {
-@@ -371,14 +371,19 @@ static int s2mps11_of_parse_gpiod(struct device_node *np,
- 		if (ret == -EPROBE_DEFER)
- 			return ret;
- 
--		if (ret == -ENOENT)
-+		if (ret == -ENOENT) {
-+			if (optional)
-+				return 0;
-+
- 			dev_info(config->dev,
- 				 "No entry for control GPIO for %d/%s in node %pOF\n",
- 				 desc->id, desc->name, np);
--		else
-+		} else {
- 			dev_warn_probe(config->dev, ret,
- 				       "Failed to get control GPIO for %d/%s in node %pOF\n",
- 				       desc->id, desc->name, np);
-+		}
-+
- 		return 0;
- 	}
- 
-@@ -409,7 +414,8 @@ static int s2mps11_of_parse_cb(struct device_node *np,
- 	else
- 		return 0;
- 
--	return s2mps11_of_parse_gpiod(np, "samsung,ext-control", desc, config);
-+	return s2mps11_of_parse_gpiod(np, "samsung,ext-control", false, desc,
-+				      config);
- }
- 
- static int s2mpg10_of_parse_cb(struct device_node *np,
-@@ -528,7 +534,7 @@ static int s2mpg10_of_parse_cb(struct device_node *np,
- 
- 	++s2mpg10_desc->desc.ops;
- 
--	return s2mps11_of_parse_gpiod(np, "enable", desc, config);
-+	return s2mps11_of_parse_gpiod(np, "enable", true, desc, config);
- }
- 
- static int s2mpg10_enable_ext_control(struct s2mps11_info *s2mps11,
-
--- 
-2.52.0.351.gbe84eed79e-goog
-
+Jonathan
 
