@@ -1,247 +1,121 @@
-Return-Path: <linux-samsung-soc+bounces-12822-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-12824-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id AEDD1CE556E
-	for <lists+linux-samsung-soc@lfdr.de>; Sun, 28 Dec 2025 19:06:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7CF4ECE60CA
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 29 Dec 2025 07:48:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 163A43025F80
-	for <lists+linux-samsung-soc@lfdr.de>; Sun, 28 Dec 2025 18:06:07 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id B4220300F31B
+	for <lists+linux-samsung-soc@lfdr.de>; Mon, 29 Dec 2025 06:48:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 73FFD239594;
-	Sun, 28 Dec 2025 18:06:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B5DE12264B0;
+	Mon, 29 Dec 2025 06:48:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=chimac.ro header.i=@chimac.ro header.b="hAsqc5/m"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xFduY41G"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mail-244117.protonmail.ch (mail-244117.protonmail.ch [109.224.244.117])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E9E5239E63
-	for <linux-samsung-soc@vger.kernel.org>; Sun, 28 Dec 2025 18:06:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.117
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E53B0241695
+	for <linux-samsung-soc@vger.kernel.org>; Mon, 29 Dec 2025 06:48:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766945166; cv=none; b=NWHL8dnDfQdYbdn31rZH4bixmikyHdctw7m3bIzXvYOjdMERKpdYiEnMaS7eoPKqFUq37xAxF+IXLXmUUuMfp0ZGuNoGrY05KVSMgJBBUOWUBo1O0pvRSA949DOcg9PYhXukdfWZTZrcLOP6AmakHPlsIgM+XluYdFRtdjXDZgs=
+	t=1766990888; cv=none; b=jLCF7S+nRY/3DZkZJcnZAmlzFapICBU9iOA3OpL+3IoSLStaGyVvC5lLyegDE38mHxkAa9lSm8mK3osaMvEz8ukanXLC3XQsU3CaMx4enluoYuRQ+pX1wsArXbcJxyDMM2IJhkEdKdZwL1J/07NJNDqGNlIRityiqb154lSWD30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766945166; c=relaxed/simple;
-	bh=2WBWmLDvI+3uWaI6iGjj/oIiCNEaKia41qm7RafJtQM=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oXhiillYJHyO8bjbOUbQEuCo3HVDtDf2OBL3vBtf4lp4aUhstR9r1Sbu1xbe0imHJPnjYPsMuZLrc5EiPXqeJhIWFW7hGPytySs+stSP49LaVY7rAsmMxvhzBuwvBRDw56y2A1+ISmjUbU104qjxBA2qsw7q82c8w9+A8w3e6l8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=chimac.ro; spf=pass smtp.mailfrom=chimac.ro; dkim=pass (2048-bit key) header.d=chimac.ro header.i=@chimac.ro header.b=hAsqc5/m; arc=none smtp.client-ip=109.224.244.117
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=chimac.ro
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chimac.ro
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=chimac.ro;
-	s=protonmail2; t=1766945156; x=1767204356;
-	bh=Iimb+k4FWtKsauCwXJMg2NmIw/RYvYhly8/W3jnsDME=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=hAsqc5/mtwasv2h7vm6JImYTC5XGg2/j+Z2JaxXJ5iFhr7cqX6FUzqIAWSd6gi8SS
-	 ze0MGLcufVBc0Oi8HtDVySI+SBn29SPTBXx2TFQ6prZU2YTQqOTbEuGd86uh1VOBtq
-	 lcxLkW3/DxHWT1M612bBMlym5Pj95YNzTwgUpdcdGY8hqIUSqX2VBw4Hl6YiLLsYIL
-	 8GbLEXQn7o2pbxHGBCn8lW005c8I+kruTzJQX0LMBSQQIxfWFumExM7ttPFMzj+inp
-	 mMBZdt32C/8fMCilAW7PUVBPMcnO8WoUWLofZh02ofYfk34bLZcyVMSVIE9oZkWbuq
-	 b5Smt4iuYYAzQ==
-Date: Sun, 28 Dec 2025 18:05:55 +0000
-To: Krzysztof Kozlowski <krzk@kernel.org>, Sylwester Nawrocki <s.nawrocki@samsung.com>, Alim Akhtar <alim.akhtar@samsung.com>, Linus Walleij <linusw@kernel.org>, Rob Herring <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Tomasz Figa <tomasz.figa@gmail.com>
-From: Alexandru Chimac <alex@chimac.ro>
-Cc: linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org, linux-gpio@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, Alexandru Chimac <alex@chimac.ro>
-Subject: [PATCH v2 3/3] pinctrl: samsung: Add Exynos9610 pinctrl configuration
-Message-ID: <20251228-exynos9610-pinctrl-v2-3-c9bbeee4c54b@chimac.ro>
-In-Reply-To: <20251228-exynos9610-pinctrl-v2-0-c9bbeee4c54b@chimac.ro>
-References: <20251228-exynos9610-pinctrl-v2-0-c9bbeee4c54b@chimac.ro>
-Feedback-ID: 139133584:user:proton
-X-Pm-Message-ID: bb7879cbc9d07814358c81cae2b54fee2b09a00b
+	s=arc-20240116; t=1766990888; c=relaxed/simple;
+	bh=OZvhZ7NpA5Ybm+ZyBhQlb2l5FV9Gu92NCEHcOuIiZT4=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=YTdjcQCBicRi9WzCIflbLZFlVZhJ4j+IuuPzdhMQ96+c1EjxT2Ct7K3ywPOKQ0F/rr31/0dmPiNlBcnO/f7zzWanD/rJvJjTwhIaykJcxgcR4HlyFzpe30BlYmhssexT/az+95mmKVyKT2t5hkbQWfoHuUVMXTAt0TcPtlQNk60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xFduY41G; arc=none smtp.client-ip=209.85.218.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-b832522b47cso370779666b.0
+        for <linux-samsung-soc@vger.kernel.org>; Sun, 28 Dec 2025 22:48:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1766990882; x=1767595682; darn=vger.kernel.org;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=OZvhZ7NpA5Ybm+ZyBhQlb2l5FV9Gu92NCEHcOuIiZT4=;
+        b=xFduY41Gix57+U7ifvJyavEcSA7re5yz3g5JhhXQqY8cwv6VBP5iGvNlET6qVDohdS
+         9fGbV7771Id/xLUIfDRCb3jSDY6nwnn7+IOZGg/QpolIG+WcVLTpoHJvB5soE8Q3lQY0
+         /+pB+/l9rCvwgrRQFJwZr/hh+xDgbK9SJTHU6Kq2NrltRaQaQdavQ7Ju5ttAWhUwXOj1
+         GGxrZsVyKaaj+CLzhzUMwgIIEFuTAmab5s/wMpngnRccojoaiDVUhnJ3Yhj8J66Cs1vF
+         WUYcCrDaIH/hGPmKTVHVEFyE0Fx72YXKEB1LiOYY07MeXrBAAeCsZgU8kiokujj+7bNL
+         mS7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1766990882; x=1767595682;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=OZvhZ7NpA5Ybm+ZyBhQlb2l5FV9Gu92NCEHcOuIiZT4=;
+        b=MqZBVt/lPZ+mL1GnQIMxzNbdFYx/cqiURfUokQ1aayW5ej/3MFA7yXTM9ARpvE3iv/
+         zitsbKQVzM8NXaIn11kK1j+g16eu/uTOgu6WMVzH86jsTSsJfWnZiOKqYs1l0pht+DzF
+         AvVlZSDnLYiuvnThslFWDieFIAHPZY7SSfiDSiIhvmueJ+/pjuTXZy2aMcjr9LE5AO3W
+         421hwVF7HnpJZ8bP0tN1t7Dzw4BrqW1KXCHuLdIJEs+LAlPRbmJYZGMED3xqrSTrq5VB
+         kByu1xKC/o8lWn3XvTFuH4i4I4VmOEnQBhG6oCz7Qbb+iE+E1QpTstHxFoMsFWnWK7Nr
+         TsmA==
+X-Forwarded-Encrypted: i=1; AJvYcCWH3jH6m0G6giHxy1rAhluF+nV8n5j0A615a9KZ3x444fxpVUOcZ3qO6ztwtEQQtv76vKhSwz+UaVnZyNYTxTK/3w==@vger.kernel.org
+X-Gm-Message-State: AOJu0YxJe4juY7ijcRrriOgygWy0njeRqXh/JNSwt9U505p4qlon/O52
+	2TuNVX+DT3M1xGZzH5jIKYjS7/Qwsc+VkK8Rz8KdmV7dopWuOgIqUrE8mg0czUu3010=
+X-Gm-Gg: AY/fxX4cSoirnepMdSJoFxQ2xOWfoYQQf4SFWScM3yGHgL9ktzcsAeoutbTsvw+NVPL
+	YOevpxTBx8tOHlW1TEVv3AF9Hm+sr/YeTi1F7DI1JrPKNgEB3z0fc1W0VkejhIg7cAeSYPQ+sD3
+	D4PDzWE19R9ATWfPUDC9laNB3ey3e2fiK6r6JoVR7NDfVAUrexevYJIPhAMy9skA4eEccNvRNiC
+	t95SIFwA2sAGyqojw1hDQJ2AIiwLINRyPS+Go73USCs7j4GC6JpHhLeQDL91WeqfPQCeKjfntnN
+	V8tvUtHNX57w+8S5ydJgGtzMA4zdZdMoCOA12yvG6l2wJuJGM61UNRHYF1RdZnYoWrhjZZtIVJV
+	loxNDcS8Nwds4tv2BqPWr9zqMmyLTyjjy+cC2P+/K7g1jzK9XiVhLGFbLC9M/B+hmEuaW1S65YS
+	TCYRW0Lxs0ZL77yhru1g==
+X-Google-Smtp-Source: AGHT+IFKJOEnoMT9pd7t4bMOfdAuLJ3dwRnOBx+hhm/y0iCl4h0HCimfd94oOij5S8bCa43IL/8WUQ==
+X-Received: by 2002:a17:907:7f15:b0:b76:b632:1123 with SMTP id a640c23a62f3a-b8037159828mr3025066266b.42.1766990882195;
+        Sun, 28 Dec 2025 22:48:02 -0800 (PST)
+Received: from draszik.lan ([212.129.79.255])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b8037ad83dasm3338654666b.25.2025.12.28.22.48.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 28 Dec 2025 22:48:01 -0800 (PST)
+Message-ID: <fe1428dd0d6b744ad3c57bf5797550b54f85ff96.camel@linaro.org>
+Subject: Re: [PATCH v5 00/21] Samsung S2MPG10 regulator and S2MPG11 PMIC
+ drivers
+From: =?ISO-8859-1?Q?Andr=E9?= Draszik <andre.draszik@linaro.org>
+To: Tudor Ambarus <tudor.ambarus@linaro.org>, Rob Herring <robh@kernel.org>,
+  Conor Dooley <conor+dt@kernel.org>, Krzysztof Kozlowski <krzk@kernel.org>,
+ Liam Girdwood <lgirdwood@gmail.com>,  Mark Brown <broonie@kernel.org>, Lee
+ Jones <lee@kernel.org>, Linus Walleij <linus.walleij@linaro.org>,  Bartosz
+ Golaszewski	 <brgl@bgdev.pl>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Linus Walleij	 <linusw@kernel.org>, Bartosz Golaszewski <brgl@kernel.org>
+Cc: Peter Griffin <peter.griffin@linaro.org>, Will McVicker
+	 <willmcvicker@google.com>, Juan Yescas <jyescas@google.com>, 
+	kernel-team@android.com, linux-kernel@vger.kernel.org, 
+	linux-samsung-soc@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-gpio@vger.kernel.org
+Date: Mon, 29 Dec 2025 06:48:21 +0000
+In-Reply-To: <20251227-s2mpg1x-regulators-v5-0-0c04b360b4c9@linaro.org>
+References: <20251227-s2mpg1x-regulators-v5-0-0c04b360b4c9@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.2-2+build3 
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
 
-Add pinctrl configuration for Exynos9610. The bank types
-used are the same as on Exynos850 and gs101, so we can
-reuse the macros.
+On Sat, 2025-12-27 at 12:24 +0000, Andr=C3=A9 Draszik wrote:
+> This series extends the existing S2MPG10 PMIC driver to add support for
+> the regulators, and adds new S2MPG11 core and regulator drivers.
+>=20
+> As part of this it was necessary to update the regulator core to allow
+> regulator registration to succeed when supplies aren't ready yet,
+> because on the current user of those PMICs (Google Pixel 6) multiple
+> PMICs supply each other and otherwise regulator registration would fail
+> altogether. This is implemented via an additional 'regulator-bus' which
+> allows us to keep track of regulators with missing supply and retry
+> supply resolution whenever new regulators are registered.
 
-Signed-off-by: Alexandru Chimac <alex@chimac.ro>
----
- drivers/pinctrl/samsung/pinctrl-exynos-arm64.c | 117 +++++++++++++++++++++=
-++++
- drivers/pinctrl/samsung/pinctrl-samsung.c      |   2 +
- drivers/pinctrl/samsung/pinctrl-samsung.h      |   1 +
- 3 files changed, 120 insertions(+)
+Forgot to drop this paragraph from the message, as I sent a separate
+series series for that in
+https://lore.kernel.org/r/20251227-regulators-defer-v1-0-3104b22d84cb@linar=
+o.org
 
-diff --git a/drivers/pinctrl/samsung/pinctrl-exynos-arm64.c b/drivers/pinct=
-rl/samsung/pinctrl-exynos-arm64.c
-index 627dca504d7a..fe9f92cb037e 100644
---- a/drivers/pinctrl/samsung/pinctrl-exynos-arm64.c
-+++ b/drivers/pinctrl/samsung/pinctrl-exynos-arm64.c
-@@ -1770,6 +1770,123 @@ const struct samsung_pinctrl_of_match_data exynos88=
-95_of_data __initconst =3D {
- =09.num_ctrl=09=3D ARRAY_SIZE(exynos8895_pin_ctrl),
- };
-=20
-+/* pin banks of exynos9610 pin-controller 0 (ALIVE) */
-+static const struct samsung_pin_bank_data exynos9610_pin_banks0[] __initco=
-nst =3D {
-+=09EXYNOS850_PIN_BANK_EINTN(6, 0x000, "etc0"),
-+=09GS101_PIN_BANK_EINTW(8, 0x020, "gpa0", 0x00, 0x00),
-+=09GS101_PIN_BANK_EINTW(8, 0x040, "gpa1", 0x04, 0x08),
-+=09GS101_PIN_BANK_EINTW(8, 0x060, "gpa2", 0x08, 0x0c),
-+=09EXYNOS850_PIN_BANK_EINTN(5, 0x080, "gpq0"),
-+};
-+
-+/* pin banks of exynos9610 pin-controller 1 (CMGP) */
-+static const struct samsung_pin_bank_data exynos9610_pin_banks1[] __initco=
-nst =3D {
-+=09EXYNOS850_PIN_BANK_EINTW(1, 0x000, "gpm0", 0x00),
-+=09EXYNOS850_PIN_BANK_EINTW(1, 0x020, "gpm1", 0x04),
-+=09EXYNOS850_PIN_BANK_EINTW(1, 0x040, "gpm2", 0x08),
-+=09EXYNOS850_PIN_BANK_EINTW(1, 0x060, "gpm3", 0x0C),
-+=09EXYNOS850_PIN_BANK_EINTW(1, 0x080, "gpm4", 0x10),
-+=09EXYNOS850_PIN_BANK_EINTW(1, 0x0A0, "gpm5", 0x14),
-+=09EXYNOS850_PIN_BANK_EINTW(1, 0x0C0, "gpm6", 0x18),
-+=09EXYNOS850_PIN_BANK_EINTW(1, 0x0E0, "gpm7", 0x1C),
-+=09EXYNOS850_PIN_BANK_EINTW(1, 0x100, "gpm8", 0x20),
-+=09EXYNOS850_PIN_BANK_EINTW(1, 0x120, "gpm9", 0x24),
-+=09EXYNOS850_PIN_BANK_EINTW(1, 0x140, "gpm10", 0x28),
-+=09EXYNOS850_PIN_BANK_EINTW(1, 0x160, "gpm11", 0x2C),
-+=09EXYNOS850_PIN_BANK_EINTW(1, 0x180, "gpm12", 0x30),
-+=09EXYNOS850_PIN_BANK_EINTW(1, 0x1A0, "gpm13", 0x34),
-+=09EXYNOS850_PIN_BANK_EINTW(1, 0x1C0, "gpm14", 0x38),
-+=09EXYNOS850_PIN_BANK_EINTW(1, 0x1E0, "gpm15", 0x3C),
-+=09EXYNOS850_PIN_BANK_EINTW(1, 0x200, "gpm16", 0x40),
-+=09EXYNOS850_PIN_BANK_EINTW(1, 0x220, "gpm17", 0x44),
-+=09EXYNOS850_PIN_BANK_EINTW(1, 0x240, "gpm18", 0x48),
-+=09EXYNOS850_PIN_BANK_EINTW(1, 0x260, "gpm19", 0x4C),
-+=09EXYNOS850_PIN_BANK_EINTW(1, 0x280, "gpm20", 0x50),
-+=09EXYNOS850_PIN_BANK_EINTW(1, 0x2A0, "gpm21", 0x54),
-+=09EXYNOS850_PIN_BANK_EINTW(1, 0x2C0, "gpm22", 0x58),
-+=09EXYNOS850_PIN_BANK_EINTW(1, 0x2E0, "gpm23", 0x5C),
-+=09EXYNOS850_PIN_BANK_EINTW(1, 0x300, "gpm24", 0x60),
-+=09EXYNOS850_PIN_BANK_EINTW(1, 0x320, "gpm25", 0x64),
-+};
-+
-+/* pin banks of exynos9610 pin-controller 2 (DISPAUD) */
-+static const struct samsung_pin_bank_data exynos9610_pin_banks2[] __initco=
-nst =3D {
-+=09GS101_PIN_BANK_EINTG(5, 0x000, "gpb0", 0x00, 0x00),
-+=09GS101_PIN_BANK_EINTG(4, 0x020, "gpb1", 0x04, 0x08),
-+=09GS101_PIN_BANK_EINTG(5, 0x040, "gpb2", 0x08, 0x0c),
-+};
-+
-+/* pin banks of exynos9610 pin-controller 3 (FSYS) */
-+static const struct samsung_pin_bank_data exynos9610_pin_banks3[] __initco=
-nst =3D {
-+=09GS101_PIN_BANK_EINTG(4, 0x000, "gpf0", 0x00, 0x00),
-+=09GS101_PIN_BANK_EINTG(8, 0x020, "gpf1", 0x04, 0x04),
-+=09GS101_PIN_BANK_EINTG(6, 0x040, "gpf2", 0x08, 0x0c),
-+};
-+
-+/* pin banks of exynos9610 pin-controller 4 (TOP) */
-+static const struct samsung_pin_bank_data exynos9610_pin_banks4[] __initco=
-nst =3D {
-+=09GS101_PIN_BANK_EINTG(8, 0x000, "gpp0", 0x00, 0x00),
-+=09GS101_PIN_BANK_EINTG(6, 0x020, "gpp1", 0x04, 0x08),
-+=09GS101_PIN_BANK_EINTG(8, 0x040, "gpp2", 0x08, 0x10),
-+=09GS101_PIN_BANK_EINTG(8, 0x060, "gpc0", 0x0C, 0x18),
-+=09GS101_PIN_BANK_EINTG(8, 0x080, "gpc1", 0x10, 0x20),
-+=09GS101_PIN_BANK_EINTG(5, 0x0A0, "gpc2", 0x14, 0x28),
-+=09GS101_PIN_BANK_EINTG(8, 0x0C0, "gpg0", 0x18, 0x30),
-+=09GS101_PIN_BANK_EINTG(8, 0x0E0, "gpg1", 0x1C, 0x38),
-+=09GS101_PIN_BANK_EINTG(8, 0x100, "gpg2", 0x20, 0x40),
-+=09GS101_PIN_BANK_EINTG(6, 0x120, "gpg3", 0x24, 0x48),
-+=09GS101_PIN_BANK_EINTG(3, 0x140, "gpg4", 0x28, 0x50),
-+};
-+
-+/* pin banks of exynos9610 pin-controller 5 (SHUB) */
-+static const struct samsung_pin_bank_data exynos9610_pin_banks5[] __initco=
-nst =3D {
-+=09EXYNOS850_PIN_BANK_EINTG(4, 0x000, "gph0", 0x00),
-+=09EXYNOS850_PIN_BANK_EINTG(3, 0x020, "gph1", 0x04),
-+};
-+
-+static const struct samsung_pin_ctrl exynos9610_pin_ctrl[] __initconst =3D=
- {
-+=09{
-+=09=09/* pin-controller instance 0 ALIVE data */
-+=09=09.pin_banks=09=3D exynos9610_pin_banks0,
-+=09=09.nr_banks=09=3D ARRAY_SIZE(exynos9610_pin_banks0),
-+=09=09.eint_wkup_init =3D exynos_eint_wkup_init,
-+=09=09.suspend=09=3D exynos_pinctrl_suspend,
-+=09=09.resume=09=09=3D exynos_pinctrl_resume,
-+=09}, {
-+=09=09/* pin-controller instance 1 CMGP data */
-+=09=09.pin_banks=09=3D exynos9610_pin_banks1,
-+=09=09.nr_banks=09=3D ARRAY_SIZE(exynos9610_pin_banks1),
-+=09=09.eint_wkup_init =3D exynos_eint_wkup_init,
-+=09=09.suspend=09=3D exynos_pinctrl_suspend,
-+=09=09.resume=09=09=3D exynos_pinctrl_resume,
-+=09}, {
-+=09=09/* pin-controller instance 2 DISPAUD data */
-+=09=09.pin_banks=09=3D exynos9610_pin_banks2,
-+=09=09.nr_banks=09=3D ARRAY_SIZE(exynos9610_pin_banks2),
-+=09}, {
-+=09=09/* pin-controller instance 3 FSYS data */
-+=09=09.pin_banks=09=3D exynos9610_pin_banks3,
-+=09=09.nr_banks=09=3D ARRAY_SIZE(exynos9610_pin_banks3),
-+=09=09.suspend=09=3D exynos_pinctrl_suspend,
-+=09=09.resume=09=09=3D exynos_pinctrl_resume,
-+=09}, {
-+=09=09/* pin-controller instance 4 TOP data */
-+=09=09.pin_banks=09=3D exynos9610_pin_banks4,
-+=09=09.nr_banks=09=3D ARRAY_SIZE(exynos9610_pin_banks4),
-+=09=09.suspend=09=3D exynos_pinctrl_suspend,
-+=09=09.resume=09=09=3D exynos_pinctrl_resume,
-+=09}, {
-+=09=09/* pin-controller instance 5 SHUB data */
-+=09=09.pin_banks=09=3D exynos9610_pin_banks5,
-+=09=09.nr_banks=09=3D ARRAY_SIZE(exynos9610_pin_banks5),
-+=09},
-+};
-+
-+const struct samsung_pinctrl_of_match_data exynos9610_of_data __initconst =
-=3D {
-+=09.ctrl=09=09=3D exynos9610_pin_ctrl,
-+=09.num_ctrl=09=3D ARRAY_SIZE(exynos9610_pin_ctrl),
-+};
-+
- /*
-  * Pinctrl driver data for Tesla FSD SoC. FSD SoC includes three
-  * gpio/pin-mux/pinconfig controllers.
-diff --git a/drivers/pinctrl/samsung/pinctrl-samsung.c b/drivers/pinctrl/sa=
-msung/pinctrl-samsung.c
-index e374effba25a..5ac6f6b02327 100644
---- a/drivers/pinctrl/samsung/pinctrl-samsung.c
-+++ b/drivers/pinctrl/samsung/pinctrl-samsung.c
-@@ -1504,6 +1504,8 @@ static const struct of_device_id samsung_pinctrl_dt_m=
-atch[] =3D {
- =09=09.data =3D &exynos8890_of_data },
- =09{ .compatible =3D "samsung,exynos8895-pinctrl",
- =09=09.data =3D &exynos8895_of_data },
-+=09{ .compatible =3D "samsung,exynos9610-pinctrl",
-+=09=09.data =3D &exynos9610_of_data },
- =09{ .compatible =3D "samsung,exynos9810-pinctrl",
- =09=09.data =3D &exynos9810_of_data },
- =09{ .compatible =3D "samsung,exynos990-pinctrl",
-diff --git a/drivers/pinctrl/samsung/pinctrl-samsung.h b/drivers/pinctrl/sa=
-msung/pinctrl-samsung.h
-index 0f7b2ea98158..937600430a6e 100644
---- a/drivers/pinctrl/samsung/pinctrl-samsung.h
-+++ b/drivers/pinctrl/samsung/pinctrl-samsung.h
-@@ -398,6 +398,7 @@ extern const struct samsung_pinctrl_of_match_data exyno=
-s7885_of_data;
- extern const struct samsung_pinctrl_of_match_data exynos850_of_data;
- extern const struct samsung_pinctrl_of_match_data exynos8890_of_data;
- extern const struct samsung_pinctrl_of_match_data exynos8895_of_data;
-+extern const struct samsung_pinctrl_of_match_data exynos9610_of_data;
- extern const struct samsung_pinctrl_of_match_data exynos9810_of_data;
- extern const struct samsung_pinctrl_of_match_data exynos990_of_data;
- extern const struct samsung_pinctrl_of_match_data exynosautov9_of_data;
-
---=20
-2.51.0
-
-
+A.
 
