@@ -1,54 +1,54 @@
-Return-Path: <linux-samsung-soc+bounces-12952-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-12955-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1BF96CFEE37
-	for <lists+linux-samsung-soc@lfdr.de>; Wed, 07 Jan 2026 17:33:03 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9AF96CFEED1
+	for <lists+linux-samsung-soc@lfdr.de>; Wed, 07 Jan 2026 17:42:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 861733004280
-	for <lists+linux-samsung-soc@lfdr.de>; Wed,  7 Jan 2026 16:33:02 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 58E9230D267A
+	for <lists+linux-samsung-soc@lfdr.de>; Wed,  7 Jan 2026 16:34:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C6C1938171C;
-	Wed,  7 Jan 2026 16:22:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 32EAC38F22F;
+	Wed,  7 Jan 2026 16:23:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="bzDLu4ho"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="gf3+E3Zr"
 X-Original-To: linux-samsung-soc@vger.kernel.org
 Received: from smtpout-03.galae.net (smtpout-03.galae.net [185.246.85.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A2CD379962;
-	Wed,  7 Jan 2026 16:22:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E6F438170C
+	for <linux-samsung-soc@vger.kernel.org>; Wed,  7 Jan 2026 16:22:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.85.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767802964; cv=none; b=vA/DGLEhxBkglhOHZTSO4SLSF2/e3jPfX6fOhqPq1uQOEp6c1Y/i3eqoTcsgWPqMHxI2Tb29Kc4cZbhoT27Enm5v3g79zTCFmTLfamdDUyzhqQypw5NV+SRTTYFv99aI5Ot5g2iW30ZHykNDlzbdiRTKDHe70wizjeVckOiMRs4=
+	t=1767802985; cv=none; b=I+YvcbYVz9fJ1J9FeGeJAnJLOCHWWzzpGPDtWNW3f87AFUJbI7dyq/+2NeJ1+3MhqQXplaTPIrgbZx1Fk+nVuJ4lgOYqm/iJHmm1HtA0BkZNm/5ttnFVHrxUSP4h8nv2xdHdcBNFxxD5C+fDhfDYuwYHPGwnj+l936EZ/ydqM9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767802964; c=relaxed/simple;
-	bh=0WnxvGR7dNcQV8FWGN9plU+h4WhCklUUdW0/lgwyyHY=;
+	s=arc-20240116; t=1767802985; c=relaxed/simple;
+	bh=PFBPdmECrS6AMLYxYrGfvlKx1Ov47FWzP6tuMmhKFCk=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=TkpuinPTPpOeT1cqosrVYld0Hs+PkkzsxytSdfneBUAkcfK6Lug0z6b0RoBwPhLbZOdTnwgWVWYJsUI0sb47qSoyLUAkFiYa7vH60UJG6IysQmaufIYweydrwi54KDMiGr//CV7sGhn/L+H2esGqqBqo0nfiyFN3+Es0rjanLdU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=bzDLu4ho; arc=none smtp.client-ip=185.246.85.4
+	 In-Reply-To:To:Cc; b=aqVrUIqNB3zVFVtGQApBy8xKwZcpdhT8pmY+LnWy56hm1oK8YZmhKnGk61XtIH6Rtp5TIw47d48+B/Y716Ew8WK3sswkBnp/6hawyJzHB4ushzXeNDZ1D5aa9rHoJU5bUVbZ54j84E2/tt4MTbb1tVDKtjHcax2+bMB6IRJ5fW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=gf3+E3Zr; arc=none smtp.client-ip=185.246.85.4
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-03.galae.net (Postfix) with ESMTPS id F230F4E41FE1;
-	Wed,  7 Jan 2026 16:22:29 +0000 (UTC)
+	by smtpout-03.galae.net (Postfix) with ESMTPS id 0CC464E41FDE;
+	Wed,  7 Jan 2026 16:22:40 +0000 (UTC)
 Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id BDBE56072B;
-	Wed,  7 Jan 2026 16:22:29 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 5DAA0103C87C7;
-	Wed,  7 Jan 2026 17:22:23 +0100 (CET)
+	by smtpout-01.galae.net (Postfix) with ESMTPS id D4357606F8;
+	Wed,  7 Jan 2026 16:22:39 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 72981103C87C9;
+	Wed,  7 Jan 2026 17:22:33 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1767802948; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	t=1767802958; h=from:subject:date:message-id:to:cc:mime-version:content-type:
 	 content-transfer-encoding:in-reply-to:references;
-	bh=qkiR0P62QEUb1PCOEii1nVoSK2mCmCTz+ERz0qbz4sk=;
-	b=bzDLu4hog3Yzapu+FCJaa75iEPEgDSakBa2bewsdNrO75fp1ds4LOGxHwDe7EK4GeGSQhJ
-	l9ijvmCRCnj+9qfTD2679M1ipP3NBnXdgBMYGAud8sUuPBztTSS+Cs1CzC/w1APFIhguw8
-	V2WVK0uZU8nZ2/mgFTNxxwsnxzVPsYW7MrWu7TF42BAOtRrvqPMjwj8VDRGYA9H6hzDBMd
-	ORN05jWhnTBgKBmXhTqTHtMlUCsTzAKGn9EN/JdOOHv1Bcpu4h8PJJzxGuJOmMyswQZtLO
-	X3PdwDEEQe+ZgynJ6865m0cZAIlwFoPQYmii3B/XEmsWX+WIc301Hkj56NUGNg==
+	bh=ST179KMkx3KAXksoGXwbmWOr+cYParM2ZEAFdnlrrzM=;
+	b=gf3+E3Zrot6ORWwKRshSfPbFg7fbgq4507Z+9VG0hEjM0D51xpU8YmGZzK4gI5mKCHz2EI
+	Kflt7d9Ohg7QHoUz1fsaeOdeLx1hMR4JPrWEavVvZimIKPhdKYiDvrfsOHz7JRaXnXO11x
+	lNZQiMvNUtfiECi1dR13lE50fBXABfVsFu2d8lkUXYxo8RmzGIvp783FIZD/mamBG2titk
+	Qv38gwAxQ/P9e6ki4KHYNXF9lzfsB7hNnVJbfH1usv/PKkiGMeIKRVKbaaC/FJ/vB8xiwH
+	5ibUIiEYSAog2IBJKcKEdLQD5M6sYQX6OM0on54yVAxfH4uwoIP/3Ra6UQfcZQ==
 From: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Date: Wed, 07 Jan 2026 17:22:00 +0100
-Subject: [PATCH 2/6] drm/meson/dw-hdmi: convert to
+Date: Wed, 07 Jan 2026 17:22:02 +0100
+Subject: [PATCH 4/6] drm/mediatek: mtk_hdmi*: convert to
  of_drm_find_and_get_bridge()
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
@@ -58,7 +58,7 @@ List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260107-drm-bridge-alloc-getput-drm_of_find_bridge-3-v1-2-ef48a517828e@bootlin.com>
+Message-Id: <20260107-drm-bridge-alloc-getput-drm_of_find_bridge-3-v1-4-ef48a517828e@bootlin.com>
 References: <20260107-drm-bridge-alloc-getput-drm_of_find_bridge-3-v1-0-ef48a517828e@bootlin.com>
 In-Reply-To: <20260107-drm-bridge-alloc-getput-drm_of_find_bridge-3-v1-0-ef48a517828e@bootlin.com>
 To: Andrzej Hajda <andrzej.hajda@intel.com>, 
@@ -97,43 +97,73 @@ X-Last-TLS-Session-Version: TLSv1.3
 
 of_drm_find_bridge() is deprecated. Move to its replacement
 of_drm_find_and_get_bridge() which gets a bridge reference, and ensure it
-is put when done.
-
-dw_hdmi->bridge is used only in dw_hdmi_top_thread_irq(), so in order to
-avoid potential use-after-free ensure the irq is freed before putting the
-dw_hdmi->bridge reference.
+is put when done by using the drm_bridge::next_bridge pointer.
 
 Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
 ---
- drivers/gpu/drm/meson/meson_dw_hdmi.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/mediatek/mtk_hdmi.c        | 4 ++--
+ drivers/gpu/drm/mediatek/mtk_hdmi_common.c | 4 ++--
+ drivers/gpu/drm/mediatek/mtk_hdmi_common.h | 1 -
+ drivers/gpu/drm/mediatek/mtk_hdmi_v2.c     | 4 ++--
+ 4 files changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/meson/meson_dw_hdmi.c b/drivers/gpu/drm/meson/meson_dw_hdmi.c
-index 0d7c68b29dff..fef1702acb14 100644
---- a/drivers/gpu/drm/meson/meson_dw_hdmi.c
-+++ b/drivers/gpu/drm/meson/meson_dw_hdmi.c
-@@ -778,7 +778,7 @@ static int meson_dw_hdmi_bind(struct device *dev, struct device *master,
- 	if (IS_ERR(meson_dw_hdmi->hdmi))
- 		return PTR_ERR(meson_dw_hdmi->hdmi);
+diff --git a/drivers/gpu/drm/mediatek/mtk_hdmi.c b/drivers/gpu/drm/mediatek/mtk_hdmi.c
+index 0face4dcaa36..1ea259854780 100644
+--- a/drivers/gpu/drm/mediatek/mtk_hdmi.c
++++ b/drivers/gpu/drm/mediatek/mtk_hdmi.c
+@@ -986,8 +986,8 @@ static int mtk_hdmi_bridge_attach(struct drm_bridge *bridge,
+ 		return -EINVAL;
+ 	}
  
--	meson_dw_hdmi->bridge = of_drm_find_bridge(pdev->dev.of_node);
-+	meson_dw_hdmi->bridge = of_drm_find_and_get_bridge(pdev->dev.of_node);
+-	if (hdmi->next_bridge) {
+-		ret = drm_bridge_attach(encoder, hdmi->next_bridge,
++	if (hdmi->bridge.next_bridge) {
++		ret = drm_bridge_attach(encoder, hdmi->bridge.next_bridge,
+ 					bridge, flags);
+ 		if (ret)
+ 			return ret;
+diff --git a/drivers/gpu/drm/mediatek/mtk_hdmi_common.c b/drivers/gpu/drm/mediatek/mtk_hdmi_common.c
+index e78eb0876f16..40ded86dbea3 100644
+--- a/drivers/gpu/drm/mediatek/mtk_hdmi_common.c
++++ b/drivers/gpu/drm/mediatek/mtk_hdmi_common.c
+@@ -315,8 +315,8 @@ static int mtk_hdmi_dt_parse_pdata(struct mtk_hdmi *hdmi, struct platform_device
+ 		return -EINVAL;
  
- 	DRM_DEBUG_DRIVER("HDMI controller initialized\n");
+ 	if (!of_device_is_compatible(remote, "hdmi-connector")) {
+-		hdmi->next_bridge = of_drm_find_bridge(remote);
+-		if (!hdmi->next_bridge) {
++		hdmi->bridge.next_bridge = of_drm_find_and_get_bridge(remote);
++		if (!hdmi->bridge.next_bridge) {
+ 			dev_err(dev, "Waiting for external bridge\n");
+ 			of_node_put(remote);
+ 			return -EPROBE_DEFER;
+diff --git a/drivers/gpu/drm/mediatek/mtk_hdmi_common.h b/drivers/gpu/drm/mediatek/mtk_hdmi_common.h
+index de5e064585f8..cace3c5dc067 100644
+--- a/drivers/gpu/drm/mediatek/mtk_hdmi_common.h
++++ b/drivers/gpu/drm/mediatek/mtk_hdmi_common.h
+@@ -150,7 +150,6 @@ struct mtk_hdmi_conf {
  
-@@ -789,8 +789,12 @@ static void meson_dw_hdmi_unbind(struct device *dev, struct device *master,
- 				   void *data)
- {
- 	struct meson_dw_hdmi *meson_dw_hdmi = dev_get_drvdata(dev);
-+	struct platform_device *pdev = to_platform_device(dev);
-+	int irq = platform_get_irq(pdev, 0);
- 
-+	devm_free_irq(dev, irq, meson_dw_hdmi);
- 	dw_hdmi_unbind(meson_dw_hdmi->hdmi);
-+	drm_bridge_put(meson_dw_hdmi->bridge);
- }
- 
- static const struct component_ops meson_dw_hdmi_ops = {
+ struct mtk_hdmi {
+ 	struct drm_bridge bridge;
+-	struct drm_bridge *next_bridge;
+ 	struct drm_connector *curr_conn;/* current connector (only valid when 'enabled') */
+ 	struct device *dev;
+ 	const struct mtk_hdmi_conf *conf;
+diff --git a/drivers/gpu/drm/mediatek/mtk_hdmi_v2.c b/drivers/gpu/drm/mediatek/mtk_hdmi_v2.c
+index c272e1e74b7d..2adeece499b6 100644
+--- a/drivers/gpu/drm/mediatek/mtk_hdmi_v2.c
++++ b/drivers/gpu/drm/mediatek/mtk_hdmi_v2.c
+@@ -940,8 +940,8 @@ static int mtk_hdmi_v2_bridge_attach(struct drm_bridge *bridge,
+ 		DRM_ERROR("The flag DRM_BRIDGE_ATTACH_NO_CONNECTOR must be supplied\n");
+ 		return -EINVAL;
+ 	}
+-	if (hdmi->next_bridge) {
+-		ret = drm_bridge_attach(encoder, hdmi->next_bridge, bridge, flags);
++	if (hdmi->bridge.next_bridge) {
++		ret = drm_bridge_attach(encoder, hdmi->bridge.next_bridge, bridge, flags);
+ 		if (ret)
+ 			return ret;
+ 	}
 
 -- 
 2.52.0
