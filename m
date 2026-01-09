@@ -1,234 +1,140 @@
-Return-Path: <linux-samsung-soc+bounces-13001-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-13004-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-samsung-soc@lfdr.de
 Delivered-To: lists+linux-samsung-soc@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id CA007D0B7EF
-	for <lists+linux-samsung-soc@lfdr.de>; Fri, 09 Jan 2026 18:05:30 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 59D3BD0BA75
+	for <lists+linux-samsung-soc@lfdr.de>; Fri, 09 Jan 2026 18:31:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 2B765314CA19
-	for <lists+linux-samsung-soc@lfdr.de>; Fri,  9 Jan 2026 16:59:25 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 0297431740ED
+	for <lists+linux-samsung-soc@lfdr.de>; Fri,  9 Jan 2026 17:22:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4245236921B;
-	Fri,  9 Jan 2026 16:58:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C65E2368290;
+	Fri,  9 Jan 2026 17:22:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="YWiTGxvV";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="NLUNIAnM"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fMWxy9I1"
 X-Original-To: linux-samsung-soc@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9306364E8C
-	for <linux-samsung-soc@vger.kernel.org>; Fri,  9 Jan 2026 16:58:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 949643659EF;
+	Fri,  9 Jan 2026 17:22:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767977920; cv=none; b=VHeYxvuXJ+LOHc0+nfbu0WoJ6lCLnqCTnnT2xMlAljio2mBNLlu/a9P7ECLfPsPHiFpASMsvMIXb1cDViTE0UCZ7g8Esy0pT63FiKoqe5oX8/bzJsBOjjk7MmlpgD2mJb0Iy9f87hxhKhJi7dGyRMHFI0FtlGaGpnkPNJ7peXLk=
+	t=1767979321; cv=none; b=q4/8T4Q05WrjQm9EnLa2Raz+DgJ9RxLVUVkPDMFQWnMEelvsJ/zNuO4mkjfJpQPq2RJxHdnECdG6x4D2JJWqzTVCB/t703CKSktYHSFwfBfncr0/grT5mSUaqB683VNxWMyjLFkWdGJFvAATfoMe0gVb/9ulj+5kclrbamqMcco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767977920; c=relaxed/simple;
-	bh=MsflXqekUXo/aDgUOpqM/A+IhR12MRSHnOb52zLXpPE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=SIE0Ye1oT5V2kvrRexrOu9WbFi33Pi0Sv+00BWgtZvoOnpsoMLXUvlUFSR2BrysT89fCw9ZNA4xVmqRQxG5bXIz8qwyGGswvhhzrk+8SdHlwC13r4UOITB/rl2hN+c6FuFSBErSBHT4Q8UtZpToSbLDDNZqJgCmXhaf+KZNUntM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=YWiTGxvV; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=NLUNIAnM; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 609B2rQv1062741
-	for <linux-samsung-soc@vger.kernel.org>; Fri, 9 Jan 2026 16:58:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	7ovbKKrBmePhAYzcI6ZCSvjFvW5vMXzt/ujfJ3OIR3I=; b=YWiTGxvVE15vFfBL
-	1PkZ5modhSlq9rMbB1302WeGwFCjUnXrSizKPUTx1ui0mKgKd08ji7dNxyuknY0L
-	g3SKoM3LsaGtmiyBvaCvGRiqqR0iSrPMY/8E7ywIgECHJNfYY6yxXSpPLchBmWFw
-	J4XWI3V2LTypt+dR/l/0LrR5TNKtzestz+QTpcJdvtfqVEt+WzgbjvQFDaLZS5eJ
-	RefVgGMtGfVW4FPkmD1KX+c70rPtSEoh1iFwZ22URvVEg9+OEyx/ftfZGo+gRahK
-	yzaap9JtzoiNGpjVFUtOTwct7Xp4/Fhi2w2y0aT3+sLNp4b95ICWt34zu3p/gNR8
-	2fVyRA==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bk0f690cb-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-samsung-soc@vger.kernel.org>; Fri, 09 Jan 2026 16:58:34 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-8b234bae2a7so1173352585a.3
-        for <linux-samsung-soc@vger.kernel.org>; Fri, 09 Jan 2026 08:58:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1767977914; x=1768582714; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=7ovbKKrBmePhAYzcI6ZCSvjFvW5vMXzt/ujfJ3OIR3I=;
-        b=NLUNIAnMtyXcGRnHwniZkZeu0D6C61T5QHSHs36Dv1Sgt1M/caxyPVC87fQ3JQFFQf
-         XrV+xHij9cAltV3SzU11l4e22VjrhPo5D62uD9lkESzkkJC4EE0CxOp+2epLy+XrAePh
-         I328lhXT9crKjjHH9iBMzKz2Y7+pyWmNMxGUQbUdI1ihDHItBqKYXRgjdpOXCdpx6Lul
-         hUDsX2WtJG+D/F/g46KLjlxfGeV8JEE17VGPytS2FdzPL3FWWL9XataBsYDIn6pf7qfU
-         W2bOVQHUBSykl8GHvjr7TZ4GPtCXgA13nukwA8Q+nxF0kdnzGPrKt13KJNY86rk+tITq
-         6mMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767977914; x=1768582714;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=7ovbKKrBmePhAYzcI6ZCSvjFvW5vMXzt/ujfJ3OIR3I=;
-        b=DtGdwT8tuAsGJLUapqLPIeGHm980NyZazLGx/PXhkZWxQ5K+fRTJK093RSjEr+QZy7
-         YeJ2oe0HO5KqvxiNYA0UQbNhR/EtxxmLlSGzk3POCW5Rr9T5aaJ2+bsHXrZZ3TRnaP2U
-         uvrzT3a8bFvoXvS/8iQ3jBUoM3C5HllLNv7o8LN8KsiellgI8uUcTNcwtWm1wzNF7iDn
-         IHytYB04m0gErzt+Xz7Y2/GdqrFgfwO13PbAPIS3BtEYHi43WV6ZIaJPDAIGoLyt8PQ4
-         NwIeArK3Z4wSnnXtFVKJQ5//SFDFBoxOXf3ZtoxjeyH4QbH1iGMmf2rwsBhkt4F6ks4Y
-         51cw==
-X-Forwarded-Encrypted: i=1; AJvYcCUbJHWkCtZdomgnTi0iUjssbC0jA+oKtkSDO2xJF5f4HovznuPUTVwzX/V1fXRNbDEU6V7Pno/9rse7mxF9J0WZ3A==@vger.kernel.org
-X-Gm-Message-State: AOJu0YzZcKYOXI60z+LCahxD2A0MnEiN6szwjyU2To3xtE+oq+TO1xIg
-	e27wjArRc9I5Tr2zia1UGyLorZ+JQzuPM9l1aAEIiibORuHHfI31CWhNNeo3fVkn0WzZI8wAEvc
-	fuqZIXJ72CGL7pJBPH/AScr67phTRsIJq80Klv/MsxGzBbrWXMZzoggblIboYnn1NQWFH4VRfoQ
-	==
-X-Gm-Gg: AY/fxX71Venh2JPj++nBohsoPjDjic5RYIzwTFX2uNgoUGtCDxN3GqEFlpTU4Qx4Tcg
-	Ms9WXnw130e6XGszT+rx6qut9Gnn57lJTcWgkocBstSB564VS8oPO/JYbjirG/7OVLytZHZCcOh
-	Odp9UeO/qyvvlRVeTpnDN/rMfmToHbtcj5DoHEF2BJaabctKB2srsmk97gH//058AlNd7PdtqZj
-	SCfbDBDi/dMiGH6JLeRgpsS1phtQrrFLvRaUG9c5n1JZVbWT9jES/lVZktyJ61UKJLU1NCEdSsA
-	90d67YIu2BYs9x33QQ//Z0kZmqewtGzEBgvJurTpvz/OioBw5otZ/bjL+EYQ8udu4uJvh62kk9g
-	lof9SoTE2ARf/6QxTUfYFMEAG1ClJXMmiYQ==
-X-Received: by 2002:a05:620a:7088:b0:8b2:d2c9:f73 with SMTP id af79cd13be357-8c3893ef83cmr1176962985a.41.1767977913953;
-        Fri, 09 Jan 2026 08:58:33 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF924iUMxd+MwJ3dGhp/iiQySS67dLxcUnb2YLMcFoaCMT4wx2qTC8T7uv1cj0weZDGRq/u/w==
-X-Received: by 2002:a05:620a:7088:b0:8b2:d2c9:f73 with SMTP id af79cd13be357-8c3893ef83cmr1176955885a.41.1767977913425;
-        Fri, 09 Jan 2026 08:58:33 -0800 (PST)
-Received: from [127.0.1.1] ([178.197.218.229])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-432bd5ee243sm23231784f8f.31.2026.01.09.08.58.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Jan 2026 08:58:32 -0800 (PST)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Date: Fri, 09 Jan 2026 17:57:54 +0100
-Subject: [PATCH v3 10/12] dmaengine: fsl_raid: Simplify with scoped for
- each OF child loop
+	s=arc-20240116; t=1767979321; c=relaxed/simple;
+	bh=G0CdK1BbKzMKU+qqbitcHl4o9Pf/LHQ1vf98qGeQbYE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=TFUaBIpcmHwjwasjaEuto3g/MeetL5WXz1gS7eMXHclT6lcx2pHE9/LES0wK011h13SfS5loShbtrf5deWwBt7rmq/YJUL5ipOJ8xAFS3SBPCT2TFFLMiPLmXpnF6N++jl/mrKExgRsMdsYQH9UBVjD0ITzxPkkO0UiDU4qA80o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fMWxy9I1; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2F1AC4CEF1;
+	Fri,  9 Jan 2026 17:21:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1767979321;
+	bh=G0CdK1BbKzMKU+qqbitcHl4o9Pf/LHQ1vf98qGeQbYE=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=fMWxy9I1T3LHdLmPtdMUL88DS3wYXB71qViQVOCn0+8QCbajTFBrfCs8mqRUXy+Y4
+	 4E+eBYsitwzT/qE/4+xLri8dA5feTyUtep33ImpFVLB2+Wxssd+JDlhKBMSAEgTwgb
+	 jnchWeKlErbxlJm9dPOlSzhoP46/HA2MEdAQR6j1cvUjT1Z48s7+DCjf3C8gGAwNSr
+	 BUXYSgbI6w2J7+HijlF38X8OoLlcZ7PktPyZMuYV6gFQjkfwBvlk7LRC/7Nd22e6Z+
+	 gB/+xmfzZzhw6BchvPsR2Qael3H05SiSbrl7pdb++/DLGljx6tybl/LamhByeVke5T
+	 r+n5loRskMeeA==
+Message-ID: <48faa7b1-d486-406a-a8c4-a1c9609e7fc6@kernel.org>
+Date: Fri, 9 Jan 2026 18:21:47 +0100
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
 List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260109-of-for-each-compatible-scoped-v3-10-c22fa2c0749a@oss.qualcomm.com>
-References: <20260109-of-for-each-compatible-scoped-v3-0-c22fa2c0749a@oss.qualcomm.com>
-In-Reply-To: <20260109-of-for-each-compatible-scoped-v3-0-c22fa2c0749a@oss.qualcomm.com>
-To: Miguel Ojeda <ojeda@kernel.org>, Rob Herring <robh@kernel.org>,
-        Saravana Kannan <saravanak@google.com>,
-        Nathan Chancellor <nathan@kernel.org>,
-        Nick Desaulniers <nick.desaulniers+lkml@gmail.com>,
-        Bill Wendling <morbo@google.com>,
-        Justin Stitt <justinstitt@google.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Claudiu Beznea <claudiu.beznea@tuxon.dev>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Madhavan Srinivasan <maddy@linux.ibm.com>,
-        Michael Ellerman <mpe@ellerman.id.au>,
-        Nicholas Piggin <npiggin@gmail.com>,
-        "Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
-        Nipun Gupta <nipun.gupta@amd.com>,
-        Nikhil Agarwal <nikhil.agarwal@amd.com>,
-        Abel Vesa <abelvesa@kernel.org>, Peng Fan <peng.fan@nxp.com>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>, Vinod Koul <vkoul@kernel.org>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 04/12] powerpc/fsp2: Simplify with scoped for each OF
+ child loop
+To: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+ Miguel Ojeda <ojeda@kernel.org>, Rob Herring <robh@kernel.org>,
+ Saravana Kannan <saravanak@google.com>, Nathan Chancellor
+ <nathan@kernel.org>, Nick Desaulniers <nick.desaulniers+lkml@gmail.com>,
+ Bill Wendling <morbo@google.com>, Justin Stitt <justinstitt@google.com>,
+ Russell King <linux@armlinux.org.uk>,
+ Nicolas Ferre <nicolas.ferre@microchip.com>,
+ Alexandre Belloni <alexandre.belloni@bootlin.com>,
+ Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+ Krzysztof Kozlowski <krzk@kernel.org>, Alim Akhtar
+ <alim.akhtar@samsung.com>, Madhavan Srinivasan <maddy@linux.ibm.com>,
+ Michael Ellerman <mpe@ellerman.id.au>, Nicholas Piggin <npiggin@gmail.com>,
+ Nipun Gupta <nipun.gupta@amd.com>, Nikhil Agarwal <nikhil.agarwal@amd.com>,
+ Abel Vesa <abelvesa@kernel.org>, Peng Fan <peng.fan@nxp.com>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Shawn Guo <shawnguo@kernel.org>,
+ Sascha Hauer <s.hauer@pengutronix.de>,
+ Pengutronix Kernel Team <kernel@pengutronix.de>,
+ Fabio Estevam <festevam@gmail.com>, Vinod Koul <vkoul@kernel.org>,
+ Sylwester Nawrocki <s.nawrocki@samsung.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ "Rafael J. Wysocki" <rafael@kernel.org>,
+ Viresh Kumar <viresh.kumar@linaro.org>
 Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        llvm@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
-        linux-clk@vger.kernel.org, imx@lists.linux.dev,
-        dmaengine@vger.kernel.org, linux-media@vger.kernel.org,
-        linux-pm@vger.kernel.org,
-        Jonathan Cameron <jonathan.cameron@huawei.com>,
-        Frank Li <Frank.Li@nxp.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1436;
- i=krzysztof.kozlowski@oss.qualcomm.com; h=from:subject:message-id;
- bh=MsflXqekUXo/aDgUOpqM/A+IhR12MRSHnOb52zLXpPE=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBpYTOZjtjnuHm6MsFLp3+EGzl32axXLPMxcnb5v
- fcxLyp6KqqJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaWEzmQAKCRDBN2bmhouD
- 15GBD/9pEsoaE7Sv9gNfW8gJEPcA0VfLzP/x1SLnW4JtF28oqZVC9He/51hlFzvBEJRg4A1b+Ft
- KOgvgzZS0/SX36dUn+pRf7ML30RCFvWcM/kSG0DgLYtTzezJfUN0kxc5A/xWKEvuPQp5P+967hM
- H4Ijk6xLQcgIn2DJtoVKHurLdzKhOmZIhfVPdAf1jYBCi9xwxCNSkwMoQfkUExJ5jr3kOeHqvVm
- OYjkMu9ExJBuwfwGhqrOR3q+0Wv0F7OXP0iJN2yGQOlztVvx4e/6EiFZxs37S5+LbXHqV7jXbGG
- CalSNTMChp/eEsmNKRlpdIgt1LDnMCYR+LJslJfpIp2RRLX2kK6KLoX2tL5y/qXLicul2V/JWt4
- O8+yTXm5butG+MSp/njvv83MUAAUxzmaCWYP6tNlk+PAMawDXh4IcyAEYAUkNoHu1h96quF8oz3
- 5pf07iFkeS2fqhM1PhJ9VLxtsfBA9pVDVkIvAZQaBk9wreiv65snG9i6OFo1qeMsyatrXCMrs7s
- whC2MO0kZPQPzbg2JnYmK/kfVM/tLzvDn8ASzOUnekSH2fIw1O8GzBFFTHio3uwTdp/jShXzhkC
- zbzxjJdBuQRKlNBMeNmOhu45yvU7SHdE75kpTW1uG06zPaMryXuVAg4y1lGCNI+nBUFDD9hKY0M
- cKfFR2KqKiYbCNg==
-X-Developer-Key: i=krzysztof.kozlowski@oss.qualcomm.com; a=openpgp;
- fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
-X-Authority-Analysis: v=2.4 cv=P803RyAu c=1 sm=1 tr=0 ts=696133ba cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=Eb9f15NH/cHKzfGOmZSO4Q==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=i0EeH86SAAAA:8 a=VwQbUJbxAAAA:8 a=8AirrxEcAAAA:8
- a=EUspDBNiAAAA:8 a=RsIb78jGsj8zXbp4E7EA:9 a=QEXdDO2ut3YA:10
- a=IoWCM6iH3mJn3m4BftBB:22 a=ST-jHhOKWsTCqRlWije3:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA5MDEyOCBTYWx0ZWRfX/9h7mmQIA/Ey
- dmkzLoWgUpcWh8QiVLVeCrDlMsTaTeo/R1OmVoRVSVEXgcweOgANv1e4HRfyL3jxW5rshlk96xh
- Z4CLI+nVJPiN3fcYfAGBFnMSgzi8Wjh9xvyvwO22K4zKT/IhqgrX4x6ary+c28SI0yt4CHwtoFZ
- vzJfUtu6xD8ki4VcSK+6jFSQNDtSWfqBXx0h/G7Xcip1G05QH4xsKa5O+rC4UA0gpUrkVNJDTmC
- vZUGUp/ehnQr4VwNsl/bp+oDLYzDKQY4cFNvPI9TRGqBErGJiIywNWW3oIwsdbWru6RmTUFRie+
- OFsJiZ1DhG6z15IQ3GDdpXMxnQon0x4FzI8kW70DGptNSnXiZI7EmZkZxl8CvsagmjG5BxvPmij
- D/Ky6b+6DXpH5BPTva0sllpXCQAB6c+kuFh26HwqWYQwWMYryixUboFUMADWYyHR/xFgwRYBV1w
- Vti3rv4+O3NvCXbL2Og==
-X-Proofpoint-GUID: lObR4oPQabCRZ4JAvGLmga7xGOXgfrEW
-X-Proofpoint-ORIG-GUID: lObR4oPQabCRZ4JAvGLmga7xGOXgfrEW
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2026-01-09_05,2026-01-08_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 suspectscore=0 clxscore=1015 impostorscore=0 priorityscore=1501
- bulkscore=0 spamscore=0 malwarescore=0 adultscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2601090128
+ llvm@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
+ linux-samsung-soc@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
+ linux-clk@vger.kernel.org, imx@lists.linux.dev, dmaengine@vger.kernel.org,
+ linux-media@vger.kernel.org, linux-pm@vger.kernel.org,
+ Jonathan Cameron <jonathan.cameron@huawei.com>
+References: <20260109-of-for-each-compatible-scoped-v3-0-c22fa2c0749a@oss.qualcomm.com>
+ <20260109-of-for-each-compatible-scoped-v3-4-c22fa2c0749a@oss.qualcomm.com>
+Content-Language: fr-FR
+From: "Christophe Leroy (CS GROUP)" <chleroy@kernel.org>
+In-Reply-To: <20260109-of-for-each-compatible-scoped-v3-4-c22fa2c0749a@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Use scoped for-each loop when iterating over device nodes to make code a
-bit simpler.
 
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Acked-by: Vinod Koul <vkoul@kernel.org>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
----
 
-Depends on the first patch.
----
- drivers/dma/fsl_raid.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+Le 09/01/2026 à 17:57, Krzysztof Kozlowski a écrit :
+> Use scoped for-each loop when iterating over device nodes to make code a
+> bit simpler.
+> 
+> Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-diff --git a/drivers/dma/fsl_raid.c b/drivers/dma/fsl_raid.c
-index 6aa97e258a55..6e6d7e0e475e 100644
---- a/drivers/dma/fsl_raid.c
-+++ b/drivers/dma/fsl_raid.c
-@@ -746,7 +746,6 @@ static int fsl_re_chan_probe(struct platform_device *ofdev,
- static int fsl_re_probe(struct platform_device *ofdev)
- {
- 	struct fsl_re_drv_private *re_priv;
--	struct device_node *np;
- 	struct device_node *child;
- 	u32 off;
- 	u8 ridx = 0;
-@@ -823,11 +822,10 @@ static int fsl_re_probe(struct platform_device *ofdev)
- 	dev_set_drvdata(dev, re_priv);
- 
- 	/* Parse Device tree to find out the total number of JQs present */
--	for_each_compatible_node(np, NULL, "fsl,raideng-v1.0-job-queue") {
-+	for_each_compatible_node_scoped(np, NULL, "fsl,raideng-v1.0-job-queue") {
- 		rc = of_property_read_u32(np, "reg", &off);
- 		if (rc) {
- 			dev_err(dev, "Reg property not found in JQ node\n");
--			of_node_put(np);
- 			return -ENODEV;
- 		}
- 		/* Find out the Job Rings present under each JQ */
+Reviewed-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
 
--- 
-2.51.0
+> ---
+> 
+> Depends on the first patch.
+> ---
+>   arch/powerpc/platforms/44x/fsp2.c | 5 +----
+>   1 file changed, 1 insertion(+), 4 deletions(-)
+> 
+> diff --git a/arch/powerpc/platforms/44x/fsp2.c b/arch/powerpc/platforms/44x/fsp2.c
+> index f6b8d02e08b0..b06d9220844c 100644
+> --- a/arch/powerpc/platforms/44x/fsp2.c
+> +++ b/arch/powerpc/platforms/44x/fsp2.c
+> @@ -199,16 +199,14 @@ static irqreturn_t rst_wrn_handler(int irq, void *data) {
+>   
+>   static void __init node_irq_request(const char *compat, irq_handler_t errirq_handler)
+>   {
+> -	struct device_node *np;
+>   	unsigned int irq;
+>   	int32_t rc;
+>   
+> -	for_each_compatible_node(np, NULL, compat) {
+> +	for_each_compatible_node_scoped(np, NULL, compat) {
+>   		irq = irq_of_parse_and_map(np, 0);
+>   		if (!irq) {
+>   			pr_err("device tree node %pOFn is missing a interrupt",
+>   			      np);
+> -			of_node_put(np);
+>   			return;
+>   		}
+>   
+> @@ -216,7 +214,6 @@ static void __init node_irq_request(const char *compat, irq_handler_t errirq_han
+>   		if (rc) {
+>   			pr_err("fsp_of_probe: request_irq failed: np=%pOF rc=%d",
+>   			      np, rc);
+> -			of_node_put(np);
+>   			return;
+>   		}
+>   	}
+> 
 
 
