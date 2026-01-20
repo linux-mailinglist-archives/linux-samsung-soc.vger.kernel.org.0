@@ -1,52 +1,52 @@
-Return-Path: <linux-samsung-soc+bounces-13167-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
+Return-Path: <linux-samsung-soc+bounces-13169-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-samsung-soc@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id ABtPO9G5b2kOMQAAu9opvQ
-	(envelope-from <linux-samsung-soc+bounces-13167-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>)
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 20 Jan 2026 18:22:25 +0100
+	id QOVJGK2+b2kOMQAAu9opvQ
+	(envelope-from <linux-samsung-soc+bounces-13169-lists+linux-samsung-soc=lfdr.de@vger.kernel.org>)
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 20 Jan 2026 18:43:09 +0100
 X-Original-To: lists+linux-samsung-soc@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id A3A244879C
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 20 Jan 2026 18:22:25 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id F40E448C21
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 20 Jan 2026 18:43:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 152BC64DD2E
-	for <lists+linux-samsung-soc@lfdr.de>; Tue, 20 Jan 2026 16:15:10 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 4EF2F54DA5B
+	for <lists+linux-samsung-soc@lfdr.de>; Tue, 20 Jan 2026 17:28:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 76E822DCF70;
-	Tue, 20 Jan 2026 15:58:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DD0FF3F0762;
+	Tue, 20 Jan 2026 17:28:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MTA0Yp9S"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="keykpx/v"
 X-Original-To: linux-samsung-soc@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4777A285CA8;
-	Tue, 20 Jan 2026 15:58:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B10DD3EDAC3;
+	Tue, 20 Jan 2026 17:28:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768924710; cv=none; b=nDQuY1YbvBh0DwMQWfN1jJLHpGwyqi6psnVT25fcH+lABS8dO6s6VK/7mOn4u94HRZWe6t8265VKSU+Fge7SZ7kcJDhlfIgru+vcK5epS3IX1fQh+TizL28ddwc4A73Kd3DrsRt2WQhiqYP+c+TnFPBtlG1meNJ9xG+Zbg0l75I=
+	t=1768930126; cv=none; b=OH2vIhGhr/uTXCcbOxGI7h8gg3TDiON19fQUax10K5F3Jk4gQz1Iha1Cx3EpkIS2UQa61BEnBp1iveFGjCFksDTImGXyJPSvw2qJ3FdCwEiusL8lcdl0WiiSgpuH0F0gzsGU0rCLJSAF5nIW3UN78UbzBRsL6MLeXCdsZV2Y5TY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768924710; c=relaxed/simple;
-	bh=l37FTkgGHV4sgTU2D8F1KF5HqX8/MzgAGHjMDYU02wE=;
+	s=arc-20240116; t=1768930126; c=relaxed/simple;
+	bh=pKqgymuhOO8QU0VzDgLr0JkEV8uZG6qELdsZ1cmjOgo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sVkMz7x/nC6YjUz2lDKybg26IrKoSPvMzKALmoNkXgax8/vh2yZsaFIKxWQbtV7Oc6sZicGxXpoygAhotfR9E904LrCZx5Ec/Gr9MmI/04Zka6ubKiSsIP+jnIfrqT9OFyqPR7l7mhBfGrlVMVNZ8XIHlU6v3Tkjw41pYxyZqes=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MTA0Yp9S; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78FE7C16AAE;
-	Tue, 20 Jan 2026 15:58:25 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=nApgsIBQInvVpJgUD/X7yytvs+jaetSaC6aAnEOC6HVNSycDZKmVKyDFCKuhsmVerJiEhT3XqjGcTGqbHG4HVy/xN5huP9haVFTtQ586TyHCy05N6OXem833JTFZFAH9UM0n52vGbeUAMhUF85FyRXS0AGuz8paCrRiKSEyaV38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=keykpx/v; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C8B1C16AAE;
+	Tue, 20 Jan 2026 17:28:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768924710;
-	bh=l37FTkgGHV4sgTU2D8F1KF5HqX8/MzgAGHjMDYU02wE=;
+	s=k20201202; t=1768930126;
+	bh=pKqgymuhOO8QU0VzDgLr0JkEV8uZG6qELdsZ1cmjOgo=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=MTA0Yp9SV2ZCtU8F8zB0ixx3f1jzFhHWG5oHyLD6RNwcu5Unvjr0wavgfIDjdYXFP
-	 dLwPZa/TkotMCsEYfWVDexVQ9CiZ06AUrb9IGusgZbCFot0yTHia91UqdPYJOg15RT
-	 3pPc+I2JZSqj9a8GXDuzU81mNgisqamTCzmKwdRE7Lu4M/Ea9Q/eoUCJkWHawGNlY/
-	 UmVu+NvsgZy9CfKkYj/jk0ZCOhJ4Qmg9QNI1tMpL8IVtLoExpz9w3XWd2+ha3GJjjB
-	 KqhlgN1E3wt4eNdTApNeetY6Pbi7FF7j2VvQa8G886MTaXtmAo2fG7ZOAK/Gv7Q5rt
-	 hP6BT1jc4/pkA==
-Date: Tue, 20 Jan 2026 15:58:21 +0000
+	b=keykpx/vECCN+pqOoWY1lTAiYX+7xg4gW9QpTqmyfWn7w/ACBEKhaChEVG4fy7esW
+	 UBs94g2xaq2EOnCjboLjJkSiufHceHnMN5JMYJihx+5fJM+Sczmh2DoF9AnKLlq1r2
+	 ++Fg1aloDAdYxtC71CG8DgiTYBVVx41/C3+80zndLWO1jQKTG1UwsxNpigK1H5EahW
+	 iDMtMiG8LeZoZWtazVpp0Sx4z/2nu567xutTO7QVr951kGMtYWKk1dyNb4uujivfKz
+	 an6/IJOieE3oTRZW702rM5nH2aOmpKGO0qTFOAkTk/fLYjJV9/zfdKqLLPbr1kbtin
+	 vLu98yb3kO/Tw==
+Date: Tue, 20 Jan 2026 17:28:40 +0000
 From: Mark Brown <broonie@kernel.org>
 To: Lee Jones <lee@kernel.org>
 Cc: Krzysztof Kozlowski <krzk@kernel.org>,
@@ -62,10 +62,12 @@ Cc: Krzysztof Kozlowski <krzk@kernel.org>,
 	linux-kernel@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
 	linux-rtc@vger.kernel.org
 Subject: Re: [PATCH v2 0/3] Samsung mfd/rtc driver alarm IRQ simplification
-Message-ID: <e9bde783-42f3-4f28-9a5e-aa65f36db9ca@sirena.org.uk>
+Message-ID: <916995f4-60e0-47dc-abdb-8819089d103c@sirena.org.uk>
 References: <20251120-s5m-alarm-v2-0-cc15f0e32161@linaro.org>
  <176892415694.2292562.7457528145774108517.b4-ty@kernel.org>
  <20260120155241.GG1354723@google.com>
+ <e9bde783-42f3-4f28-9a5e-aa65f36db9ca@sirena.org.uk>
+ <20260120172405.GI1354723@google.com>
 Precedence: bulk
 X-Mailing-List: linux-samsung-soc@vger.kernel.org
 List-Id: <linux-samsung-soc.vger.kernel.org>
@@ -73,9 +75,9 @@ List-Subscribe: <mailto:linux-samsung-soc+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-samsung-soc+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="jxQDUqLbwYzDnVrM"
+	protocol="application/pgp-signature"; boundary="5C+JAuLDUkP13/M9"
 Content-Disposition: inline
-In-Reply-To: <20260120155241.GG1354723@google.com>
+In-Reply-To: <20260120172405.GI1354723@google.com>
 X-Cookie: Slippery when wet.
 X-Spamd-Result: default: False [-4.06 / 15.00];
 	SIGNED_PGP(-2.00)[];
@@ -86,7 +88,7 @@ X-Spamd-Result: default: False [-4.06 / 15.00];
 	MAILLIST(-0.15)[generic];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-13167-lists,linux-samsung-soc=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-13169-lists,linux-samsung-soc=lfdr.de];
 	FROM_HAS_DN(0.00)[];
 	DMARC_POLICY_ALLOW(0.00)[kernel.org,quarantine];
 	RCPT_COUNT_TWELVE(0.00)[16];
@@ -102,50 +104,49 @@ X-Spamd-Result: default: False [-4.06 / 15.00];
 	R_SPF_SOFTFAIL(0.00)[~all:c];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-samsung-soc];
-	ASN(0.00)[asn:7979, ipnet:2a01:60a::/32, country:US];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[ams.mirrors.kernel.org:rdns,ams.mirrors.kernel.org:helo,sirena.org.uk:mid]
-X-Rspamd-Queue-Id: A3A244879C
+	ASN(0.00)[asn:7979, ipnet:2605:f480::/32, country:US];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sirena.org.uk:mid,dfw.mirrors.kernel.org:rdns,dfw.mirrors.kernel.org:helo]
+X-Rspamd-Queue-Id: F40E448C21
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
 
---jxQDUqLbwYzDnVrM
+--5C+JAuLDUkP13/M9
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 
-On Tue, Jan 20, 2026 at 03:52:41PM +0000, Lee Jones wrote:
-> On Tue, 20 Jan 2026, Lee Jones wrote:
+On Tue, Jan 20, 2026 at 05:24:05PM +0000, Lee Jones wrote:
+> On Tue, 20 Jan 2026, Mark Brown wrote:
 
-> > [1/3] mfd: sec: add rtc alarm IRQ as platform device resource
-> >       (no commit info)
-> > [2/3] rtc: s5m: query platform device IRQ resource for alarm IRQ
-> >       commit: c70aee3dd85482c67720eb642d59ebbb9433faa5
-> > [3/3] mfd: sec: drop now unused struct sec_pmic_dev::irq_data
-> >       (no commit info)
+> > If you fetch a series but don't delete it from the database then (with
+> > b4 ty -d) then b4 will remember it and if any commits in what gets
+> > applied match it'll generate a mail for b4 ty -a.  Usually that's when
+> > some commits didn't get changed.
 
-> Looks like b4 is having a bad day.
+> The last attempt to apply this failed with conflicts.
 
-> I just applied v3, not this set.
+> I wonder why b4 stored that as a success?
 
-If you fetch a series but don't delete it from the database then (with
-b4 ty -d) then b4 will remember it and if any commits in what gets
-applied match it'll generate a mail for b4 ty -a.  Usually that's when
-some commits didn't get changed.
+Are you using b4 shazam?  I wonder if under the hood it's a mailbox
+fetch then an apply.  I download a mailbox then script my own
+application after the fact so it's not so surprising that it happens for
+me, b4 knows nothing about the patches actually being applied until I
+tell it to go look to send thanks.
 
---jxQDUqLbwYzDnVrM
+--5C+JAuLDUkP13/M9
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmlvph0ACgkQJNaLcl1U
-h9Dj5wf/aPeSfXUuH0xaET9UsP1lbE0XjWkk+mTPceqVhnkRCgLqNm6+QMGAkLR3
-AhBbnU7ZukuBy8cKGaPDJUAp095/3jfzgnGZ33I6oRdDTXaQC9oVZZFa8IWtyJF7
-mr2zCOL0mEVnbQltlvKyLJUcrLNWHA+YIof1ANk4cVCOX//2tCGcjL0oi6tMegUQ
-TOMim+OyEGVj4yh4epOzup51msvpBAKRxNcszuWjHAoY1k5Gk0M48aGRbejGmZ3o
-R9s76nBmAmVXgV/owkCLjVfb2L8eljzuPLrpQJCZxiTvNrrRXnbraiX7ykL7aVcg
-TH7MRBCEnYeTZ4h6QgvnewT61qok/A==
-=42eu
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmlvu0gACgkQJNaLcl1U
+h9BQ4gf/XS3VtYI5SKVmR5yt/y9gEltvUnMufTkTSFHl1BIop9/1VCqW+0k6lE/k
+DHhUhX8WVpflfrtZZFXtw6Vb95kv+eicMQJcNaTJOL/P6MV0gjr7G87Ad+RPFiDh
+TbBJr8VdEKNlKHUawvtSN1wAzJTnAhC+DQmcfg9NXriQ7Eu5Q4TIyLbzYKtDqXtn
+DEkW36O/LCTpvfh7uF9TLwco7K+s2Te/O6zxtFwRY+JO3fNPpl9CiRzb1CZ6jcVs
++ZQpixL7YAwGBB3fhTiO3JLIEoYnnoT5cO3UbQq2WvW+RKZDJoQCk8nJL3xKgKAB
+BRy0DaghPpF60fODGw4z9BSazWMROA==
+=dEjf
 -----END PGP SIGNATURE-----
 
---jxQDUqLbwYzDnVrM--
+--5C+JAuLDUkP13/M9--
 
